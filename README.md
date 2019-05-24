@@ -1,4 +1,4 @@
-# YAFE
+# MEPHISTO
 An application used to monitor and moderate hate-speech in social media
 
 ## Project Objectives
