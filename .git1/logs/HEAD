@@ -1,0 +1,6 @@
+0000000000000000000000000000000000000000 ced4327f1710c336e427cafd68f3b4ac9d541824 OmegaDracul <salimabdu008@gmail.com> 1558725113 +0100	clone: from https://github.com/SummaDiaboli/Yafe.git
+ced4327f1710c336e427cafd68f3b4ac9d541824 0f49dca5020dff602bcae7ef6a9f630c95d325e5 OmegaDracul <salimabdu008@gmail.com> 1558728033 +0100	commit: The very beginning of Yafe
+0f49dca5020dff602bcae7ef6a9f630c95d325e5 b2a474287c8353abc888a184112be70ec2ddf044 OmegaDracul <salimabdu008@gmail.com> 1558728561 +0100	commit: Switched from Java and Objective C to Kotlin and Swift respectively
+b2a474287c8353abc888a184112be70ec2ddf044 8f690ed64e3eccd0075de4b6376def10d9fbafc1 OmegaDracul <salimabdu008@gmail.com> 1558728708 +0100	commit: Changed the README from the default flutter README
+8f690ed64e3eccd0075de4b6376def10d9fbafc1 7b0bb793d748d4dd54610673fd824036cc81ac16 OmegaDracul <salimabdu008@gmail.com> 1558729597 +0100	pull --tags origin master: Fast-forward
+7b0bb793d748d4dd54610673fd824036cc81ac16 2bb06bd8b59a26fed3a32bca6627d24e7ce4ea67 OmegaDracul <salimabdu008@gmail.com> 1558732856 +0100	commit: Turned the default file into different components
