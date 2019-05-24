@@ -18,9 +18,6 @@
 # Visual Studio Code related
 .vscode/
 
-# Private Git
-.git1/
-
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/
