@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:yafe/login/signUp.dart';
+import 'package:yafe/login/forgotPassword.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -52,7 +53,7 @@ class _LoginState extends State<Login> {
                       ),
                       // Contains password
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(6, 4, 6, 0),
+                        padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
                         child: TextFormField(
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
@@ -75,7 +76,11 @@ class _LoginState extends State<Login> {
                         child: Padding(
                           padding: const EdgeInsets.all(0.0),
                           child: FlatButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Route route = MaterialPageRoute(
+                                  builder: (context) => ForgotPassword());
+                              Navigator.push(context, route);
+                            },
                             child: Text(
                               "Forgot password?",
                               textAlign: TextAlign.start,
@@ -98,9 +103,11 @@ class _LoginState extends State<Login> {
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: Text(
-                              "Login",
+                              "LOGIN",
                               style: TextStyle(
-                                  color: Colors.red[800], fontSize: 18),
+                                  color: Colors.red[800],
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w800),
                             ),
                             onPressed: () {},
                           ),
