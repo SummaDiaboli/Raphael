@@ -13,9 +13,6 @@ class _MainAppState extends State<MainApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Yafe',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
       home: Login(),
     );
   }

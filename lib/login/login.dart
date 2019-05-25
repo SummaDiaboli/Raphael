@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -9,8 +10,121 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text("Yafe the social media moderation app"),
+      resizeToAvoidBottomPadding: true,
+      body: Container(
+        child: Form(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                // Container with the logo
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 60),
+                  child: Container(
+                    // Will hold placeholder image
+                    child: Icon(
+                      Icons.donut_small,
+                      size: 120,
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 22),
+                  child: Column(
+                    // Containing the user login
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: TextFormField(
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                            labelStyle: TextStyle(color: Colors.black),
+                            labelText: "Username",
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: TextFormField(
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                            labelText: "Password",
+                            labelStyle: TextStyle(color: Colors.black),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.red[800],
+                                  style: BorderStyle.solid),
+                            ),
+                          ),
+                          obscureText: true,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 45, 0, 20),
+                        child: Container(
+                          width: 100,
+                          height: 45,
+                          child: RaisedButton(
+                            elevation: 4,
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5)),
+                            child: Text(
+                              "Login",
+                              style: TextStyle(
+                                  color: Colors.red[800], fontSize: 18),
+                            ),
+                            onPressed: () {},
+                          ),
+                        ),
+                      ),
+                      Divider(
+                        color: Colors.grey[600],
+                        indent: 6,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: FlatButton(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 16),
+                          child: Text(
+                            "LOGIN WITH TWITTER",
+                            style: TextStyle(color: Colors.grey[600]),
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            side: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 16),
+                        child: FlatButton(
+                          onPressed: () {},
+                          child: Text(
+                            "Don't have an account yet? Sign-up here",
+                            style: TextStyle(color: Colors.red[900]),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
