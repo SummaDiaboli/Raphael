@@ -131,7 +131,7 @@ class _SignUpState extends State<SignUp> {
                         padding: const EdgeInsets.fromLTRB(20, 30, 10, 0),
                         child: Center(
                           child: Text(
-                            "By signing up, you are agreeing to our terms and conditions & privay policy.",
+                            "By signing up, you are agreeing to our terms and conditions & privacy policy.",
                             textAlign: TextAlign.center,
                           ),
                         ),

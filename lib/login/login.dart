@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+// Importing the other login pages
 import 'package:yafe/login/signUp.dart';
 import 'package:yafe/login/forgotPassword.dart';
+
+// Importing the navigation to the main pages
+import 'package:yafe/mainPages/mainHome.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -109,7 +114,11 @@ class _LoginState extends State<Login> {
                                   fontSize: 18,
                                   fontWeight: FontWeight.w800),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Route route = MaterialPageRoute(
+                                  builder: (context) => MainHomePage());
+                              Navigator.push(context, route);
+                            },
                           ),
                         ),
                       ),
