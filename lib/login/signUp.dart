@@ -10,6 +10,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
       body: Container(
         child: Form(
@@ -25,10 +26,11 @@ class _SignUpState extends State<SignUp> {
                       child: BackButton(),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 14, 12, 2),
+                      padding: const EdgeInsets.fromLTRB(0, 14, 6, 2),
                       child: Align(
                         alignment: Alignment.topRight,
-                        child: Icon(Icons.donut_small),
+                        child: Image.asset('assets/images/icon.jpg', scale: 25,)
+                        /* Icon(Icons.donut_small), */
                       ),
                     )
                   ],

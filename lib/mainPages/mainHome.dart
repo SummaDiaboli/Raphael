@@ -37,8 +37,8 @@ class _MainHomePageState extends State<MainHomePage> {
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
         backgroundColor: Colors.red[900],
         currentIndex: _currentIndex,
         items: [
@@ -48,7 +48,10 @@ class _MainHomePageState extends State<MainHomePage> {
               size: 30,
               color: Colors.white,
             ),
-            title: Text("Articles"),
+            title: Text(
+              "Articles",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
@@ -56,7 +59,10 @@ class _MainHomePageState extends State<MainHomePage> {
               size: 30,
               color: Colors.white,
             ),
-            title: Text("Map"),
+            title: Text(
+              "Map",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
@@ -64,7 +70,10 @@ class _MainHomePageState extends State<MainHomePage> {
               size: 30,
               color: Colors.white,
             ),
-            title: Text("Posts"),
+            title: Text(
+              "Posts",
+              style: TextStyle(color: Colors.white),
+            ),
           )
         ],
       ),

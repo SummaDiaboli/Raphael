@@ -17,6 +17,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: true,
       body: Container(
         child: Form(
@@ -26,14 +27,15 @@ class _LoginState extends State<Login> {
               children: <Widget>[
                 // Container with the logo
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 60),
+                  padding: EdgeInsets.symmetric(vertical: 20),
                   child: Container(
                     // Will hold placeholder image
-                    child: Icon(
+                    child: Image.asset('assets/images/icon.jpg', scale: 5,),
+                    /* Icon(
                       Icons.donut_small,
                       size: 120,
                       color: Colors.red,
-                    ),
+                    ), */
                   ),
                 ),
                 Padding(

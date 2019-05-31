@@ -20,7 +20,7 @@ class _ArticleCardsState extends State<ArticleCards> {
   );
 
   final dayAndTime = DateTime.now();
-  final dayFormatter = DateFormat('EEEE, d MMMM yyyy').format(DateTime.now());
+  final dayFormatter = DateFormat('EE, d MMMM yyyy').format(DateTime.now());
 
   Widget _articleCards(BuildContext context, int index) {
     final article = articleText[index];
@@ -38,7 +38,7 @@ class _ArticleCardsState extends State<ArticleCards> {
               color: Colors.grey,
             ),
           ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+          contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0),
           title: Padding(
             padding: const EdgeInsets.fromLTRB(0, 6, 0, 10),
             child: Text(
@@ -51,13 +51,15 @@ class _ArticleCardsState extends State<ArticleCards> {
             article,
             overflow: TextOverflow.ellipsis,
             maxLines: 3,
+            softWrap: true,
+            //textAlign: TextAlign.justify,
           ),
           isThreeLine: true,
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(0, 8, 4, 4),
+          padding: EdgeInsets.fromLTRB(60, 8, 4, 4),
           child: Align(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.center,
             child: Text(
               'Posted on ${dayFormatter.toString()} - ${dayAndTime.hour}:${dayAndTime.minute} GMT',
               style: TextStyle(fontSize: 11.9),
