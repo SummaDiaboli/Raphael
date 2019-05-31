@@ -14,6 +14,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  // TODO: Change all strict padding to relative MediaQuery padding
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,6 +63,7 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ),
+
                       // Contains password
                       Padding(
                         padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
@@ -81,6 +84,8 @@ class _LoginState extends State<Login> {
                           obscureText: true,
                         ),
                       ),
+
+                      // Forgot Password Button
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
@@ -103,6 +108,7 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ),
+
                       // Login button
                       Padding(
                         padding: EdgeInsets.fromLTRB(0, 20, 0, 16),
@@ -135,15 +141,20 @@ class _LoginState extends State<Login> {
                         color: Colors.grey[600],
                         indent: 6,
                       ),
-                      // Login Alternative
+
+                      // Login Alternative using Twitter
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: FlatButton(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 16),
+                            horizontal: 24,
+                            vertical: 16,
+                          ),
                           child: Text(
                             "LOGIN WITH TWITTER",
-                            style: TextStyle(color: Colors.grey[600]),
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                            ),
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6),
@@ -154,6 +165,7 @@ class _LoginState extends State<Login> {
                           onPressed: () {},
                         ),
                       ),
+
                       // Sign-up button
                       Padding(
                         padding: EdgeInsets.only(top: 12),
@@ -166,7 +178,9 @@ class _LoginState extends State<Login> {
                           },
                           child: Text(
                             "Don't have an account yet? Sign-up here",
-                            style: TextStyle(color: Colors.red[900]),
+                            style: TextStyle(
+                              color: Colors.red[900],
+                            ),
                           ),
                         ),
                       )

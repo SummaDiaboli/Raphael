@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
+
+// This is used for the Date and Time formatting
 import 'package:intl/intl.dart';
 
 class ArticleCards extends StatefulWidget {
@@ -8,27 +9,49 @@ class ArticleCards extends StatefulWidget {
 }
 
 class _ArticleCardsState extends State<ArticleCards> {
+  /*
+    This generates an array containing the lorem ipsum 20 times
+    It is used for the text inside the list tiles
+  */
+
   final articleText = List<String>.generate(
     20,
     (i) =>
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi augue tellus, semper ut auctor ac, egestas ac mauris. Morbi id risus imperdiet, tristique nibh sed, dignissim arcu. Cras volutpat dolor sit amet dapibus dignissim",
   );
 
+  /*
+    Generates an array containing the ipsum 20 times
+    This is used to set the article titles
+  */
+
   final articleHeading = List<String>.generate(
     20,
     (i) => "Pellentesque vel sapien neque",
   );
 
+  /*
+    Scamming the system by setting the date and time to
+    when the app is opened
+  */
   final dayAndTime = DateTime.now();
+
+  /*
+    The format below is used for the date and time
+    This is appreviated day, the day number, full month and full year
+  */
   final dayFormatter = DateFormat('EE, d MMMM yyyy').format(DateTime.now());
 
   Widget _articleCards(BuildContext context, int index) {
     final article = articleText[index];
     final header = articleHeading[index];
 
+    // TODO: Change all strict padding to relative MediaQuery padding
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        // Creates the account image icon at the side
         ListTile(
           leading: Padding(
             padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
@@ -56,6 +79,8 @@ class _ArticleCardsState extends State<ArticleCards> {
           ),
           isThreeLine: true,
         ),
+
+        // Fills in the article information
         Padding(
           padding: EdgeInsets.fromLTRB(60, 8, 4, 4),
           child: Align(
@@ -66,6 +91,8 @@ class _ArticleCardsState extends State<ArticleCards> {
             ),
           ),
         ),
+
+        // Made a custom divider that's easier to manipulate
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 10, 20, 10),
           child: SizedBox(
@@ -85,6 +112,11 @@ class _ArticleCardsState extends State<ArticleCards> {
 
   @override
   Widget build(BuildContext context) {
+    /*
+      Creates the listview using the length of 20 from the array of
+      article text and uses the articleCards widget to build the
+      contents of the listview
+    */
     return ListView.builder(
       itemCount: articleText.length,
       itemBuilder: _articleCards,

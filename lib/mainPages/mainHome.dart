@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// Importing other pages
+// Importing other pages for the main route
 import 'package:yafe/mainPages/homePage.dart';
 import 'package:yafe/mainPages/mapPage.dart';
 import 'package:yafe/mainPages/postPage.dart';
@@ -12,7 +12,9 @@ class MainHomePage extends StatefulWidget {
 }
 
 class _MainHomePageState extends State<MainHomePage> {
-  int _currentIndex = 0;
+  int _currentIndex = 0; // Index of the bottom navigation bar items
+
+  // All the pages contained in the bottom navigation bar
   final List<Widget> _children = [
     HomePage(),
     MapPage(),
@@ -24,6 +26,9 @@ class _MainHomePageState extends State<MainHomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+
+        // This changes the title of the appbar in accordance
+        // with changes in the child of the bottom nav bar
         title: Text(
           [
             "Articles",
@@ -80,6 +85,8 @@ class _MainHomePageState extends State<MainHomePage> {
     );
   }
 
+  // Changes the index of the child when another item
+  // in the bottom navigation bar is tapped
   void onTabTapped(int index) {
     setState(
       () {

@@ -6,6 +6,8 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  // TODO: Change all strict padding to relative MediaQuery padding
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +78,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       ),
                       child: Text(
                         "SEND",
-                        style: TextStyle(color: Colors.red[800], fontSize: 18, fontWeight: FontWeight.w800),
+                        style: TextStyle(
+                            color: Colors.red[800],
+                            fontSize: 18,
+                            fontWeight: FontWeight.w800),
                       ),
                       onPressed: () {},
                     ),

@@ -7,6 +7,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  // TODO: Change all strict padding to relative MediaQuery padding
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,10 +30,13 @@ class _SignUpState extends State<SignUp> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 14, 6, 2),
                       child: Align(
-                        alignment: Alignment.topRight,
-                        child: Image.asset('assets/images/icon.jpg', scale: 25,)
-                        /* Icon(Icons.donut_small), */
-                      ),
+                          alignment: Alignment.topRight,
+                          child: Image.asset(
+                            'assets/images/icon.jpg',
+                            scale: 25,
+                          )
+                          /* Icon(Icons.donut_small), */
+                          ),
                     )
                   ],
                 ),
