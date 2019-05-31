@@ -30,7 +30,10 @@ class _LoginState extends State<Login> {
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: Container(
                     // Will hold placeholder image
-                    child: Image.asset('assets/images/icon.jpg', scale: 5,),
+                    child: Image.asset(
+                      'assets/images/icon.jpg',
+                      scale: 5,
+                    ),
                     /* Icon(
                       Icons.donut_small,
                       size: 120,
@@ -85,7 +88,8 @@ class _LoginState extends State<Login> {
                           child: FlatButton(
                             onPressed: () {
                               Route route = MaterialPageRoute(
-                                  builder: (context) => ForgotPassword());
+                                builder: (context) => ForgotPassword(),
+                              );
                               Navigator.push(context, route);
                             },
                             child: Text(
@@ -118,7 +122,8 @@ class _LoginState extends State<Login> {
                             ),
                             onPressed: () {
                               Route route = MaterialPageRoute(
-                                  builder: (context) => MainHomePage());
+                                builder: (context) => MainHomePage(),
+                              );
                               Navigator.push(context, route);
                             },
                           ),
@@ -153,7 +158,8 @@ class _LoginState extends State<Login> {
                         child: FlatButton(
                           onPressed: () {
                             Route route = MaterialPageRoute(
-                                builder: (context) => SignUp());
+                              builder: (context) => SignUp(),
+                            );
                             Navigator.push(context, route);
                           },
                           child: Text(
