@@ -96,7 +96,9 @@ class _LoginState extends State<Login> {
                               "Forgot password?",
                               textAlign: TextAlign.start,
                               style: TextStyle(
-                                  fontSize: 12, color: Colors.red[800]),
+                                fontSize: 12,
+                                color: Colors.red[800],
+                              ),
                             ),
                           ),
                         ),
