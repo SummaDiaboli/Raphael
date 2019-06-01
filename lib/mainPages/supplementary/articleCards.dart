@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 // This is used for the Date and Time formatting
 import 'package:intl/intl.dart';
 
-class ArticleCards extends StatefulWidget {
+class HomeArticleCards extends StatefulWidget {
   @override
-  _ArticleCardsState createState() => _ArticleCardsState();
+  _HomeArticleCardsState createState() => _HomeArticleCardsState();
 }
 
-class _ArticleCardsState extends State<ArticleCards> {
+class _HomeArticleCardsState extends State<HomeArticleCards> {
   /*
     This generates an array containing the lorem ipsum 20 times
     It is used for the text inside the list tiles
@@ -82,7 +82,7 @@ class _ArticleCardsState extends State<ArticleCards> {
 
         // Fills in the article information
         Padding(
-          padding: EdgeInsets.fromLTRB(60, 8, 4, 4),
+          padding: EdgeInsets.fromLTRB(50, 8, 4, 4),
           child: Align(
             alignment: Alignment.center,
             child: Text(
@@ -94,7 +94,7 @@ class _ArticleCardsState extends State<ArticleCards> {
 
         // Made a custom divider that's easier to manipulate
         Padding(
-          padding: const EdgeInsets.fromLTRB(0, 10, 20, 10),
+          padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
           child: SizedBox(
             height: 1.2,
             child: Center(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yafe/mainPages/supplementary/postCards.dart';
 
 class PostPage extends StatefulWidget {
   @override
@@ -8,8 +9,6 @@ class PostPage extends StatefulWidget {
 class _PostPageState extends State<PostPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.yellow
-    );
+    return PostsCards();
   }
 }

@@ -6,6 +6,9 @@ import 'package:yafe/mainPages/homePage.dart';
 import 'package:yafe/mainPages/mapPage.dart';
 import 'package:yafe/mainPages/postPage.dart';
 
+// Importing the drawer
+import 'package:yafe/mainPages/drawer.dart';
+
 class MainHomePage extends StatefulWidget {
   @override
   _MainHomePageState createState() => _MainHomePageState();
@@ -38,7 +41,7 @@ class _MainHomePageState extends State<MainHomePage> {
         ),
         backgroundColor: Colors.grey[700],
       ),
-      drawer: Drawer(),
+      drawer: MainDrawer(),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
@@ -76,7 +79,7 @@ class _MainHomePageState extends State<MainHomePage> {
               color: Colors.white,
             ),
             title: Text(
-              "Posts",
+              "Twitter",
               style: TextStyle(color: Colors.white),
             ),
           ),
