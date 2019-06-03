@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yafe/mainPages/detailPages/detailedArticles.dart';
 
 // This is used for the Date and Time formatting
 import 'package:intl/intl.dart';
@@ -53,6 +54,7 @@ class _HomeArticleCardsState extends State<HomeArticleCards> {
       children: <Widget>[
         // Creates the account image icon at the side
         ListTile(
+          onTap: _push,
           leading: Padding(
             padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
             child: Icon(
@@ -70,26 +72,31 @@ class _HomeArticleCardsState extends State<HomeArticleCards> {
               maxLines: 1,
             ),
           ),
-          subtitle: Text(
-            article,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 3,
-            softWrap: true,
-            //textAlign: TextAlign.justify,
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              // Fills in the article information
+              Text(
+                article,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 3,
+                softWrap: true,
+                //textAlign: TextAlign.justify,
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 8, 4, 4),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Posted on ${dayFormatter.toString()} - ${dayAndTime.hour}:${dayAndTime.minute} GMT',
+                    style: TextStyle(fontSize: 11.9),
+                  ),
+                ),
+              ),
+            ],
           ),
           isThreeLine: true,
-        ),
-
-        // Fills in the article information
-        Padding(
-          padding: EdgeInsets.fromLTRB(50, 8, 4, 4),
-          child: Align(
-            alignment: Alignment.center,
-            child: Text(
-              'Posted on ${dayFormatter.toString()} - ${dayAndTime.hour}:${dayAndTime.minute} GMT',
-              style: TextStyle(fontSize: 11.9),
-            ),
-          ),
         ),
 
         // Made a custom divider that's easier to manipulate
@@ -107,6 +114,14 @@ class _HomeArticleCardsState extends State<HomeArticleCards> {
           ),
         )
       ],
+    );
+  }
+
+  void _push() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => DetailedArticle(),
+      ),
     );
   }
 

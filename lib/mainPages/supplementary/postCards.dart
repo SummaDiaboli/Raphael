@@ -28,6 +28,7 @@ class _PostsCardsState extends State<PostsCards> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         ListTile(
+          onTap: () {},
           leading: Padding(
             padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
             child: Icon(
