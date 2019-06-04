@@ -16,13 +16,14 @@ class MainHomePage extends StatefulWidget {
 
 class _MainHomePageState extends State<MainHomePage> {
   int _currentIndex = 0; // Index of the bottom navigation bar items
+  int index = 0;
 
   // All the pages contained in the bottom navigation bar
-  final List<Widget> _children = [
+  /* final List<Widget> _children = [
     HomePage(),
     MapPage(),
     PostPage(),
-  ];
+  ]; */
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,22 @@ class _MainHomePageState extends State<MainHomePage> {
         backgroundColor: Colors.grey[700],
       ),
       drawer: MainDrawer(),
-      body: _children[_currentIndex],
+      body: Stack(
+        children: <Widget>[
+          Offstage(
+            offstage: _currentIndex != 0,
+            child: HomePage(),
+          ),
+          Offstage(
+            offstage: _currentIndex != 1,
+            child: MapPage(),
+          ),
+          Offstage(
+            offstage: _currentIndex != 2,
+            child: PostPage(),
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
         showSelectedLabels: true,
