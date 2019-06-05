@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
+import 'package:yafe/mainPages/detailPages/detailedPosts.dart';
+
 class PostsCards extends StatefulWidget {
   @override
   _PostsCardsState createState() => _PostsCardsState();
@@ -28,7 +30,7 @@ class _PostsCardsState extends State<PostsCards> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         ListTile(
-          onTap: () {},
+          onTap: _push,
           leading: Padding(
             padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
             child: Icon(
@@ -137,6 +139,14 @@ class _PostsCardsState extends State<PostsCards> {
     return ListView.builder(
       itemBuilder: _postsCards,
       itemCount: usernameList.length,
+    );
+  }
+
+  void _push() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => DetailedPosts(),
+      ),
     );
   }
 
