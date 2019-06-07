@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yafe/mainPages/drawerPages/profilePage.dart';
 
 class MainDrawer extends StatefulWidget {
   @override
@@ -81,7 +82,12 @@ class _MainDrawerState extends State<MainDrawer> {
                   style: TextStyle(color: Colors.red[800], fontSize: 16),
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Route route = MaterialPageRoute(
+                  builder: (context) => ProfilePage(),
+                );
+                Navigator.push(context, route);
+              },
             ),
             ListTile(
               contentPadding: EdgeInsets.all(0),
