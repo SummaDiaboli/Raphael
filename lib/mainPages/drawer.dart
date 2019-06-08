@@ -7,7 +7,7 @@ class MainDrawer extends StatefulWidget {
 }
 
 class _MainDrawerState extends State<MainDrawer> {
-  String username = "John Doe";
+  String username = "John Do";
   String userRole = "Content Manager";
   String userEmail = "john.doe@doey.com";
 
