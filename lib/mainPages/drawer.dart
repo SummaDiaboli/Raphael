@@ -7,9 +7,9 @@ class MainDrawer extends StatefulWidget {
 }
 
 class _MainDrawerState extends State<MainDrawer> {
-  String username = "Salim Hussaini";
-  String userRole = "Software Maintainer";
-  String userEmail = "salim.hussaini@backlinq.ng";
+  String username = "John Doe";
+  String userRole = "Content Manager";
+  String userEmail = "john.doe@doey.com";
 
   @override
   Widget build(BuildContext context) {
