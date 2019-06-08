@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // Importing other pages for the main route
 import 'package:yafe/mainPages/homePage.dart';
-import 'package:yafe/mainPages/mapPage.dart';
+//import 'package:yafe/mainPages/pollsPage.dart';
 import 'package:yafe/mainPages/postPage.dart';
 
 // Importing the drawer
@@ -36,7 +36,7 @@ class _MainHomePageState extends State<MainHomePage> {
         title: Text(
           [
             "Articles",
-            "Map",
+            //"Polls",
             "Posts",
           ][_currentIndex],
         ),
@@ -49,12 +49,13 @@ class _MainHomePageState extends State<MainHomePage> {
             offstage: _currentIndex != 0,
             child: HomePage(),
           ),
-          Offstage(
+          /* Offstage(
             offstage: _currentIndex != 1,
-            child: MapPage(),
-          ),
+            child: PollsPage(),
+          ), */
           Offstage(
-            offstage: _currentIndex != 2,
+            // offstage: _currentIndex != 2,
+            offstage: _currentIndex != 1,
             child: PostPage(),
           ),
         ],
@@ -77,7 +78,7 @@ class _MainHomePageState extends State<MainHomePage> {
               style: TextStyle(color: Colors.white),
             ),
           ),
-          BottomNavigationBarItem(
+          /* BottomNavigationBarItem(
             icon: Icon(
               Icons.map,
               size: 30,
@@ -87,7 +88,7 @@ class _MainHomePageState extends State<MainHomePage> {
               "Map",
               style: TextStyle(color: Colors.white),
             ),
-          ),
+          ), */
           BottomNavigationBarItem(
             icon: Icon(
               Icons.mode_comment,
@@ -95,7 +96,7 @@ class _MainHomePageState extends State<MainHomePage> {
               color: Colors.white,
             ),
             title: Text(
-              "Twitter",
+              "Posts",
               style: TextStyle(color: Colors.white),
             ),
           ),

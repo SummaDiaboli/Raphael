@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 /* import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart'; */
 
-class MapPage extends StatefulWidget {
+class PollsPage extends StatefulWidget {
   @override
-  _MapPageState createState() => _MapPageState();
+  _PollsPageState createState() => _PollsPageState();
 }
 
-class _MapPageState extends State<MapPage> {
+class _PollsPageState extends State<PollsPage> {
   // PermissionStatus _permissionStatus = PermissionStatus.unknown;
 
   /* @override

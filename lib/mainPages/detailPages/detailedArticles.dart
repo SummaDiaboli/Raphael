@@ -11,7 +11,7 @@ enum MenuItems {
 }
 
 class _DetailedArticleState extends State<DetailedArticle> {
-  MenuItems _selection;
+  //MenuItems _selection;
 
   /*
     Scamming the system by setting the date and time to
@@ -32,7 +32,7 @@ class _DetailedArticleState extends State<DetailedArticle> {
         centerTitle: true,
         title: Text("Detailed Article"),
         backgroundColor: Colors.grey[700],
-        actions: <Widget>[
+        /*actions: <Widget>[
           PopupMenuButton<MenuItems>(
             onSelected: (MenuItems result) {
               setState(
@@ -49,8 +49,51 @@ class _DetailedArticleState extends State<DetailedArticle> {
                   )
                 ],
           ),
-        ],
+        ],*/
       ),
+      persistentFooterButtons: <Widget>[
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, 80, 0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              FlatButton.icon(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                icon: Icon(Icons.thumb_up),
+                onPressed: () {},
+                label: Text(""),
+              ),
+              FlatButton.icon(
+                padding: EdgeInsets.all(0),
+                icon: Icon(Icons.thumb_down),
+                onPressed: () {},
+                label: Text(""),
+                textColor: Colors.red[800],
+              ),
+            ],
+          ),
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            FlatButton.icon(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              icon: Icon(Icons.share),
+              onPressed: () {},
+              label: Text(""),
+              textColor: Colors.grey[800],
+            ),
+            FlatButton.icon(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              icon: Icon(Icons.comment),
+              onPressed: () {},
+              label: Text(""),
+              textColor: Colors.grey[800],
+            )
+          ],
+        ),
+      ],
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
