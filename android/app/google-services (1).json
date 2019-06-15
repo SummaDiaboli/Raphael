@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "358967935015",
+    "firebase_url": "https://backlinq-yafe.firebaseio.com",
+    "project_id": "backlinq-yafe",
+    "storage_bucket": "backlinq-yafe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358967935015:android:b55a8014e045207c",
+        "android_client_info": {
+          "package_name": "com.backlinq.yafe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358967935015-fuqfdtv605nafo412l4ii3bin59o1q3b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.backlinq.yafe",
+            "certificate_hash": "98831d711bccbcb493012f3bb665ea5a1fb6d987"
+          }
+        },
+        {
+          "client_id": "358967935015-6rhlu96u6ibme309vjubhan3fi39i5sm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvXZMvyF22tJfFXsBlC5mX5e6gLvVKT2I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "358967935015-6rhlu96u6ibme309vjubhan3fi39i5sm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
