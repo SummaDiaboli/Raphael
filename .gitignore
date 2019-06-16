@@ -71,4 +71,4 @@
 
 
 # Google Services
-**/android/app/google-services.json
+**/android/**/google-services.json
