@@ -1,15 +1,87 @@
 import 'package:flutter/material.dart';
 import 'package:yafe/mainPages/drawerPages/profilePage.dart';
+import 'package:yafe/mainPages/supplementary/authentication.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:yafe/rootPage.dart';
 
 class MainDrawer extends StatefulWidget {
+  MainDrawer({this.userId, this.auth, this.onSignedOut});
+
+  final BaseAuth auth;
+  final VoidCallback onSignedOut;
+  final String userId;
+  /* final String userId; */
+
   @override
   _MainDrawerState createState() => _MainDrawerState();
 }
 
+enum AuthStatus {
+  NOT_DETERMINED,
+  NOT_LOGGED_IN,
+  LOGGED_IN,
+}
+
 class _MainDrawerState extends State<MainDrawer> {
+  AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
+  String _userId = "";
+  /* AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
+  String _userId = "";
+
+  @override
+  void initState() {
+    super.initState();
+    widget.auth.getCurrentUser().then((user) {
+      setState(() {
+        if (user != null) {
+          _userId = user?.uid;
+        }
+        authStatus =
+            user?.uid == null ? AuthStatus.NOT_LOGGED_IN : AuthStatus.LOGGED_IN;
+      });
+    });
+  } */
+
+  // void _onLoggedIn() {
+  //   widget.auth.getCurrentUser().then((user) {
+  //     setState(() {
+  //       _userId = user.uid.toString();
+  //     });
+  //   });
+  //   setState(() {
+  //     authStatus = AuthStatus.LOGGED_IN;
+  //   });
+  // }
+
+  /* void _onSignedOut() {
+    setState(() {
+      authStatus = AuthStatus.NOT_LOGGED_IN;
+      _userId = "";
+    });
+  } */
+
   String username = "John Doe";
   String userRole = "Content Manager";
   String userEmail = "john.doe@doey.com";
+
+  _signOut() async {
+    try {
+      await widget.auth.signOut();
+      widget.onSignedOut();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseAuth.instance.onAuthStateChanged.listen((firebaseUser) {
+      // do whatever you want based on the firebaseUser state
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -163,6 +235,44 @@ class _MainDrawerState extends State<MainDrawer> {
                 ),
               ),
               onTap: () {},
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              /* leading: Padding(
+                  padding: const EdgeInsets.all(0.0),
+                  child: SizedBox(
+                    width: 5,
+                    height: 45,
+                    child: Container(
+                      margin: EdgeInsetsDirectional.only(
+                        start: 0,
+                      ),
+                      color: Colors.red[800],
+                    ),
+                  ),
+                ), */
+              title: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: Text(
+                  "Logout",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(color: Colors.red[800], fontSize: 16),
+                ),
+              ),
+              onTap: () async {
+                await FirebaseAuth.instance.signOut();
+                widget.onSignedOut();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RootPage(
+                          auth: Auth(),
+                        ),
+                  ),
+                  ModalRoute.withName("/Home"),
+                );
+                // Navigator.of(context).pushReplacementNamed('/');
+              },
             ),
             Expanded(
               child: Align(

@@ -9,7 +9,16 @@ import 'package:yafe/mainPages/postPage.dart';
 // Importing the drawer
 import 'package:yafe/mainPages/drawer.dart';
 
+import "package:yafe/mainPages/supplementary/authentication.dart";
+
 class MainHomePage extends StatefulWidget {
+  MainHomePage({Key key, this.auth, this.userId, this.onSignedOut})
+      : super(key: key);
+
+  final BaseAuth auth;
+  final VoidCallback onSignedOut;
+  final String userId;
+
   @override
   _MainHomePageState createState() => _MainHomePageState();
 }
@@ -18,12 +27,70 @@ class _MainHomePageState extends State<MainHomePage> {
   int _currentIndex = 0; // Index of the bottom navigation bar items
   int index = 0;
 
+  AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
+  String _userId = "";
+
   // All the pages contained in the bottom navigation bar
   /* final List<Widget> _children = [
     HomePage(),
     MapPage(),
     PostPage(),
   ]; */
+
+  /* bool _isEmailVerified = false;
+  @override
+  void initState() {
+    super.initState();
+
+    _checkEmailVerification();
+  }
+
+  void _checkEmailVerification() async {
+    _isEmailVerified = await widget.auth.isEmailVerified();
+    if (!_isEmailVerified) {
+      _showVerifyEmailDialog();
+    }
+  }
+
+  void _showVerifyEmailDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Verify your account"),
+          content: new Text("Please verify account in the link sent to email"),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("Resent link"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _resentVerifyEmail();
+              },
+            ),
+            new FlatButton(
+              child: new Text("Dismiss"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  } */
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  void _onSignedOut() {
+    setState(() {
+      authStatus = AuthStatus.NOT_LOGGED_IN;
+      _userId = "";
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +109,11 @@ class _MainHomePageState extends State<MainHomePage> {
         ),
         backgroundColor: Colors.grey[700],
       ),
-      drawer: MainDrawer(),
+      drawer: MainDrawer(
+        userId: widget.userId,
+        auth: widget.auth,
+        onSignedOut: _onSignedOut,
+      ),
       body: Stack(
         children: <Widget>[
           Offstage(
