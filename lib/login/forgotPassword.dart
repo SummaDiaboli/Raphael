@@ -6,8 +6,6 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-  // TODO: Change all strict padding to relative MediaQuery padding
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

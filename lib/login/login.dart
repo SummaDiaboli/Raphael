@@ -35,13 +35,18 @@ class _LoginState extends State<Login> {
 
   bool _isLoading;
 
-  bool _isIos;
-
-  // TODO: Change all strict padding to relative MediaQuery padding
+  //bool _isIos;
 
   Widget _showCircularProgress() {
     if (_isLoading) {
-      return Center(child: CircularProgressIndicator());
+      return Container(
+        color: Colors.white70,
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
     }
     return Container(
       height: 0.0,
@@ -92,7 +97,7 @@ class _LoginState extends State<Login> {
           _isLoading = false;
         });
         Route route = MaterialPageRoute(
-          builder: (context) => MainHomePage(),
+          builder: (context) => MainHomePage(auth: Auth(), userId: userId),
         );
         Navigator.push(context, route);
       } catch (e) {
@@ -117,7 +122,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    _isIos = Theme.of(context).platform == TargetPlatform.iOS;
+    // _isIos = Theme.of(context).platform == TargetPlatform.iOS;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -162,7 +167,7 @@ class _LoginState extends State<Login> {
                                   borderSide: BorderSide(color: Colors.black),
                                 ),
                                 labelStyle: TextStyle(color: Colors.black),
-                                labelText: "Username",
+                                labelText: "Email",
                                 border: OutlineInputBorder(),
                               ),
                               validator: (value) {
@@ -294,8 +299,12 @@ class _LoginState extends State<Login> {
                             padding: EdgeInsets.only(top: 12),
                             child: FlatButton(
                               onPressed: () {
+                                _formKey.currentState.reset();
                                 Route route = MaterialPageRoute(
-                                  builder: (context) => SignUp(),
+                                  builder: (context) => SignUp(
+                                        auth: widget.auth,
+                                        onSignedIn: widget.onSignedIn,
+                                      ),
                                 );
                                 Navigator.push(context, route);
                               },

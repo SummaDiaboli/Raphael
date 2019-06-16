@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yafe/login/login.dart';
 import 'mainPages/supplementary/authentication.dart';
 import 'package:yafe/mainPages/mainHome.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
 class RootPage extends StatefulWidget {
   RootPage({this.auth});

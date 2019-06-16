@@ -47,8 +47,6 @@ class _HomeArticleCardsState extends State<HomeArticleCards> {
     final article = articleText[index];
     final header = articleHeading[index];
 
-    // TODO: Change all strict padding to relative MediaQuery padding
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[

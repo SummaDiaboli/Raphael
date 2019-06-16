@@ -82,6 +82,7 @@ class _MainHomePageState extends State<MainHomePage> {
   @override
   void dispose() {
     super.dispose();
+    print("$_userId");
   }
 
   void _onSignedOut() {
@@ -90,7 +91,6 @@ class _MainHomePageState extends State<MainHomePage> {
       _userId = "";
     });
   }
-
 
   @override
   Widget build(BuildContext context) {

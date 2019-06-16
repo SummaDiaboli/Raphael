@@ -62,25 +62,54 @@ class _MainDrawerState extends State<MainDrawer> {
   } */
 
   String username = "John Doe";
-  String userRole = "Content Manager";
+  // String userRole = "Content Manager";
   String userEmail = "john.doe@doey.com";
 
-  _signOut() async {
+  /* _signOut() async {
     try {
       await widget.auth.signOut();
       widget.onSignedOut();
     } catch (e) {
       print(e);
     }
-  }
+  } */
 
   @override
   void initState() {
     super.initState();
 
-    FirebaseAuth.instance.onAuthStateChanged.listen((firebaseUser) {
-      // do whatever you want based on the firebaseUser state
+    _loadCurrentUser();
+    FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+      user.reload();
     });
+    print("$_userId");
+  }
+
+  FirebaseUser currentUser;
+
+  void _loadCurrentUser() {
+    FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+      setState(() {
+        // call setState to rebuild the view
+        this.currentUser = user;
+      });
+    });
+  }
+
+  String _displayName() {
+    if (currentUser != null) {
+      return currentUser.displayName;
+    } else {
+      return username;
+    }
+  }
+
+  String _email() {
+    if (currentUser != null) {
+      return currentUser.email;
+    } else {
+      return "john.doe@doey.com";
+    }
   }
 
   @override
@@ -103,7 +132,7 @@ class _MainDrawerState extends State<MainDrawer> {
                     title: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 34, 0, 0),
                       child: Text(
-                        username,
+                        /* username */ _displayName(),
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
@@ -112,14 +141,14 @@ class _MainDrawerState extends State<MainDrawer> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            userRole,
-                            style: TextStyle(fontSize: 12),
-                          ),
+                          // Text(
+                          //   userRole,
+                          //   style: TextStyle(fontSize: 12),
+                          // ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 14, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
                             child: Text(
-                              userEmail,
+                              _email(),
                               style: TextStyle(
                                   fontStyle: FontStyle.italic, fontSize: 12),
                             ),
