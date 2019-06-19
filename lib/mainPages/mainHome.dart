@@ -30,19 +30,25 @@ class _MainHomePageState extends State<MainHomePage> {
   AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
   String _userId = "";
 
+  bool _isEmailVerified;
+
   // All the pages contained in the bottom navigation bar
   /* final List<Widget> _children = [
     HomePage(),
     MapPage(),
     PostPage(),
   ]; */
-
-  /* bool _isEmailVerified = false;
   @override
   void initState() {
     super.initState();
 
     _checkEmailVerification();
+    print("$_userId");
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   void _checkEmailVerification() async {
@@ -58,18 +64,21 @@ class _MainHomePageState extends State<MainHomePage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("Verify your account"),
-          content: new Text("Please verify account in the link sent to email"),
+          title: Text("Verify your account"),
+          content: Text("Please verify account in the link sent to email"),
           actions: <Widget>[
-            new FlatButton(
-              child: new Text("Resent link"),
+            FlatButton(
+              child: Text("Resend verification link"),
               onPressed: () {
                 Navigator.of(context).pop();
-                _resentVerifyEmail();
+                _resendVerifyEmail();
               },
             ),
-            new FlatButton(
-              child: new Text("Dismiss"),
+            FlatButton(
+              child: Text(
+                "Dismiss",
+                style: TextStyle(color: Colors.grey),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -78,12 +87,41 @@ class _MainHomePageState extends State<MainHomePage> {
         );
       },
     );
-  } */
-  @override
+  }
+
+  void _resendVerifyEmail() {
+    widget.auth.sendEmailVerification();
+    _showVerifyEmailSentDialog();
+  }
+
+  Widget _showVerifyEmailSentDialog() {
+    // showDialog(
+    //   context: context,
+    //   builder: (BuildContext context) {
+    // return object of type Dialog
+    return AlertDialog(
+      title: Text("Verify your account"),
+      content: Text("Link to verify account has been sent to your email"),
+      actions: <Widget>[
+        FlatButton(
+          child: Text(
+            "Dismiss",
+            style: TextStyle(color: Colors.grey),
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+    // },
+    // );
+  }
+  /* @override
   void dispose() {
     super.dispose();
     print("$_userId");
-  }
+  } */
 
   void _onSignedOut() {
     setState(() {

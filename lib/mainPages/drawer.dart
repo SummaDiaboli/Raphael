@@ -185,8 +185,11 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
               onTap: () {
                 Route route = MaterialPageRoute(
-                  builder: (context) => ProfilePage(),
+                  builder: (context) => ProfilePage(
+                        auth: widget.auth,
+                      ),
                 );
+                Navigator.pop(context);
                 Navigator.push(context, route);
               },
             ),

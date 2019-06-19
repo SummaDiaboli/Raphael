@@ -34,6 +34,7 @@ class _LoginState extends State<Login> {
   String _errorMessage;
 
   bool _isLoading;
+  bool _isIos;
 
   //bool _isIos;
 
@@ -104,10 +105,10 @@ class _LoginState extends State<Login> {
         print('Error: $e');
         setState(() {
           _isLoading = false;
-          /* if (_isIos) {
+          if (_isIos) {
             _errorMessage = e.details;
           } else
-            _errorMessage = e.message; */
+            _errorMessage = e.message;
         });
       }
     }
