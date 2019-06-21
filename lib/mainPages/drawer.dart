@@ -193,7 +193,7 @@ class _MainDrawerState extends State<MainDrawer> {
                 Navigator.push(context, route);
               },
             ),
-            ListTile(
+            /*ListTile(
               contentPadding: EdgeInsets.all(0),
               /* leading: Padding(
                   padding: const EdgeInsets.all(0.0),
@@ -217,7 +217,7 @@ class _MainDrawerState extends State<MainDrawer> {
                 ),
               ),
               onTap: () {},
-            ),
+            ),*/
             ListTile(
               contentPadding: EdgeInsets.all(0),
               /* leading: Padding(

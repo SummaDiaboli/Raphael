@@ -31,7 +31,7 @@ class _SignUpState extends State<SignUp> {
   String _password;
   String _confirmPassword;
   String _finalPassword;
-  String _errorMessage;
+  // String _errorMessage;
 
   bool _isLoading;
 
@@ -57,12 +57,12 @@ class _SignUpState extends State<SignUp> {
   @override
   void initState() {
     super.initState();
-    _errorMessage = "";
+    // _errorMessage = "";
     _isLoading = false;
     print("$_userId");
   }
 
-  Widget _showErrorMessage() {
+  /* Widget _showErrorMessage() {
     if (_errorMessage.length > 0 && _errorMessage != null) {
       return new Text(
         _errorMessage,
@@ -77,6 +77,25 @@ class _SignUpState extends State<SignUp> {
         height: 0.0,
       );
     }
+  } */
+
+  Future _buildErrorDialog(BuildContext context, _message) {
+    return showDialog(
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Error Message'),
+          content: Text(_message),
+          actions: <Widget>[
+            FlatButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                })
+          ],
+        );
+      },
+      context: context,
+    );
   }
 
   bool _validateAndSave() {
@@ -90,42 +109,49 @@ class _SignUpState extends State<SignUp> {
 
   _validateAndSubmit() async {
     setState(() {
-      _errorMessage = "";
+      // _errorMessage = "";
       _isLoading = true;
     });
     if (_validateAndSave()) {
       String userId = "";
       if (_password == _confirmPassword) {
         _finalPassword = _password;
-      }
-      try {
-        userId = await widget.auth.signUp(_email, _finalPassword);
-        widget.auth.sendEmailVerification();
+        try {
+          userId = await widget.auth.signUp(_email, _finalPassword);
+          widget.auth.sendEmailVerification();
 
-        _showVerifyEmailSentDialog();
-        print('Signed up: $userId');
-        if (userId.length > 0 && userId != null) {
-          widget.onSignedIn();
-        }
-        setState(
-          () {
-            _isLoading = false;
-          },
-        );
-        /* FirebaseUser user = await FirebaseAuth.instance.currentUser();
+          _showVerifyEmailSentDialog();
+          print('Signed up: $userId');
+          if (userId.length > 0 && userId != null) {
+            widget.onSignedIn();
+          }
+          setState(
+            () {
+              _isLoading = false;
+            },
+          );
+          /* FirebaseUser user = await FirebaseAuth.instance.currentUser();
         UserUpdateInfo updateInfo = UserUpdateInfo();
         updateInfo.displayName = _username;
         user.updateProfile(updateInfo); */
 
-      } catch (e) {
-        print('Error: $e');
+        } catch (e) {
+          print('Error: $e');
+          return _buildErrorDialog(context,
+              "Sorry. Something went wrong with the Sign-up process. Please try again.");
+          /*  setState(() {
+          _isLoading = false;
+          /* /* if (_isIos) {
+            _errorMessage = e.details;
+          } else */*/
+          _errorMessage = e.message;
+        }); */
+        }
+      } else {
         setState(() {
           _isLoading = false;
-          /* if (_isIos) {
-            _errorMessage = e.details;
-          } else
-            _errorMessage = e.message; */
         });
+        _buildErrorDialog(context, "The two passwords do not match");
       }
     }
   }
@@ -208,11 +234,11 @@ class _SignUpState extends State<SignUp> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 14, 0, 2),
+                        padding: const EdgeInsets.fromLTRB(0, 18, 0, 2),
                         child: BackButton(),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 14, 6, 2),
+                        padding: const EdgeInsets.fromLTRB(0, 18, 6, 2),
                         child: Align(
                             alignment: Alignment.topRight,
                             child: Image.asset(
@@ -258,6 +284,7 @@ class _SignUpState extends State<SignUp> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: TextFormField(
+                                    textCapitalization: TextCapitalization.none,
                                     controller: _userController,
                                     keyboardType: TextInputType.text,
                                     decoration: InputDecoration(
@@ -281,6 +308,7 @@ class _SignUpState extends State<SignUp> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: TextFormField(
+                                    textCapitalization: TextCapitalization.none,
                                     controller: _emailController,
                                     keyboardType: TextInputType.emailAddress,
                                     decoration: InputDecoration(
@@ -296,6 +324,12 @@ class _SignUpState extends State<SignUp> {
                                           _isLoading = false;
                                         });
                                         return 'Email can\'t be empty';
+                                      }
+                                      if (!value.contains(
+                                        RegExp(
+                                            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'),
+                                      )) {
+                                        return 'This is not a valid email format';
                                       }
                                     },
                                     onSaved: (value) => _email = value,
@@ -321,6 +355,12 @@ class _SignUpState extends State<SignUp> {
                                         });
                                         return 'Password can\'t be empty';
                                       }
+                                      if (value.length < 6) {
+                                        setState(() {
+                                          _isLoading = false;
+                                        });
+                                        return 'Password must be 6 characters or more';
+                                      }
                                     },
                                     onSaved: (value) => _password = value,
                                   ),
@@ -345,8 +385,13 @@ class _SignUpState extends State<SignUp> {
                                         });
                                         return 'Password Confirmation can\'t be empty';
                                       }
-                                      /* if (value !=
-                                          _registerPassController.text) {
+                                      if (value.length < 6) {
+                                        setState(() {
+                                          _isLoading = false;
+                                        });
+                                        return 'Password must be 6 characters or more';
+                                      }
+                                      /* if (value != _password) {
                                         setState(() {
                                           _isLoading = false;
                                         });
@@ -395,7 +440,7 @@ class _SignUpState extends State<SignUp> {
                       ],
                     ),
                   ),
-                  _showErrorMessage(),
+                  // _showErrorMessage(),
                 ],
               ),
             ),

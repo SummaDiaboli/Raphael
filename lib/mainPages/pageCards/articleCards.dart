@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 // import 'package:yafe/mainPages/pageCards/articleDatabase.dart';
 // import 'package:yafe/mainPages/pageCards/aticleFeeder.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:yafe/mainPages/pageCards/detailPages/detailedArticle.dart';
 
 class ArticleCards extends StatefulWidget {
   @override
@@ -11,78 +12,94 @@ class ArticleCards extends StatefulWidget {
 }
 
 class _ArticleCardsState extends State<ArticleCards> {
-  void _push() {
-    /* Navigator.of(context).push(
+  /* void _push() {
+    Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => DetailedArticle(),
       ),
-    ); */
-  }
+    );
+  } */
 
   getArticles(AsyncSnapshot<QuerySnapshot> snapshot) {
     return snapshot.data.documents
         .map(
-          (doc) => ListTile(
-                onTap: _push,
-                leading: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
-                  child: Icon(
-                    Icons.account_circle,
-                    size: 70,
-                    color: Colors.grey,
-                  ),
-                ),
-                contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0),
-                title: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 6, 0, 10),
-                  child: Text(
-                    doc['heading'],
-                    overflow: TextOverflow.clip,
-                    //maxLines: 1,
-                  ),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    // Fills in the article information
-
-                    Text(
-                      doc['description'],
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 3,
-                      softWrap: true,
-                      //textAlign: TextAlign.justify,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 8, 4, 4),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          // 'Posted on ${dayFormatter.toString()} - ${dayAndTime.hour}:${dayAndTime.minute} GMT',
-                          //'Posted on -- - -- GMT',
-                          'Posted on ${DateFormat('EE, d MMMM yyyy hh:mm a').format(doc['date'])}',
-                          style: TextStyle(fontSize: 11.9),
-                        ),
+          (doc) => Card(
+                margin: EdgeInsets.symmetric(vertical: 2),
+                elevation: 0.5,
+                child: ListTile(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => DetailedArticle(
+                              url: doc['url'],
+                              likes: doc['likes'],
+                              dislikes: doc['dislikes'],
+                              doc: doc,
+                            ),
                       ),
+                    );
+                  },
+                  /* leading: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
+                    child: Icon(
+                      Icons.account_circle,
+                      size: 70,
+                      color: Colors.grey,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-                      child: SizedBox(
-                        height: 1.2,
-                        child: Center(
-                          child: Container(
-                            margin: EdgeInsetsDirectional.only(
-                                start: 0.0, end: 1.0),
-                            height: 5.0,
-                            color: Colors.grey,
+                  ), */
+                  contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  title: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 6, 0, 10),
+                    child: Text(
+                      doc['heading'],
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.clip,
+                      maxLines: 2,
+                    ),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      // Fills in the article information
+
+                      Text(
+                        doc['description'],
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
+                        softWrap: true,
+                        //textAlign: TextAlign.justify,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 8, 4, 4),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            // 'Posted on ${dayFormatter.toString()} - ${dayAndTime.hour}:${dayAndTime.minute} GMT',
+                            //'Posted on -- - -- GMT',
+                            'Posted on ${DateFormat('EE, d MMMM yyyy hh:mm a').format(doc['date'])}',
+                            style: TextStyle(fontSize: 11.9),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      /* Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+                        child: SizedBox(
+                          height: 1.2,
+                          child: Center(
+                            child: Container(
+                              margin: EdgeInsetsDirectional.only(
+                                  start: 0.0, end: 1.0),
+                              height: 5.0,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                      ), */
+                    ],
+                  ),
+                  isThreeLine: true,
                 ),
-                isThreeLine: true,
               ),
         )
         .toList();

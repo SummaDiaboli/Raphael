@@ -1,4 +1,7 @@
+// import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 // Importing the other login pages
@@ -27,16 +30,40 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final _formKey = new GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   String _username;
   String _password;
-  String _errorMessage;
+  //String _errorMessage;
+
+  //int _timeTaken;
 
   bool _isLoading;
-  bool _isIos;
+  //bool _isIos;
 
   //bool _isIos;
+
+  /* Future _delayOperation() {
+    return Future.delayed(Duration(minutes: 10));
+  } */
+  Future _buildErrorDialog(BuildContext context, _message) {
+    return showDialog(
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Error Message'),
+          content: Text(_message),
+          actions: <Widget>[
+            FlatButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                })
+          ],
+        );
+      },
+      context: context,
+    );
+  }
 
   Widget _showCircularProgress() {
     if (_isLoading) {
@@ -55,22 +82,19 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget _showErrorMessage() {
-    if (_errorMessage.length > 0 && _errorMessage != null) {
-      return new Text(
-        _errorMessage,
+  /* Widget _showErrorMessage(PlatformException e) {
+    return AlertDialog(
+      title: Text("Login Error"),
+      content: Text(
+        '$e',
         style: TextStyle(
             fontSize: 13.0,
             color: Colors.red,
             height: 1.0,
             fontWeight: FontWeight.w300),
-      );
-    } else {
-      return new Container(
-        height: 0.0,
-      );
-    }
-  }
+      ),
+    );
+  } */
 
   bool _validateAndSave() {
     final form = _formKey.currentState;
@@ -83,11 +107,12 @@ class _LoginState extends State<Login> {
 
   _validateAndSubmit() async {
     setState(() {
-      _errorMessage = "";
-      _isLoading = true;
+      //_errorMessage = "";
+      // _isLoading = true;
     });
     if (_validateAndSave()) {
       String userId = "";
+      _isLoading = true;
       try {
         userId = await widget.auth.signIn(_username, _password);
         print('Signed in: $userId');
@@ -101,22 +126,36 @@ class _LoginState extends State<Login> {
           builder: (context) => MainHomePage(auth: Auth(), userId: userId),
         );
         Navigator.push(context, route);
-      } catch (e) {
+        // Timer(Duration(seconds: 15), await _delayOperation());
+      } on PlatformException catch (e) {
         print('Error: $e');
         setState(() {
+          _isLoading = false;
+        });
+        return _buildErrorDialog(context,
+            "This email does not exist on the database. Please Sign-up to continue.");
+      } on Exception catch (e) {
+        print('Error: $e');
+        setState(() {
+          _isLoading = false;
+        });
+        // return _buildErrorDialog(context, e.toString());
+        return _buildErrorDialog(context,
+            "Sorry. Something went wrong while trying to log you in. Please try again");
+        /* setState(() {
           _isLoading = false;
           if (_isIos) {
             _errorMessage = e.details;
           } else
             _errorMessage = e.message;
-        });
+        }); */
       }
     }
   }
 
   @override
   void initState() {
-    _errorMessage = "";
+    //_errorMessage = "";
     _isLoading = false;
     super.initState();
   }
@@ -178,6 +217,12 @@ class _LoginState extends State<Login> {
                                   });
                                   return 'Email can\'t be empty';
                                 }
+                                if (!value.contains(
+                                  RegExp(
+                                      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'),
+                                )) {
+                                  return 'This is not a valid email format';
+                                }
                               },
                               onSaved: (value) => _username = value,
                             ),
@@ -208,6 +253,12 @@ class _LoginState extends State<Login> {
                                   });
                                   return 'Password can\'t be empty';
                                 }
+                                if (value.length < 6) {
+                                  setState(() {
+                                    _isLoading = false;
+                                  });
+                                  return 'Password must have 6 characters or more';
+                                }
                               },
                               onSaved: (value) => _password = value,
                             ),
@@ -221,7 +272,9 @@ class _LoginState extends State<Login> {
                               child: FlatButton(
                                 onPressed: () {
                                   Route route = MaterialPageRoute(
-                                    builder: (context) => ForgotPassword(),
+                                    builder: (context) => ForgotPassword(
+                                          auth: widget.auth,
+                                        ),
                                   );
                                   Navigator.push(context, route);
                                 },
@@ -320,7 +373,6 @@ class _LoginState extends State<Login> {
                         ],
                       ),
                     ),
-                    _showErrorMessage(),
                   ],
                 ),
               ),
