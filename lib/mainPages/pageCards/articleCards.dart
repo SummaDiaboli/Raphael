@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 // import 'package:yafe/mainPages/pageCards/aticleFeeder.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:yafe/mainPages/pageCards/detailPages/detailedArticle.dart';
+import 'package:rxdart/rxdart.dart';
+
 
 class ArticleCards extends StatefulWidget {
   @override
@@ -104,6 +106,13 @@ class _ArticleCardsState extends State<ArticleCards> {
         )
         .toList();
   }
+
+  /* Stream getData() {
+    Stream stream1 = Firestore.instance.collection('articles').snapshots();
+    Stream stream2 = Firestore.instance.collection("fish").snapshots();
+
+    return Observable.merge(([stream1, stream2]));
+  } */
 
   @override
   Widget build(BuildContext context) {
