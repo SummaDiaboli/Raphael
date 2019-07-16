@@ -246,6 +246,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           )) {
                             return 'This is not a valid email format';
                           }
+
+                          return "";
                         },
                         onSaved: (value) => _email = value,
                       ),

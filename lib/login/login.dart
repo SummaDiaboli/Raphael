@@ -223,6 +223,8 @@ class _LoginState extends State<Login> {
                                 )) {
                                   return 'This is not a valid email format';
                                 }
+
+                                return null;
                               },
                               onSaved: (value) => _username = value,
                             ),
@@ -259,6 +261,8 @@ class _LoginState extends State<Login> {
                                   });
                                   return 'Password must have 6 characters or more';
                                 }
+
+                                return null;
                               },
                               onSaved: (value) => _password = value,
                             ),

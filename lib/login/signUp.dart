@@ -301,6 +301,7 @@ class _SignUpState extends State<SignUp> {
                                         });
                                         return 'Username can\'t be empty';
                                       }
+                                      return null;
                                     },
                                     onSaved: (value) => _username = value,
                                   ),
@@ -331,6 +332,7 @@ class _SignUpState extends State<SignUp> {
                                       )) {
                                         return 'This is not a valid email format';
                                       }
+                                      return null;
                                     },
                                     onSaved: (value) => _email = value,
                                   ),
@@ -361,6 +363,7 @@ class _SignUpState extends State<SignUp> {
                                         });
                                         return 'Password must be 6 characters or more';
                                       }
+                                      return null;
                                     },
                                     onSaved: (value) => _password = value,
                                   ),
@@ -397,6 +400,7 @@ class _SignUpState extends State<SignUp> {
                                         });
                                         return 'Passwords do not match';
                                       } */
+                                      return null;
                                     },
                                     onSaved: (value) =>
                                         _confirmPassword = value,

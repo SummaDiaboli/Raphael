@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // Importing other pages for the main route
 import 'package:yafe/mainPages/homePage.dart';
-//import 'package:yafe/mainPages/pollsPage.dart';
+import 'package:yafe/mainPages/communityPage.dart';
 import 'package:yafe/mainPages/postPage.dart';
 
 // Importing the drawer
@@ -140,8 +140,8 @@ class _MainHomePageState extends State<MainHomePage> {
         // with changes in the child of the bottom nav bar
         title: Text(
           [
-            "Articles",
-            //"Polls",
+            "Home",
+            "Community",
             "Posts",
           ][_currentIndex],
         ),
@@ -158,13 +158,13 @@ class _MainHomePageState extends State<MainHomePage> {
             offstage: _currentIndex != 0,
             child: HomePage(),
           ),
-          /* Offstage(
+          Offstage(
             offstage: _currentIndex != 1,
-            child: PollsPage(),
-          ), */
+            child: CommunityPage(),
+          ),
           Offstage(
             // offstage: _currentIndex != 2,
-            offstage: _currentIndex != 1,
+            offstage: _currentIndex != 2,
             child: PostPage(),
           ),
         ],
@@ -183,7 +183,18 @@ class _MainHomePageState extends State<MainHomePage> {
               color: Colors.white,
             ),
             title: Text(
-              "Articles",
+              "Home",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.group,
+              size: 30,
+              color: Colors.white,
+            ),
+            title: Text(
+              "Community",
               style: TextStyle(color: Colors.white),
             ),
           ),
