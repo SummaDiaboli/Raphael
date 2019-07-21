@@ -33,7 +33,9 @@ class _ProfilePageState extends State<ProfilePage> {
     _isLoading = false;
 
     //auth.reloadProfile();
-    _loadCurrentUser();
+    setState(() {
+      _loadCurrentUser();
+    });
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
       user.reload();
     });

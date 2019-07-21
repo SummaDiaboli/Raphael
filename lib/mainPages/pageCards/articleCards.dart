@@ -41,12 +41,13 @@ class _ArticleCardsState extends State<ArticleCards> {
                   color: Colors.grey,
                 ),
               ),
-              contentPadding: EdgeInsets.fromLTRB(16, 0, 20, 0),
+              // contentPadding: EdgeInsets.fromLTRB(16, 0, 20, 0),
+              contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0),
               title: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 6, 0, 10),
                 child: Text(
                   doc['heading'],
-                  style: TextStyle(fontWeight: FontWeight.w600),
+                  style: TextStyle(fontWeight: FontWeight.w500),
                   overflow: TextOverflow.clip,
                   maxLines: 2,
                 ),
@@ -65,7 +66,7 @@ class _ArticleCardsState extends State<ArticleCards> {
                     //textAlign: TextAlign.justify,
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0, 8, 4, 4),
+                    padding: EdgeInsets.fromLTRB(0, 16, 4, 4),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(

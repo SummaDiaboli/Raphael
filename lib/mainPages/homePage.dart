@@ -13,10 +13,15 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:path/path.dart' as prefix0;
+import 'package:yafe/mainPages/detailPages/detailedHome.dart';
+import 'package:yafe/mainPages/supplementary/authentication.dart';
 
 // import 'package:video_player/video_player.dart';
 
 class HomePage extends StatefulWidget {
+  HomePage({this.auth});
+  final BaseAuth auth;
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -200,7 +205,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: <Widget>[Container(), _showCircularProgress()],
+        children: <Widget>[
+          DetailedHomePage(
+            auth: widget.auth,
+          ),
+          _showCircularProgress()
+        ],
       ),
       floatingActionButton: _fabSpeedDial(),
     );
@@ -208,10 +218,13 @@ class _HomePageState extends State<HomePage> {
 
   Widget _fabSpeedDial() {
     return SpeedDial(
-      animatedIcon: AnimatedIcons.menu_close,
+      // animatedIcon: AnimatedIcons.menu_close,
+      child: Image.asset(
+        "assets/images/icon-fab-upload.png",
+      ),
       tooltip: "Upload",
       shape: StadiumBorder(),
-      backgroundColor: Colors.red[800],
+      backgroundColor: Colors.white10,
       children: [
         SpeedDialChild(
           child: Icon(Icons.photo),

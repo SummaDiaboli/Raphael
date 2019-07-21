@@ -156,7 +156,9 @@ class _MainHomePageState extends State<MainHomePage> {
         children: <Widget>[
           Offstage(
             offstage: _currentIndex != 0,
-            child: HomePage(),
+            child: HomePage(
+              auth: widget.auth,
+            ),
           ),
           Offstage(
             offstage: _currentIndex != 1,

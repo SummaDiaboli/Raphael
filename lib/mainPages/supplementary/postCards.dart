@@ -29,95 +29,106 @@ class _PostsCardsState extends State<PostsCards> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        ListTile(
-          onTap: _push,
-          leading: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
-            child: Icon(
-              Icons.account_circle,
-              size: 70,
-              color: Colors.grey,
-            ),
-          ),
-          contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0),
-          title: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 6, 0, 10),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  usernames,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(13, 0, 0, 0),
-                  child: Text(
-                    "@ipsum ",
-                    style: TextStyle(fontWeight: FontWeight.w300, fontSize: 13),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                  child: Text("•"),
-                ),
-                Text(
-                  "${randomNumberGenerator(60)} mins ago",
-                  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
-                ),
-              ],
-            ),
-          ),
-          subtitle: Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: Text(
-              posts,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 4,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(73, 0, 3, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+        Card(
+          margin: EdgeInsets.symmetric(vertical: 2),
+          elevation: 0.5,
+          child: Column(
             children: <Widget>[
-              FlatButton(
-                padding: EdgeInsets.all(0),
-                child: Text(
-                  "Upvote",
-                  style: TextStyle(
-                    fontSize: 13,
+              ListTile(
+                onTap: _push,
+                leading: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
+                  child: Icon(
+                    Icons.account_circle,
+                    size: 70,
+                    color: Colors.grey,
                   ),
                 ),
-                onPressed: () {},
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 17, 0),
-                child: FlatButton(
-                  padding: EdgeInsets.all(0),
+                contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0),
+                title: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 6, 0, 10),
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        usernames,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(13, 0, 0, 0),
+                        child: Text(
+                          "@ipsum ",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w300, fontSize: 13),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                        child: Text("•"),
+                      ),
+                      Text(
+                        "${randomNumberGenerator(60)} mins ago",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300, fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+                subtitle: Padding(
+                  padding: const EdgeInsets.all(0.0),
                   child: Text(
-                    "Mark as Hate",
-                    style: TextStyle(
-                      color: Colors.red[800],
-                      fontSize: 13,
-                    ),
+                    posts,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 4,
                   ),
-                  onPressed: () {},
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: Text(
-                  "Retweets: ${randomNumberGenerator(1000)}",
-                  style: TextStyle(
-                    fontSize: 11,
-                  ),
+                padding: const EdgeInsets.fromLTRB(73, 0, 3, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    FlatButton(
+                      padding: EdgeInsets.all(0),
+                      child: Text(
+                        "Upvote",
+                        style: TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+                      onPressed: () {},
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 17, 0),
+                      child: FlatButton(
+                        padding: EdgeInsets.all(0),
+                        child: Text(
+                          "Mark as Hate",
+                          style: TextStyle(
+                            color: Colors.red[800],
+                            fontSize: 13,
+                          ),
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: Text(
+                        "Retweets: ${randomNumberGenerator(1000)}",
+                        style: TextStyle(
+                          fontSize: 11,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
         ),
-        Padding(
+
+        /* Padding(
           padding: const EdgeInsets.fromLTRB(0, 0, 10, 5),
           child: SizedBox(
             height: 1.2,
@@ -129,7 +140,7 @@ class _PostsCardsState extends State<PostsCards> {
               ),
             ),
           ),
-        )
+        ) */
       ],
     );
   }
