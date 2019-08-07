@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 // import 'package:file_picker/file_picker.dart';
@@ -107,7 +108,29 @@ class _HomePageState extends State<HomePage> {
       } */
     }
 
+    /* Firestore.instance.runTransaction((Transaction tx) async {
+      await dbPending.add({"url": url});
+    }); */
+
+    sendToDatabase(uploadTask);
+
     print("File uploaded");
+  }
+
+  Future<void> sendToDatabase(StorageUploadTask uploadTask) async {
+    var downloadUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+    String url = downloadUrl.toString();
+
+    final FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
+    String userEmail = firebaseUser.email;
+    DateTime dateAndTime = DateTime.now();
+
+    CollectionReference dbPending = Firestore.instance.collection('pending');
+    dbPending.add({
+      "userEmail": userEmail,
+      "contentUrl": url,
+      "uploadDateAndTime": dateAndTime
+    }).catchError((err) => print(err));
   }
 
   // void _selectAndUpload() async {}
