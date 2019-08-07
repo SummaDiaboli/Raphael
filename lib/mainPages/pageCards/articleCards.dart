@@ -6,7 +6,10 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
 import 'package:yafe/mainPages/pageCards/detailPages/detailedArticle.dart';
+import 'package:yafe/mainPages/supplementary/imageDetailScreen.dart';
+import 'package:yafe/mainPages/supplementary/videoCards.dart';
 // import 'package:rxdart/rxdart.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ArticleCards extends StatefulWidget {
   @override
@@ -20,64 +23,73 @@ class _ArticleCardsState extends State<ArticleCards> {
           (doc) => Card(
             margin: EdgeInsets.symmetric(vertical: 2),
             elevation: 0.5,
-            child: ListTile(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => DetailedArticle(
-                      url: doc['url'],
-                      likes: doc['likes'],
-                      dislikes: doc['dislikes'],
-                      doc: doc,
-                    ),
-                  ),
-                );
-              },
-              leading: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
-                child: Icon(
-                  Icons.account_circle,
-                  size: 70,
-                  color: Colors.grey,
-                ),
-              ),
-              // contentPadding: EdgeInsets.fromLTRB(16, 0, 20, 0),
-              contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0),
-              title: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 6, 0, 10),
-                child: Text(
-                  doc['heading'],
-                  style: TextStyle(fontWeight: FontWeight.w500),
-                  overflow: TextOverflow.clip,
-                  maxLines: 2,
-                ),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  // Fills in the article information
+            child: doc['media'] == null
+                ? createArticleTile(doc)
+                : createMediaTile(doc),
+          ),
+        )
+        .toList();
+  }
 
-                  Text(
-                    doc['description'],
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
-                    softWrap: true,
-                    //textAlign: TextAlign.justify,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 16, 4, 4),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        // 'Posted on ${dayFormatter.toString()} - ${dayAndTime.hour}:${dayAndTime.minute} GMT',
-                        //'Posted on -- - -- GMT',
-                        'Posted on ${DateFormat('EE, d MMMM yyyy hh:mm a').format(doc['date'])}',
-                        style: TextStyle(fontSize: 11.9),
-                      ),
-                    ),
-                  ),
-                  /* Padding(
+  Widget createArticleTile(DocumentSnapshot doc) {
+    return ListTile(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => DetailedArticle(
+              url: doc['url'],
+              likes: doc['likes'],
+              dislikes: doc['dislikes'],
+              doc: doc,
+            ),
+          ),
+        );
+      },
+      leading: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
+        child: Icon(
+          Icons.account_circle,
+          size: 70,
+          color: Colors.grey,
+        ),
+      ),
+      // contentPadding: EdgeInsets.fromLTRB(16, 0, 20, 0),
+      contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0),
+      title: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 6, 0, 10),
+        child: Text(
+          doc['heading'],
+          style: TextStyle(fontWeight: FontWeight.w500),
+          overflow: TextOverflow.clip,
+          maxLines: 2,
+        ),
+      ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          // Fills in the article information
+
+          Text(
+            doc['description'],
+            overflow: TextOverflow.ellipsis,
+            maxLines: 3,
+            softWrap: true,
+            //textAlign: TextAlign.justify,
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 16, 4, 4),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                // 'Posted on ${dayFormatter.toString()} - ${dayAndTime.hour}:${dayAndTime.minute} GMT',
+                //'Posted on -- - -- GMT',
+                'Posted on ${DateFormat('EE, d MMMM yyyy hh:mm a').format(doc['date'])}',
+                style: TextStyle(fontSize: 11.9),
+              ),
+            ),
+          ),
+          /* Padding(
                         padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
                         child: SizedBox(
                           height: 1.2,
@@ -91,15 +103,80 @@ class _ArticleCardsState extends State<ArticleCards> {
                           ),
                         ),
                       ), */
-                ],
-              ),
-              isThreeLine: true,
-            ),
-          ),
-        )
-        .toList();
+        ],
+      ),
+      isThreeLine: true,
+    );
   }
 
+  Widget createMediaTile(DocumentSnapshot doc) {
+    return doc['mediaType'] == 'image'
+        ? imageTile(doc)
+        : VideoPlayerCard(
+            doc: doc,
+          );
+  }
+
+  Widget imageTile(DocumentSnapshot doc) {
+    final tag = 'imageHero';
+    final imageUrl = doc['url'];
+
+    return GestureDetector(
+      child: ListTile(
+        leading: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
+          child: Icon(
+            Icons.account_circle,
+            size: 70,
+            color: Colors.grey,
+          ),
+        ),
+        contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0),
+        title: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 6, 0, 10),
+          child: Text(
+            doc['heading'],
+            style: TextStyle(fontWeight: FontWeight.w500),
+            overflow: TextOverflow.clip,
+            maxLines: 2,
+          ),
+        ),
+        subtitle: Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Hero(
+            tag: tag,
+            child: CachedNetworkImage(
+              imageUrl: imageUrl,
+              placeholder: (context, url) => Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 60),
+                  child: Container(
+                    width: 32,
+                    height: 32,
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              ),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            ),
+          ),
+        ),
+      ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) {
+              return ImageDetailScreen(
+                tag: tag,
+                url: imageUrl,
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
   /* Stream getData() {
     // Order the streams by upload date and time
     Stream stream1 = Firestore.instance.collection('articles').snapshots();
