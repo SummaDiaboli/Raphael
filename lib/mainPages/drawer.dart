@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yafe/mainPages/drawerPages/profilePage.dart';
+import 'package:yafe/mainPages/drawerPages/settingsPage.dart';
 import 'package:yafe/mainPages/supplementary/authentication.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -186,8 +187,8 @@ class _MainDrawerState extends State<MainDrawer> {
               onTap: () {
                 Route route = MaterialPageRoute(
                   builder: (context) => ProfilePage(
-                        auth: widget.auth,
-                      ),
+                    auth: widget.auth,
+                  ),
                 );
                 Navigator.pop(context);
                 Navigator.push(context, route);
@@ -241,7 +242,13 @@ class _MainDrawerState extends State<MainDrawer> {
                   style: TextStyle(color: Colors.red[800], fontSize: 16),
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Route route = MaterialPageRoute(
+                  builder: (context) => SettingsPage(),
+                );
+                Navigator.pop(context);
+                Navigator.push(context, route);
+              },
             ),
             ListTile(
               contentPadding: EdgeInsets.all(0),
@@ -298,8 +305,8 @@ class _MainDrawerState extends State<MainDrawer> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => RootPage(
-                          auth: Auth(),
-                        ),
+                      auth: Auth(),
+                    ),
                   ),
                   ModalRoute.withName("/Home"),
                 );
