@@ -134,6 +134,7 @@ class _MainHomePageState extends State<MainHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
 
         // This changes the title of the appbar in accordance
@@ -144,8 +145,9 @@ class _MainHomePageState extends State<MainHomePage> {
             "Community",
             "Posts",
           ][_currentIndex],
+          style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.grey[700],
+        backgroundColor: Colors.white /* Colors.grey[700] */,
       ),
       drawer: MainDrawer(
         userId: widget.userId,

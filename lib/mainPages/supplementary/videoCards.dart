@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
+// import 'package:custom_chewie/custom_chewie.dart';
 
 class VideoPlayerCard extends StatefulWidget {
   VideoPlayerCard({this.doc});
+
   final DocumentSnapshot doc;
 
   @override
@@ -24,9 +27,8 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
 
   @override
   void dispose() {
-    // Ensure disposing of the VideoPlayerController to free up resources.
     _controller.dispose();
-
+    // chewieController.dispose();
     super.dispose();
   }
 
@@ -44,7 +46,7 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
           },
         );
       },
-      leading: Padding(
+      /* leading: Padding(
         padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
         child: Icon(
           Icons.account_circle,
@@ -52,18 +54,27 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
           color: Colors.grey,
         ),
       ),
-      contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0),
-      title: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 6, 0, 10),
-        child: Text(
-          widget.doc['heading'],
-          style: TextStyle(fontWeight: FontWeight.w500),
-          overflow: TextOverflow.clip,
-          maxLines: 2,
-        ),
+      contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0), */
+      title: Row(
+        children: <Widget>[
+          Icon(
+            Icons.account_circle,
+            color: Colors.grey,
+            size: 44,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 6, 0, 10),
+            child: Text(
+              widget.doc['heading'],
+              style: TextStyle(fontWeight: FontWeight.w500),
+              overflow: TextOverflow.clip,
+              maxLines: 2,
+            ),
+          ),
+        ],
       ),
       subtitle: Padding(
-        padding: const EdgeInsets.only(bottom: 4),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         child: FutureBuilder(
           future: _initializeVideoPlayerFuture,
           builder: (context, snapshot) {
@@ -73,7 +84,13 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
               return AspectRatio(
                 aspectRatio: _controller.value.aspectRatio,
                 // Use the VideoPlayer widget to display the video.
-                child: VideoPlayer(_controller),
+                child: Chewie(
+                  _controller,
+                  aspectRatio: _controller.value.aspectRatio,
+                  autoPlay: false,
+                  looping: true,
+                  // showControls: true,
+                ),
               );
             } else {
               // If the VideoPlayerController is still initializing, show a

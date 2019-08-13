@@ -123,7 +123,7 @@ class _ArticleCardsState extends State<ArticleCards> {
 
     return GestureDetector(
       child: ListTile(
-        leading: Padding(
+        /* leading: Padding(
           padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
           child: Icon(
             Icons.account_circle,
@@ -131,18 +131,27 @@ class _ArticleCardsState extends State<ArticleCards> {
             color: Colors.grey,
           ),
         ),
-        contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0),
-        title: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 6, 0, 10),
-          child: Text(
-            doc['heading'],
-            style: TextStyle(fontWeight: FontWeight.w500),
-            overflow: TextOverflow.clip,
-            maxLines: 2,
-          ),
+        contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0), */
+        title: Row(
+          children: <Widget>[
+            Icon(
+              Icons.account_circle,
+              color: Colors.grey,
+              size: 44,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 6, 0, 10),
+              child: Text(
+                doc['heading'],
+                style: TextStyle(fontWeight: FontWeight.w500),
+                overflow: TextOverflow.clip,
+                maxLines: 2,
+              ),
+            ),
+          ],
         ),
         subtitle: Padding(
-          padding: const EdgeInsets.only(bottom: 20),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: Hero(
             tag: tag,
             child: CachedNetworkImage(
