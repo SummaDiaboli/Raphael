@@ -404,6 +404,10 @@ class _LoginState extends State<Login> {
                                     return _buildErrorDialog(context, "Error");
                                     break;
                                 }
+
+                                setState(() {
+                                  _isLoading = true;
+                                });
                               },
                             ),
                           ),
