@@ -78,10 +78,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   String _email() {
-    if (currentUser != null) {
+    if (currentUser.email != null) {
       return currentUser.email;
     } else {
-      return "john.doe@doey.com";
+      return "";
     }
   }
 

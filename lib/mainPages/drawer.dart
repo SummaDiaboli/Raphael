@@ -106,10 +106,10 @@ class _MainDrawerState extends State<MainDrawer> {
   }
 
   String _email() {
-    if (currentUser != null) {
+    if (currentUser.email != null) {
       return currentUser.email;
     } else {
-      return "john.doe@doey.com";
+      return "";
     }
   }
 

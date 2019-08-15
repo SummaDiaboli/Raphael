@@ -1,23 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yafe/mainPages/drawerPages/profilePage.dart';
 import 'package:yafe/mainPages/supplementary/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:yafe/mainPages/supplementary/newsCarousel.dart';
 
 class DetailedHomePage extends StatefulWidget {
-  DetailedHomePage({this.auth});
+  DetailedHomePage({this.auth, this.userId});
   final BaseAuth auth;
+  final String userId;
 
   @override
   _DetailedHomePageState createState() => _DetailedHomePageState();
 }
 
 class _DetailedHomePageState extends State<DetailedHomePage> {
-  FirebaseUser currentUser;
+  FirebaseUser firebaseUser;
+  String twitterUser;
+  String firebaseUserDisplayName;
+  String firebaseUserEmail;
+
+  bool firstTime;
 
   @override
   void initState() {
     super.initState();
     setState(() {
+      checkIfBeginner();
       _loadCurrentUser();
       _displayName();
       _email();
@@ -30,28 +39,48 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
   }
 
   void _loadCurrentUser() {
+    // if (widget.userId == null) {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
       setState(() {
         // call setState to rebuild the view
-        this.currentUser = user;
+        this.firebaseUser = user;
       });
     });
+    /*  } else {
+      this.twitterUser = widget.userId;
+    } */
   }
 
   String _displayName() {
-    String username = "No Display name";
-    if (currentUser != null) {
-      return currentUser.displayName;
+    // String username = "No Display name";
+    if (firebaseUser != null) {
+      firebaseUserDisplayName = firebaseUser.displayName;
+      return firebaseUserDisplayName;
+    } else if (twitterUser != null) {
+      return twitterUser;
     } else {
-      return username;
+      return "Something is missing";
     }
   }
 
   String _email() {
-    if (currentUser != null) {
-      return currentUser.email;
+    if (firebaseUser != null) {
+      firebaseUserEmail = firebaseUser.email;
+      return firebaseUser.email;
     } else {
-      return "john.doe@doey.com";
+      return "";
+    }
+  }
+
+  Future checkIfBeginner() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    bool _seen = (preferences.getBool('seen') ?? false);
+
+    if (_seen) {
+      firstTime = false;
+    } else {
+      preferences.setBool('seen', true);
+      firstTime = true;
     }
   }
 
@@ -60,27 +89,33 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
     return Center(
       child: Column(
         children: <Widget>[
+          firstTime == true
+              ? Padding(
+                  padding: const EdgeInsets.all(0.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: FlatButton(
+                      padding: EdgeInsets.all(0),
+                      color: Colors.red[800],
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      onPressed: () {},
+                      child: Text(
+                        "What is YAFE? How to get started",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                )
+              : Container(),
           Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              child: FlatButton(
-                padding: EdgeInsets.all(0),
-                color: Colors.red[800],
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                onPressed: () {},
-                child: Text(
-                  "What is YAFE? How to get started",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
+            padding: const EdgeInsets.only(top: 10),
+            child: NewsCarousel(),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(4.0),
             child: Icon(
               Icons.account_circle,
-              size: 140,
+              size: 100,
               color: Colors.grey,
             ),
           ),
@@ -91,35 +126,37 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
             ),
           ),
+          /* firebaseUserEmail == null
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    _email(),
+                  ),
+                )
+              : Container(), */
+          firebaseUserDisplayName != null
+              ? FlatButton(
+                  onPressed: () {
+                    Route route = MaterialPageRoute(
+                      builder: (context) => ProfilePage(auth: widget.auth),
+                    );
+                    Navigator.push(context, route);
+                  },
+                  child: Text(
+                    "Edit Profile",
+                    style: TextStyle(color: Colors.blue[600]),
+                  ),
+                )
+              : Container(),
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              _email(),
-            ),
-          ),
-          FlatButton(
-            onPressed: () {
-              Route route = MaterialPageRoute(
-                builder: (context) => ProfilePage(
-                  auth: widget.auth,
-                ),
-              );
-              Navigator.push(context, route);
-            },
-            child: Text(
-              "Edit Profile",
-              style: TextStyle(color: Colors.blue[600]),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(2, 30, 2, 0),
+            padding: const EdgeInsets.fromLTRB(2, 10, 2, 0),
             child: Align(
               alignment: Alignment.bottomLeft,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.fromLTRB(30, 0, 15, 0),
                     child: Column(
                       children: <Widget>[
                         Text(
@@ -129,14 +166,17 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                             fontSize: 28,
                           ),
                         ),
-                        Text(
-                          "POLLS TAKEN",
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Text(
+                            "POLLS\nTAKEN",
+                          ),
                         ),
                       ],
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                     child: Column(
                       children: <Widget>[
                         Text(
@@ -146,14 +186,17 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                             fontSize: 28,
                           ),
                         ),
-                        Text(
-                          "POSTS SHARED",
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Text(
+                            "POSTS\nSHARED",
+                          ),
                         ),
                       ],
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.fromLTRB(15, 0, 10, 0),
                     child: Column(
                       children: <Widget>[
                         Text(
@@ -163,8 +206,11 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                             fontSize: 28,
                           ),
                         ),
-                        Text(
-                          "POSTS READ",
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Text(
+                            "POSTS\nREAD",
+                          ),
                         ),
                       ],
                     ),

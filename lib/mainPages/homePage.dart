@@ -16,12 +16,14 @@ import 'dart:io';
 import 'package:path/path.dart' as prefix0;
 import 'package:yafe/mainPages/detailPages/detailedHome.dart';
 import 'package:yafe/mainPages/supplementary/authentication.dart';
+import 'package:yafe/mainPages/supplementary/uReport.dart';
 
 // import 'package:video_player/video_player.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({this.auth});
+  HomePage({this.auth, this.userId});
   final BaseAuth auth;
+  final String userId;
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -73,17 +75,14 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> uploadTask(File userSelection, String filename) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    // String filename = Random().nextInt(1000000).toString();
-    StorageReference storage =
-        FirebaseStorage.instance.ref().child("${user.email}").child(filename);
+    StorageReference storage = FirebaseStorage.instance
+        .ref()
+        .child("${user.displayName} ${user.uid}")
+        .child(filename);
 
     StorageUploadTask uploadTask = storage.putFile(userSelection);
 
     if (uploadTask.isInProgress) {
-      /* setState(() {
-        // _errorMessage = "";
-        _isLoading = true;
-      }); */
       final snackBar = SnackBar(
         content: Text(
           "Uploading. You will be contacted if any issues arise.",
@@ -92,25 +91,7 @@ class _HomePageState extends State<HomePage> {
         // backgroundColor: Color,
       );
       Scaffold.of(context).showSnackBar(snackBar);
-      /* if (uploadTask.isComplete) {
-        if (uploadTask.isSuccessful) {
-          /* setState(() {
-          _isLoading = false;
-        }); */
-          final snackBar = SnackBar(
-            content: Text("Uploaded"),
-            // backgroundColor: Color,
-          );
-          Scaffold.of(context).showSnackBar(snackBar);
-        } else {
-          _buildErrorDialog(context, "${uploadTask.lastSnapshot.error}");
-        }
-      } */
     }
-
-    /* Firestore.instance.runTransaction((Transaction tx) async {
-      await dbPending.add({"url": url});
-    }); */
 
     sendToDatabase(uploadTask);
 
@@ -122,12 +103,14 @@ class _HomePageState extends State<HomePage> {
     String url = downloadUrl.toString();
 
     final FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
-    String userEmail = firebaseUser.email;
+    String userId = firebaseUser.uid;
+    String userDisplayName = firebaseUser.displayName;
     DateTime dateAndTime = DateTime.now();
 
     CollectionReference dbPending = Firestore.instance.collection('pending');
     dbPending.add({
-      "userEmail": userEmail,
+      "userId": userId,
+      "userDisplayName": userDisplayName,
       "contentUrl": url,
       "uploadDateAndTime": dateAndTime
     }).catchError((err) => print(err));
@@ -188,11 +171,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 _uploadInProgress(_file, _filename);
                 Navigator.of(context).pop();
-              } /* () async {
-                await uploadTask(_file, _filename);
-                Navigator.of(context).pop();
-              } */
-              ,
+              },
             ),
             FlatButton(
               child: Text(
@@ -224,21 +203,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          DetailedHomePage(
-            auth: widget.auth,
-          ),
-          _showCircularProgress()
-        ],
-      ),
-      floatingActionButton: _fabSpeedDial(),
-    );
-  }
-
   Widget _fabSpeedDial() {
     return SpeedDial(
       // animatedIcon: AnimatedIcons.menu_close,
@@ -250,18 +214,44 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white10,
       children: [
         SpeedDialChild(
+          child: Icon(Icons.videocam),
+          label: "Upload video",
+          backgroundColor: Colors.red[800],
+          onTap: getVideo,
+        ),
+        SpeedDialChild(
           child: Icon(Icons.photo),
           label: "Upload picture",
           backgroundColor: Colors.red[800],
           onTap: getImage,
         ),
         SpeedDialChild(
-          child: Icon(Icons.videocam),
-          label: "Upload video",
+          child: Icon(Icons.description),
+          label: "Upload article",
           backgroundColor: Colors.red[800],
-          onTap: getVideo,
+          onTap: () {
+            Route route = MaterialPageRoute(
+              builder: (context) => UReportPage(),
+            );
+            Navigator.push(context, route);
+          },
         ),
       ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Stack(
+          children: <Widget>[
+            DetailedHomePage(auth: widget.auth, userId: widget.userId),
+            _showCircularProgress()
+          ],
+        ),
+      ),
+      floatingActionButton: _fabSpeedDial(),
     );
   }
 }

@@ -172,6 +172,7 @@ class _MainHomePageState extends State<MainHomePage> {
             offstage: _currentIndex != 0,
             child: HomePage(
               auth: widget.auth,
+              userId: widget.userId,
             ),
           ),
           Offstage(

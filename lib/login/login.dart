@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_twitter_login/flutter_twitter_login.dart';
 
 // Importing the other login pages
 import 'package:yafe/login/signUp.dart';
@@ -16,6 +17,7 @@ import 'package:yafe/mainPages/mainHome.dart';
 
 // importing firebase
 import "package:yafe/mainPages/supplementary/authentication.dart";
+import 'package:firebase_auth/firebase_auth.dart';
 
 // import 'package:yafe/mainPages/supplementary/showErrorMessage.dart';
 
@@ -170,9 +172,9 @@ class _LoginState extends State<Login> {
       body: Stack(
         children: <Widget>[
           Container(
-            child: Form(
-              key: _formKey,
-              child: SingleChildScrollView(
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
@@ -277,8 +279,8 @@ class _LoginState extends State<Login> {
                                 onPressed: () {
                                   Route route = MaterialPageRoute(
                                     builder: (context) => ForgotPassword(
-                                          auth: widget.auth,
-                                        ),
+                                      auth: widget.auth,
+                                    ),
                                   );
                                   Navigator.push(context, route);
                                 },
@@ -348,7 +350,61 @@ class _LoginState extends State<Login> {
                                   color: Colors.grey,
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () async {
+                                final twitterLogin = TwitterLogin(
+                                    consumerKey: "sbQC3OYcDgketywpBmSnqXiSs",
+                                    consumerSecret:
+                                        "tfS4tj6wHVkUveEWdutBeXmlMjnhXAoJ9jibMWQPPpSayIxoKj");
+
+                                final TwitterLoginResult result =
+                                    await twitterLogin.authorize();
+
+                                switch (result.status) {
+                                  case TwitterLoginStatus.loggedIn:
+                                    var userId = result.session.username;
+                                    FirebaseAuth.instance
+                                        .signInWithCredential(
+                                            TwitterAuthProvider.getCredential(
+                                                authToken: result.session.token,
+                                                authTokenSecret:
+                                                    result.session.secret))
+                                        .then((a) async {
+                                      FirebaseUser user = await FirebaseAuth
+                                          .instance
+                                          .currentUser();
+
+                                      UserUpdateInfo updateInfo =
+                                          UserUpdateInfo();
+                                      updateInfo.displayName = userId;
+                                      user.updateProfile(updateInfo);
+                                      user.reload();
+                                    }).then((signedInUser) {
+                                      Route route = MaterialPageRoute(
+                                        builder: (context) => MainHomePage(
+                                          auth: Auth(),
+                                          userId: userId,
+                                        ),
+                                      );
+                                      Navigator.push(context, route);
+                                    }).catchError((e) {
+                                      print(e);
+                                      return _buildErrorDialog(
+                                          context, e.toString());
+                                    });
+                                    break;
+
+                                  case TwitterLoginStatus.cancelledByUser:
+                                    print('Cancelled by you');
+                                    return _buildErrorDialog(
+                                        context, "Cancelled by you");
+                                    break;
+
+                                  case TwitterLoginStatus.error:
+                                    print('Error');
+                                    return _buildErrorDialog(context, "Error");
+                                    break;
+                                }
+                              },
                             ),
                           ),
 
@@ -360,9 +416,9 @@ class _LoginState extends State<Login> {
                                 _formKey.currentState.reset();
                                 Route route = MaterialPageRoute(
                                   builder: (context) => SignUp(
-                                        auth: widget.auth,
-                                        onSignedIn: widget.onSignedIn,
-                                      ),
+                                    auth: widget.auth,
+                                    onSignedIn: widget.onSignedIn,
+                                  ),
                                 );
                                 Navigator.push(context, route);
                               },
