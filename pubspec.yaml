@@ -45,6 +45,8 @@ dependencies:
   carousel_slider:
   flutter_twitter_login:
   flutter_swiper:
+
+  flutter_pollfish: ^0.2.1
   # custom_chewie:
   # path:
   # mapbox_gl:

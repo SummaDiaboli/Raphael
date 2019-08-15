@@ -17,12 +17,21 @@ class DetailedArticle extends StatefulWidget {
 
 class _DetailedArticleState extends State<DetailedArticle> {
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Article"),
-        backgroundColor: Colors.grey[700],
+        title: Text(
+          "Article",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
         /*actions: <Widget>[
           PopupMenuButton<MenuItems>(
             onSelected: (MenuItems result) {

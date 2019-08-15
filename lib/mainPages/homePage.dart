@@ -124,6 +124,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _isLoading = false;
+    // FlutterPollfish.instance.show();
   }
 
   Future getImage() async {
