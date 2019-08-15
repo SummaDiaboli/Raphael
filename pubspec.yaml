@@ -47,6 +47,11 @@ dependencies:
   flutter_swiper:
 
   flutter_pollfish: ^0.2.1
+  twitter:
+  yaml:
+  url_launcher:
+  # flutter_feed:
+  #   git: git://github.com/AlexiCoard/flutter_feed.git
   # custom_chewie:
   # path:
   # mapbox_gl:
@@ -77,6 +82,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/hatespeech/
+    - lib/twitterFeedConfig.yaml
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

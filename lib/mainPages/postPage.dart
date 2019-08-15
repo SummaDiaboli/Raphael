@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yafe/mainPages/supplementary/postCards.dart';
+// import 'package:yafe/mainPages/supplementary/postCards.dart';
+import 'package:yafe/mainPages/supplementary/twitterFeed.dart';
 
 class PostPage extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class PostPage extends StatefulWidget {
 class _PostPageState extends State<PostPage> {
   @override
   Widget build(BuildContext context) {
-    return PostsCards();
+    // return PostsCards();
+    return TwitterFeedWidget();
   }
 }

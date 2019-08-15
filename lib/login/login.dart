@@ -369,6 +369,9 @@ class _LoginState extends State<Login> {
                                                 authTokenSecret:
                                                     result.session.secret))
                                         .then((a) async {
+                                      setState(() {
+                                        _isLoading = true;
+                                      });
                                       FirebaseUser user = await FirebaseAuth
                                           .instance
                                           .currentUser();
@@ -404,10 +407,6 @@ class _LoginState extends State<Login> {
                                     return _buildErrorDialog(context, "Error");
                                     break;
                                 }
-
-                                setState(() {
-                                  _isLoading = true;
-                                });
                               },
                             ),
                           ),
