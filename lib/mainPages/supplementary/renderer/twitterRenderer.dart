@@ -6,7 +6,11 @@ class TwitterRenderer {
 
   Widget render(List data) {
     return ListView(
-      children: data.map((tweet) => TwitterTile(tweet)).toList(),
+      children: data
+          .map(
+            (tweet) => TwitterTile(tweet),
+          )
+          .toList(),
     );
   }
 }

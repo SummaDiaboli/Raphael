@@ -82,7 +82,8 @@ flutter:
   assets:
     - assets/images/
     - assets/images/hatespeech/
-    - lib/twitterFeedConfig.yaml
+    # - twitterFeedConfig.yaml
+    - config.yaml
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

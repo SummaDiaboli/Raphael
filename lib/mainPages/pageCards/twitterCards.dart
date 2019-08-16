@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -25,101 +26,92 @@ class _TwitterTileState extends State<TwitterTile> {
       List<Widget> images = List<Widget>();
       tweetImages.forEach(
         (image) => images.add(
-          Image.network(
-            image['media_url_https'],
+          CachedNetworkImage(
+            imageUrl: image['media_url_https'],
+            placeholder: (context, url) => Center(
+              child: Container(
+                width: 32,
+                height: 32,
+                child: CircularProgressIndicator(),
+              ),
+            ),
+            errorWidget: (context, url, error) => Icon(Icons.error),
           ),
+          /* Image.network(
+            image['media_url_https'],
+          ), */
         ),
       );
       tweetContent.add(
         Container(
-          height: 150.0,
-          child: GridView.count(
-            crossAxisCount: numberOfImagePerRow,
-            children: images,
+          height: 200.0,
+          child: SingleChildScrollView(
+            physics: NeverScrollableScrollPhysics(),
+            child: GridView.count(
+              physics: NeverScrollableScrollPhysics(),
+              primary: true,
+              shrinkWrap: true,
+              crossAxisCount: numberOfImagePerRow,
+              children: images,
+            ),
           ),
         ),
       );
     }
     return InkWell(
-      child: Container(
+      child: Card(
         margin: const EdgeInsets.all(5.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
+        child: ListTile(
+          leading: CircleAvatar(
+            backgroundImage: NetworkImage(
+              widget.tweet["user"]["profile_image_url_https"],
+            ),
           ),
-          border: Border.all(
-            color: new Color.fromRGBO(230, 236, 240, 1.0),
-          ),
-        ),
-        child: Container(
-          padding: EdgeInsets.only(top: 10.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          title: Row(
+            //Tweet heading
             children: <Widget>[
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        widget.tweet["user"]["profile_image_url_https"],
-                      ),
-                    ),
-                  ],
-                ),
-                flex: 1,
+              Text(
+                "${widget.tweet['user']['name']}",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
               ),
-              Expanded(
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  "@${widget.tweet['user']['screen_name']}",
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                ),
+              ),
+            ],
+            mainAxisAlignment: MainAxisAlignment.start,
+          ),
+          subtitle: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: Column(
+                  children: tweetContent,
+                ),
+              ),
+              Divider(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
+                    Row(children: <Widget>[
+                      Text("${widget.tweet['retweet_count']}"),
+                      //TODO : use this when Flutter will support svg new Image.asset("assets/retweet.svg"),
+                      Icon(Icons.autorenew),
+                    ]),
                     Row(
-                      //Tweet heading
                       children: <Widget>[
-                        Text(
-                          "${widget.tweet['user']['name']}",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Text(
-                            "@${widget.tweet['user']['screen_name']}",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ),
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.start,
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10.0),
-                          child: Column(
-                            children: tweetContent,
-                          ),
-                        ),
-                        Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Row(children: <Widget>[
-                              Text("${widget.tweet['retweet_count']}"),
-                              //TODO : use this when Flutter will support svg new Image.asset("assets/retweet.svg"),
-                              Icon(Icons.autorenew),
-                            ]),
-                            Row(
-                              children: <Widget>[
-                                Text("${widget.tweet['favorite_count']}"),
-                                Icon(Icons.favorite_border),
-                              ],
-                            ),
-                          ],
-                        ),
+                        Text("${widget.tweet['favorite_count']}"),
+                        Icon(Icons.favorite_border),
                       ],
                     ),
                   ],
                 ),
-                flex: 5,
-              )
+              ),
             ],
           ),
         ),

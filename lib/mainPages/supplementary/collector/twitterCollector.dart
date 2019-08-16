@@ -1,11 +1,11 @@
 import 'package:twitter/twitter.dart';
-import 'package:yafe/mainPages/supplementary/collector/abstract_collector.dart';
+// import 'package:yafe/mainPages/supplementary/collector/abstract_collector.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:yaml/yaml.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-class TwitterCollector extends AbstractCollector {
+class TwitterCollector {
   String _consumerKey;
   String _consumerSecret;
   String _accessToken;

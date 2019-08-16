@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:yafe/mainPages/supplementary/collector/twitterCollector.dart';
 import 'package:yafe/mainPages/supplementary/renderer/twitterRenderer.dart';
+import 'dart:async';
 
 class TwitterFeedWidget extends StatefulWidget {
-  // * Sets where the data is fetched from
-  TwitterFeedWidget({this.query: 'statuses/user_timeline.json'});
+  TwitterFeedWidget({this.query: 'statuses/home_timeline.json?count=200'});
   final String query;
 
   @override
@@ -15,8 +15,7 @@ class _TwitterFeedWidgetState extends State<TwitterFeedWidget> {
   List tweets;
 
   Future<Null> _gatherTweets() async {
-    var collector =
-        TwitterCollector.fromFile("twitterFeedConfig.yaml", widget.query);
+    var collector = TwitterCollector.fromFile("config.yaml", widget.query);
     await collector.getConfigCredentials().then((success) {
       collector.gather().then((response) {
         setState(() {
