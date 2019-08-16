@@ -100,7 +100,6 @@ class _TwitterTileState extends State<TwitterTile> {
                   children: <Widget>[
                     Row(children: <Widget>[
                       Text("${widget.tweet['retweet_count']}"),
-                      //TODO : use this when Flutter will support svg new Image.asset("assets/retweet.svg"),
                       Icon(Icons.autorenew),
                     ]),
                     Row(
