@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yafe/rootPage.dart';
-import 'mainPages/supplementary/authentication.dart';
+import "package:yafe/Pages/rootPage.dart";
+import 'package:yafe/Utils/Auth/authentication.dart';
 
 class MainApp extends StatefulWidget {
   // This widget is the root of your application.

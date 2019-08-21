@@ -50,6 +50,7 @@ dependencies:
   twitter:
   yaml:
   url_launcher:
+  share:
   # flutter_feed:
   #   git: git://github.com/AlexiCoard/flutter_feed.git
   # custom_chewie:
