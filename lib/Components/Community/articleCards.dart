@@ -11,6 +11,7 @@ import 'package:yafe/Components/Community/imageDetailScreen.dart';
 import 'package:yafe/Components/Community/videoCards.dart';
 // import 'package:rxdart/rxdart.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:yafe/Pages/Comments/commentsPage.dart';
 
 class ArticleCards extends StatefulWidget {
   @override
@@ -25,11 +26,77 @@ class _ArticleCardsState extends State<ArticleCards> {
             margin: EdgeInsets.symmetric(vertical: 2),
             elevation: 0.5,
             child: doc['media'] == null
-                ? createArticleTile(doc)
+                ? createTextTile(doc)
                 : createMediaTile(doc),
           ),
         )
         .toList();
+  }
+
+  Widget createTextTile(DocumentSnapshot doc) {
+    return doc['textType'] == 'userPost'
+        ? createUserPostTile(doc)
+        : createArticleTile(doc);
+  }
+
+  Widget createUserPostTile(DocumentSnapshot doc) {
+    return ListTile(
+      title: Row(
+        children: <Widget>[
+          Icon(
+            Icons.account_circle,
+            color: Colors.grey,
+            size: 44,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 6, 0, 10),
+            child: Text(
+              doc['userDisplayName'],
+              style: TextStyle(fontWeight: FontWeight.w500),
+              overflow: TextOverflow.clip,
+              maxLines: 2,
+            ),
+          ),
+        ],
+      ),
+      subtitle: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              doc['postContents'],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                FlatButton.icon(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  icon: Icon(Icons.comment),
+                  onPressed: () {
+                    Route route = MaterialPageRoute(
+                      builder: (context) => CommentsPage(doc: doc),
+                    );
+                    Navigator.push(context, route);
+                  },
+                  label: Text(""),
+                  textColor: Colors.grey[800],
+                ),
+                FlatButton.icon(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  icon: Icon(Icons.share),
+                  label: Text(""),
+                  onPressed: () {
+                    Share.share(
+                        "\"${doc['postContents']}\" \n-- ${doc['userDisplayName']} ");
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget createArticleTile(DocumentSnapshot doc) {
@@ -178,6 +245,21 @@ class _ArticleCardsState extends State<ArticleCards> {
               children: <Widget>[
                 FlatButton.icon(
                   padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  icon: Icon(Icons.comment),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => CommentsPage(
+                          doc: doc,
+                        ),
+                      ),
+                    );
+                  },
+                  label: Text(""),
+                  textColor: Colors.grey[800],
+                ),
+                FlatButton.icon(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                   icon: Icon(Icons.share),
                   label: Text(""),
                   onPressed: () {
@@ -204,22 +286,6 @@ class _ArticleCardsState extends State<ArticleCards> {
       },
     );
   }
-  /* Stream getData() {
-    // Order the streams by upload date and time
-    Stream stream1 = Firestore.instance.collection('articles').snapshots();
-    // Stream stream2 = Firestore.instance.collection("fish").snapshots();
-    Stream stream2 = FirebaseStorage.instance.ref().child();
-
-    return Observable.merge(([stream1, stream2]));
-  } */
-
-  /* void _push() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => DetailedArticle(),
-      ),
-    );
-  } */
 
   @override
   Widget build(BuildContext context) {
@@ -234,7 +300,6 @@ class _ArticleCardsState extends State<ArticleCards> {
               : ListView(
                   children: getArticles(snapshot),
                 ),
-          // Made a custom divider that's easier to manipulate
         );
       },
     );

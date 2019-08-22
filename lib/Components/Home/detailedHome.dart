@@ -224,10 +224,10 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(30, 0, 15, 0),
+                        padding: const EdgeInsets.fromLTRB(10, 0, 15, 0),
                         child: Column(
                           children: <Widget>[
                             Text(

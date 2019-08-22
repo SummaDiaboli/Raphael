@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 
 class UReportPage extends StatefulWidget {
   @override
@@ -90,6 +91,7 @@ class _UReportPageState extends State<UReportPage> {
       setState(() {
         _isLoading = true;
       });
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
       try {
         FirebaseUser user = await FirebaseAuth.instance.currentUser();
         String userId = user.uid;

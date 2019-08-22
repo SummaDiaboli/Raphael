@@ -3,6 +3,7 @@ import 'package:chewie/chewie.dart';
 import 'package:share/share.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:yafe/Pages/Comments/commentsPage.dart';
 // import 'package:custom_chewie/custom_chewie.dart';
 
 class VideoPlayerCard extends StatefulWidget {
@@ -111,6 +112,21 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
+              FlatButton.icon(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                icon: Icon(Icons.comment),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => CommentsPage(
+                        doc: widget.doc,
+                      ),
+                    ),
+                  );
+                },
+                label: Text(""),
+                textColor: Colors.grey[800],
+              ),
               FlatButton.icon(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                 icon: Icon(Icons.share),

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:yafe/Pages/Comments/commentsPage.dart';
 
 class DetailedArticle extends StatefulWidget {
   DetailedArticle({this.url, this.likes, this.dislikes, this.doc});
@@ -102,7 +103,15 @@ class _DetailedArticleState extends State<DetailedArticle> {
             FlatButton.icon(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
               icon: Icon(Icons.comment),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => CommentsPage(
+                      doc: widget.doc,
+                    ),
+                  ),
+                );
+              },
               label: Text(""),
               textColor: Colors.grey[800],
             )
