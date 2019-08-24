@@ -73,7 +73,10 @@
 # Google Services API
 **/android/**/google-services.json
 android/android.zip
+<<<<<<< HEAD
 .VSCodeCounter/
+=======
+>>>>>>> 0794976e0fc3431b0036df3e5d8c098c4d254e6f
 .VSCodeCounter/results.txt
 .VSCodeCounter/details.md
 .VSCodeCounter/results.csv
