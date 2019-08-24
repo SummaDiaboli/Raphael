@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:yafe/Components/Comments/editComment.dart';
 import 'package:yafe/Components/Comments/newComment.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CommentsBuilder extends StatefulWidget {
   CommentsBuilder({this.doc});
@@ -12,12 +14,57 @@ class CommentsBuilder extends StatefulWidget {
 }
 
 class _CommentsBuilderState extends State<CommentsBuilder> {
+  String uid;
+
+  getUser() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    String userId = user.uid;
+    setState(() {
+      uid = userId;
+    });
+  }
+
   getComments(AsyncSnapshot<QuerySnapshot> snapshot) {
+    getUser();
     return snapshot.data.documents
         .map(
           (doc) => Card(
             child: ListTile(
-              title: Text(doc['displayName']),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    doc['displayName'],
+                  ),
+                  doc['userId'] == uid
+                      ? Align(
+                          alignment: Alignment.topRight,
+                          child: FlatButton(
+                            padding: EdgeInsets.all(0),
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => EditComment(
+                                    // doc: widget.doc,
+                                    comment: doc,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              "edit",
+                              style: TextStyle(
+                                color: Colors.red[400],
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container(),
+                ],
+              ),
               subtitle: Text(
                 doc['comment'],
               ),
@@ -40,6 +87,7 @@ class _CommentsBuilderState extends State<CommentsBuilder> {
         return Stack(
           children: <Widget>[
             Container(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
               child: !snapshot.hasData
                   ? Center(
                       child: CircularProgressIndicator(),
@@ -60,7 +108,7 @@ class _CommentsBuilderState extends State<CommentsBuilder> {
                   color: Colors.white,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   shape: BeveledRectangleBorder(
-                    side: BorderSide(color: Colors.grey),
+                    side: BorderSide(color: Colors.red[800]),
                   ),
                   onPressed: () {
                     Navigator.push(
@@ -77,7 +125,7 @@ class _CommentsBuilderState extends State<CommentsBuilder> {
                   child: Text(
                     "COMMENT",
                     style: TextStyle(
-                      color: Colors.grey[600],
+                      color: Colors.red[800],
                       fontSize: 16,
                     ),
                   ),

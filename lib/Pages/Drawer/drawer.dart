@@ -341,12 +341,12 @@ class _MainDrawerState extends State<MainDrawer> {
                 child: Container(
                   color: Color(0xFFD0202D),
                   height: 60,
-                  child: Align(
+                  /* child: Align(
                     alignment: Alignment.centerLeft,
                     child: Image.asset(
                       "assets/images/logo.jpg",
                     ),
-                  ),
+                  ), */
                 ),
               ),
             )
