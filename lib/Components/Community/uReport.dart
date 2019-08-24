@@ -11,7 +11,7 @@ class UReportPage extends StatefulWidget {
 class _UReportPageState extends State<UReportPage> {
   String _articleDescription;
   String _articleTitle;
-  String _articleUrl;
+  // String _articleUrl;
   final _formKey = GlobalKey<FormState>();
   bool _isLoading;
 
@@ -106,7 +106,7 @@ class _UReportPageState extends State<UReportPage> {
           "userDisplayName": displayName,
           "userId": userId,
           "photoUrl": photoUrl,
-          "url": _articleUrl,
+          // "url": _articleUrl,
           "description": _articleDescription,
           "heading": _articleTitle,
         });
@@ -199,7 +199,7 @@ class _UReportPageState extends State<UReportPage> {
                       onSaved: (value) => _articleDescription = value,
                     ),
                   ),
-                  Padding(
+                  /* Padding(
                     padding: const EdgeInsets.fromLTRB(20, 15, 20, 18),
                     child: TextFormField(
                       keyboardType: TextInputType.url,
@@ -230,7 +230,7 @@ class _UReportPageState extends State<UReportPage> {
                       },
                       onSaved: (value) => _articleUrl = value,
                     ),
-                  ),
+                  ), */
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 18, 0, 10),
                     child: FlatButton(

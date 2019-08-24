@@ -148,7 +148,7 @@ class _MainHomePageState extends State<MainHomePage> {
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white /* Colors.grey[700] */,
-        actions: <Widget>[
+        /* actions: <Widget>[
           IconButton(
             icon: Icon(Icons.monetization_on),
             onPressed: () {},
@@ -159,7 +159,7 @@ class _MainHomePageState extends State<MainHomePage> {
             onPressed: () {},
             tooltip: "Share Yafe",
           )
-        ],
+        ], */
       ),
       drawer: MainDrawer(
         userId: widget.userId,

@@ -91,18 +91,14 @@ class _DetailedArticleState extends State<DetailedArticle> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            FlatButton.icon(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-              icon: Icon(Icons.share),
-              onPressed: () {
-                Share.share(widget.url);
-              },
-              label: Text(""),
-              textColor: Colors.grey[800],
+            IconButton(
+              icon: Icon(Icons.thumb_up),
+              color: Colors.red,
+              onPressed: () {},
             ),
-            FlatButton.icon(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            IconButton(
               icon: Icon(Icons.comment),
+              color: Colors.grey,
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -112,9 +108,14 @@ class _DetailedArticleState extends State<DetailedArticle> {
                   ),
                 );
               },
-              label: Text(""),
-              textColor: Colors.grey[800],
-            )
+            ),
+            IconButton(
+              icon: Icon(Icons.share),
+              color: Colors.blueAccent,
+              onPressed: () {
+                Share.share(widget.url);
+              },
+            ),
           ],
         ),
       ],

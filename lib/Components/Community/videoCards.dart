@@ -118,9 +118,14 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              FlatButton.icon(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              IconButton(
+                icon: Icon(Icons.thumb_up),
+                color: Colors.red,
+                onPressed: () {},
+              ),
+              IconButton(
                 icon: Icon(Icons.comment),
+                color: Colors.grey,
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -130,13 +135,11 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
                     ),
                   );
                 },
-                label: Text(""),
-                textColor: Colors.grey[800],
               ),
-              FlatButton.icon(
+              IconButton(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                color: Colors.grey,
                 icon: Icon(Icons.share),
-                label: Text(""),
                 onPressed: () {
                   Share.share(widget.doc["url"]);
                 },

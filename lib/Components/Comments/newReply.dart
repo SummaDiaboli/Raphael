@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class NewComment extends StatefulWidget {
-  NewComment({this.doc});
-
+class NewReply extends StatefulWidget {
+  NewReply({this.doc});
   final DocumentSnapshot doc;
+
   @override
-  _NewCommentState createState() => _NewCommentState();
+  _NewReplyState createState() => _NewReplyState();
 }
 
-class _NewCommentState extends State<NewComment> {
+class _NewReplyState extends State<NewReply> {
   final commentKey = GlobalKey<FormState>();
   String _comment;
   bool _isLoading;
@@ -78,13 +78,12 @@ class _NewCommentState extends State<NewComment> {
         String userId = user.uid;
         String photoUrl = user.photoUrl;
         String displayName = user.displayName;
-        String documentId = widget.doc.documentID;
+        // String documentId = widget.doc.documentID;
         DateTime dateCreated = DateTime.now();
 
         await Firestore.instance
-            .collection('articles')
-            .document('$documentId')
-            .collection('comments')
+            .document(widget.doc.reference.path)
+            .collection('replies')
             .document('$displayName$dateCreated')
             .setData({
           "comment": _comment,
@@ -115,7 +114,7 @@ class _NewCommentState extends State<NewComment> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          "Write your comment",
+          "Reply",
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
@@ -140,11 +139,11 @@ class _NewCommentState extends State<NewComment> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
                         ),
-                        hintText: "Comment on this",
+                        hintText: "Reply to comment",
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Comment cannot be empty';
+                          return 'Reply cannot be empty';
                         }
 
                         return null;
@@ -171,7 +170,7 @@ class _NewCommentState extends State<NewComment> {
                       child: Row(
                         children: <Widget>[
                           Text(
-                            "Submit Comment",
+                            "Submit Reply",
                             style: TextStyle(
                                 color: Colors.red[800],
                                 fontSize: 16,

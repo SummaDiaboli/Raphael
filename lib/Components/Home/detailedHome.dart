@@ -262,7 +262,7 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                         child: Column(
                           children: <Widget>[
                             Text(
-                              "1/10",
+                              "-/-",
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 28,
@@ -282,7 +282,7 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                         child: Column(
                           children: <Widget>[
                             Text(
-                              "32",
+                              "-",
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 28,
@@ -302,7 +302,7 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                         child: Column(
                           children: <Widget>[
                             Text(
-                              "102",
+                              "-",
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 28,

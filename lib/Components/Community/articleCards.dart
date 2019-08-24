@@ -76,27 +76,29 @@ class _ArticleCardsState extends State<ArticleCards> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                FlatButton.icon(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                IconButton(
+                  icon: Icon(Icons.thumb_up),
+                  onPressed: () {},
+                  color: Colors.red,
+                ),
+                IconButton(
                   icon: Icon(Icons.comment),
+                  color: Colors.grey,
                   onPressed: () {
                     Route route = MaterialPageRoute(
                       builder: (context) => CommentsPage(doc: doc),
                     );
                     Navigator.push(context, route);
                   },
-                  label: Text(""),
-                  textColor: Colors.grey[800],
                 ),
-                FlatButton.icon(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                IconButton(
                   icon: Icon(Icons.share),
-                  label: Text(""),
+                  color: Colors.blueAccent,
                   onPressed: () {
                     Share.share(
                         "\"${doc['postContents']}\" \n-- ${doc['userDisplayName']} ");
                   },
-                ),
+                )
               ],
             ),
           ],
@@ -169,20 +171,6 @@ class _ArticleCardsState extends State<ArticleCards> {
               ),
             ),
           ),
-          /* Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-                        child: SizedBox(
-                          height: 1.2,
-                          child: Center(
-                            child: Container(
-                              margin: EdgeInsetsDirectional.only(
-                                  start: 0.0, end: 1.0),
-                              height: 5.0,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                      ), */
         ],
       ),
       isThreeLine: true,
@@ -261,9 +249,14 @@ class _ArticleCardsState extends State<ArticleCards> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                FlatButton.icon(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                IconButton(
+                  icon: Icon(Icons.thumb_up),
+                  color: Colors.red,
+                  onPressed: () {},
+                ),
+                IconButton(
                   icon: Icon(Icons.comment),
+                  color: Colors.grey,
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -273,13 +266,10 @@ class _ArticleCardsState extends State<ArticleCards> {
                       ),
                     );
                   },
-                  label: Text(""),
-                  textColor: Colors.grey[800],
                 ),
-                FlatButton.icon(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                IconButton(
                   icon: Icon(Icons.share),
-                  label: Text(""),
+                  color: Colors.blueAccent,
                   onPressed: () {
                     Share.share(imageUrl);
                   },

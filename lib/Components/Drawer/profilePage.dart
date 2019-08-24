@@ -266,7 +266,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                             onPressed: getImage,
                           ),
-                          Positioned(
+                          /* Positioned(
                             top: 76,
                             left: 80,
                             child: ClipOval(
@@ -280,7 +280,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ),
                             ),
-                          )
+                          ) */
                         ],
                       ),
                       Column(

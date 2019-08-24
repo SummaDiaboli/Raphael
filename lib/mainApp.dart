@@ -14,8 +14,12 @@ class _MainAppState extends State<MainApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Yafe',
-      home: RootPage(
-        auth: Auth(),
+      home: SafeArea(
+        bottom: true,
+        top: true,
+        child: RootPage(
+          auth: Auth(),
+        ),
       ),
     );
   }
