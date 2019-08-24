@@ -94,6 +94,7 @@ class _UPostState extends State<UPost> {
         FirebaseUser user = await FirebaseAuth.instance.currentUser();
         String userId = user.uid;
         String displayName = user.displayName;
+        String photoUrl = user.photoUrl;
         DateTime dateAndTime = DateTime.now();
 
         CollectionReference dbPending =
@@ -103,6 +104,7 @@ class _UPostState extends State<UPost> {
           "userDisplayName": displayName,
           "userId": userId,
           "postContents": post,
+          "photoUrl": photoUrl,
           "textType": "userPost"
         });
 

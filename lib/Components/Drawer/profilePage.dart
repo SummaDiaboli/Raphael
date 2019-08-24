@@ -1,8 +1,12 @@
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:yafe/Utils/Auth/authentication.dart';
+import 'package:path/path.dart' as prefix0;
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({this.auth});
@@ -22,9 +26,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
   String _username;
   String _userEmail;
+  String _profilePicUrl;
   //String _errorMessage;
+  // String _downloadUrl;
+  File imageFile;
 
   bool _isLoading;
+  bool _changeProfilePicture;
   //bool _isIos;
 
   @override
@@ -71,6 +79,10 @@ class _ProfilePageState extends State<ProfilePage> {
   String _displayName() {
     String username = "No Display name";
     if (currentUser != null) {
+      setState(() {
+        currentUser.displayName;
+        _username = currentUser.displayName;
+      });
       return currentUser.displayName;
     } else {
       return username;
@@ -79,7 +91,23 @@ class _ProfilePageState extends State<ProfilePage> {
 
   String _email() {
     if (currentUser.email != null) {
+      setState(() {
+        currentUser.email;
+        _userEmail = currentUser.email;
+      });
       return currentUser.email;
+    } else {
+      return "";
+    }
+  }
+
+  String _profilePicture() {
+    if (currentUser.photoUrl != null) {
+      setState(() {
+        currentUser.photoUrl;
+        _profilePicUrl = currentUser.photoUrl;
+      });
+      return currentUser.photoUrl;
     } else {
       return "";
     }
@@ -126,12 +154,18 @@ class _ProfilePageState extends State<ProfilePage> {
           await widget.auth.updateUserEmail(_userEmail);
         }
 
+        if (_changeProfilePicture == true) {
+          await uploadTask(imageFile);
+          // await widget.auth.updateProfilePicture(_downloadUrl);
+        }
+
         setState(
           () {
             _isLoading = false;
             _loadCurrentUser();
             _displayName();
             _email();
+            _profilePicture();
           },
         );
 
@@ -140,6 +174,7 @@ class _ProfilePageState extends State<ProfilePage> {
           user.reload();
         }); */
         widget.auth.reloadProfile();
+        _loadCurrentUser();
       } catch (e) {
         print('Error: $e');
         setState(() {
@@ -153,8 +188,47 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  Future getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    print(image);
+    setState(() {
+      imageFile = image;
+      _changeProfilePicture = true;
+    });
+  }
+
+  Future<void> uploadTask(File image) async {
+    setState(() {
+      _isLoading = true;
+    });
+    String filename = prefix0.basename(image.path);
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    StorageReference storage = FirebaseStorage.instance
+        .ref()
+        .child("${user.displayName} ${user.uid}")
+        .child(filename);
+
+    StorageUploadTask uploadTask = storage.putFile(image);
+    sendToDatabase(uploadTask);
+  }
+
+  Future<void> sendToDatabase(StorageUploadTask uploadTask) async {
+    var downloadUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+    String url = downloadUrl.toString();
+    await widget.auth.updateProfilePicture(url);
+
+    setState(() {
+      // _downloadUrl = url;
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _displayName();
+    _email();
+    _profilePicture();
+    _loadCurrentUser();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: /* Colors.grey[700] */ Colors.white,
@@ -179,11 +253,18 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: <Widget>[
                           IconButton(
                             iconSize: 110,
-                            icon: Icon(
-                              Icons.account_circle,
-                              color: Colors.grey,
-                            ),
-                            onPressed: () {},
+                            icon: _profilePicUrl == null
+                                ? Icon(
+                                    Icons.account_circle,
+                                    color: Colors.grey,
+                                  )
+                                : CircleAvatar(
+                                    backgroundImage:
+                                        NetworkImage("$_profilePicUrl"),
+                                    radius: 60.0,
+                                    backgroundColor: Colors.transparent,
+                                  ),
+                            onPressed: getImage,
                           ),
                           Positioned(
                             top: 76,
@@ -209,7 +290,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             padding: const EdgeInsets.fromLTRB(0, 26, 0, 10),
                             child: Text(
                               // "Not given",
-                              _displayName(),
+                              _username,
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18,
@@ -227,7 +308,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                             child: Text(
                               // "salim.hussaini@backlinq.ng",
-                              _email(),
+                              _userEmail,
                               style: TextStyle(fontStyle: FontStyle.italic),
                             ),
                           ),

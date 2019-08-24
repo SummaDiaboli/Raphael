@@ -21,6 +21,7 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
   String twitterUser;
   String firebaseUserDisplayName;
   String firebaseUserEmail;
+  String firebaseUserPhotoUrl;
 
   bool firstTime;
 
@@ -52,6 +53,7 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
       checkIfBeginner();
       _loadCurrentUser();
       _displayName();
+      _profilePicture();
       _email();
       _isLoading = false;
     });
@@ -84,13 +86,31 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
   String _displayName() {
     // String username = "No Display name";
     if (firebaseUser != null) {
-      firebaseUserDisplayName = firebaseUser.displayName;
+      setState(() {
+        firebaseUserDisplayName = firebaseUser.displayName;
+        firebaseUserPhotoUrl = firebaseUser.photoUrl;
+      });
+      // print(firebaseUserPhotoUrl);
       return firebaseUserDisplayName;
     } else if (twitterUser != null) {
       return twitterUser;
     } else {
       return "Something is missing";
     }
+  }
+
+  String _profilePicture() {
+    if (firebaseUser != null) {
+      setState(() {
+        firebaseUserPhotoUrl = firebaseUser.displayName;
+      });
+      print(firebaseUser.photoUrl);
+      return firebaseUserPhotoUrl;
+    } else {
+      return null;
+    }
+    // print(firebaseUser.photoUrl);
+    // return firebaseUserPhotoUrl;
   }
 
   String _email() {
@@ -137,6 +157,8 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    _loadCurrentUser();
+    _displayName();
     return Stack(
       children: <Widget>[
         Center(
@@ -165,14 +187,23 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                       ),
                     )
                   : Container(),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Icon(
-                  Icons.account_circle,
-                  size: 100,
-                  color: Colors.grey,
-                ),
-              ),
+              firebaseUserPhotoUrl == null
+                  ? Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Icon(
+                        Icons.account_circle,
+                        size: 100,
+                        color: Colors.grey,
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 4),
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage("$firebaseUserPhotoUrl"),
+                        backgroundColor: Colors.transparent,
+                        radius: 45.0,
+                      ),
+                    ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(

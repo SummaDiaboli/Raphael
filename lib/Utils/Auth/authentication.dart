@@ -15,6 +15,8 @@ abstract class BaseAuth {
 
   Future<String> updateDisplayName(String displayName);
 
+  Future<String> updateProfilePicture(String pictureUrl);
+
   Future<void> signOut();
 
   Future<bool> isEmailVerified();
@@ -65,6 +67,16 @@ class Auth implements BaseAuth {
     user.reload();
     _firebaseAuth.currentUser();
     return user.displayName;
+  }
+
+  Future<String> updateProfilePicture(String pictureUrl) async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    UserUpdateInfo updateInfo = UserUpdateInfo();
+    updateInfo.photoUrl = pictureUrl;
+    user.updateProfile(updateInfo);
+    user.reload();
+    _firebaseAuth.currentUser();
+    return user.photoUrl;
   }
 
   Future<bool> isEmailVerified() async {

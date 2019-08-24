@@ -34,7 +34,7 @@ class _CommentsBuilderState extends State<CommentsBuilder> {
           .collection('articles')
           .document('${widget.doc.documentID}')
           .collection('comments')
-          .orderBy("dateCreated", descending: true)
+          .orderBy("dateCreated" /* , descending: true */)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         return Stack(

@@ -351,6 +351,9 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                               onPressed: () async {
+                                setState(() {
+                                  _isLoading = true;
+                                });
                                 final twitterLogin = TwitterLogin(
                                     consumerKey: "sbQC3OYcDgketywpBmSnqXiSs",
                                     consumerSecret:
@@ -382,6 +385,9 @@ class _LoginState extends State<Login> {
                                       user.updateProfile(updateInfo);
                                       user.reload();
                                     }).then((signedInUser) {
+                                      setState(() {
+                                        _isLoading = false;
+                                      });
                                       Route route = MaterialPageRoute(
                                         builder: (context) => MainHomePage(
                                           auth: Auth(),
@@ -398,13 +404,20 @@ class _LoginState extends State<Login> {
 
                                   case TwitterLoginStatus.cancelledByUser:
                                     print('Cancelled by you');
+                                    setState(() {
+                                      _isLoading = false;
+                                    });
                                     return _buildErrorDialog(
-                                        context, "Cancelled by you");
+                                        context, "You cancelled the login");
                                     break;
 
                                   case TwitterLoginStatus.error:
                                     print('Error');
-                                    return _buildErrorDialog(context, "Error");
+                                    setState(() {
+                                      _isLoading = false;
+                                    });
+                                    return _buildErrorDialog(context,
+                                        "Your twitter sign in could not be continued. Please check your network and try again");
                                     break;
                                 }
                               },

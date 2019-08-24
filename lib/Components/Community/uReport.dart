@@ -96,6 +96,7 @@ class _UReportPageState extends State<UReportPage> {
         FirebaseUser user = await FirebaseAuth.instance.currentUser();
         String userId = user.uid;
         String displayName = user.displayName;
+        String photoUrl = user.photoUrl;
         DateTime dateAndTime = DateTime.now();
 
         CollectionReference dbPending =
@@ -104,6 +105,7 @@ class _UReportPageState extends State<UReportPage> {
           "date": dateAndTime,
           "userDisplayName": displayName,
           "userId": userId,
+          "photoUrl": photoUrl,
           "url": _articleUrl,
           "description": _articleDescription,
           "heading": _articleTitle,

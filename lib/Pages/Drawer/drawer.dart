@@ -65,6 +65,7 @@ class _MainDrawerState extends State<MainDrawer> {
   String username = "John Doe";
   // String userRole = "Content Manager";
   String userEmail = "john.doe@doey.com";
+  String photoUrl;
 
   /* _signOut() async {
     try {
@@ -113,8 +114,20 @@ class _MainDrawerState extends State<MainDrawer> {
     }
   }
 
+  String _photoUrl() {
+    if (currentUser.photoUrl != null) {
+      setState(() {
+        photoUrl = currentUser.photoUrl;
+      });
+      return currentUser.photoUrl;
+    } else {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    _photoUrl();
     return Drawer(
       child: Container(
         child: Column(
@@ -125,11 +138,20 @@ class _MainDrawerState extends State<MainDrawer> {
                 children: <Widget>[
                   ListTile(
                     contentPadding: EdgeInsets.all(0),
-                    leading: Icon(
-                      Icons.account_circle,
-                      size: 110,
-                      color: Colors.grey,
-                    ),
+                    leading: photoUrl == null
+                        ? Icon(
+                            Icons.account_circle,
+                            size: 110,
+                            color: Colors.grey,
+                          )
+                        : Padding(
+                            padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage("$photoUrl"),
+                              backgroundColor: Colors.transparent,
+                              radius: 30,
+                            ),
+                          ),
                     title: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 34, 0, 0),
                       child: Text(

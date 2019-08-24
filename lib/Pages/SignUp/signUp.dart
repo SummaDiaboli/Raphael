@@ -1,9 +1,15 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 //import 'package:yafe/login/login.dart';
 import 'package:yafe/Utils/Auth/authentication.dart';
 import "package:yafe/Pages/rootPage.dart";
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:path/path.dart' as prefix0;
 
 class SignUp extends StatefulWidget {
   SignUp({this.auth, this.onSignedIn});
@@ -31,6 +37,8 @@ class _SignUpState extends State<SignUp> {
   String _password;
   String _confirmPassword;
   String _finalPassword;
+  String _downloadUrl;
+  File _image;
   // String _errorMessage;
 
   bool _isLoading;
@@ -135,8 +143,17 @@ class _SignUpState extends State<SignUp> {
         updateInfo.displayName = _username;
         user.updateProfile(updateInfo); */
 
-        } catch (e) {
+        } on PlatformException catch (e) {
           print('Error: $e');
+          setState(() {
+            _isLoading = false;
+          });
+          return _buildErrorDialog(context, e.message);
+        } on Exception catch (e) {
+          print('Error: $e');
+          setState(() {
+            _isLoading = false;
+          });
           return _buildErrorDialog(context,
               "Sorry. Something went wrong with the Sign-up process. Please try again.");
           /*  setState(() {
@@ -195,6 +212,7 @@ class _SignUpState extends State<SignUp> {
                 ); */
 
                 widget.auth.updateDisplayName(_username);
+                widget.auth.updateProfilePicture(_downloadUrl);
                 FirebaseUser user = await widget.auth.getCurrentUser();
                 print('With the display name: ${user.displayName}');
                 await widget.auth.getCurrentUser();
@@ -216,6 +234,34 @@ class _SignUpState extends State<SignUp> {
         );
       },
     );
+  }
+
+  Future getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    print(image);
+    setState(() {
+      _image = image;
+    });
+    uploadTask(image);
+  }
+
+  Future<void> uploadTask(File image) async {
+    String filename = prefix0.basename(image.path);
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    StorageReference storage = FirebaseStorage.instance
+        .ref()
+        .child("${user.displayName} ${user.uid}")
+        .child(filename);
+
+    StorageUploadTask uploadTask = storage.putFile(image);
+    sendToDatabase(uploadTask);
+  }
+
+  Future<void> sendToDatabase(StorageUploadTask uploadTask) async {
+    var downloadUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+    String url = downloadUrl.toString();
+
+    _downloadUrl = url;
   }
 
   @override
@@ -261,9 +307,18 @@ class _SignUpState extends State<SignUp> {
                                 color: Colors.white10,
                                 child: IconButton(
                                   color: Colors.blueGrey[100],
-                                  icon: Icon(Icons.account_circle),
+                                  icon: _image != null
+                                      ? ClipOval(
+                                          child: Image.file(
+                                            _image,
+                                            fit: BoxFit.cover,
+                                            width: 120,
+                                            height: 120,
+                                          ),
+                                        )
+                                      : Icon(Icons.account_circle),
                                   iconSize: 150,
-                                  onPressed: () {},
+                                  onPressed: getImage,
                                 ) /* FlatButton(
                                 onPressed: () {},
                                 child: Icon(

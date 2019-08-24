@@ -59,11 +59,17 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
       contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0), */
       title: Row(
         children: <Widget>[
-          Icon(
-            Icons.account_circle,
-            color: Colors.grey,
-            size: 44,
-          ),
+          widget.doc['photoUrl'] == null
+              ? Icon(
+                  Icons.account_circle,
+                  color: Colors.grey,
+                  size: 44,
+                )
+              : CircleAvatar(
+                  backgroundImage: NetworkImage("${widget.doc['photoUrl']}"),
+                  backgroundColor: Colors.transparent,
+                  radius: 15,
+                ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 6, 0, 10),
             child: Text(

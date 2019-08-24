@@ -43,11 +43,17 @@ class _ArticleCardsState extends State<ArticleCards> {
     return ListTile(
       title: Row(
         children: <Widget>[
-          Icon(
-            Icons.account_circle,
-            color: Colors.grey,
-            size: 44,
-          ),
+          doc['photoUrl'] == null
+              ? Icon(
+                  Icons.account_circle,
+                  color: Colors.grey,
+                  size: 44,
+                )
+              : CircleAvatar(
+                  backgroundImage: NetworkImage("${doc['photoUrl']}"),
+                  backgroundColor: Colors.transparent,
+                  radius: 15,
+                ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 6, 0, 10),
             child: Text(
@@ -115,11 +121,17 @@ class _ArticleCardsState extends State<ArticleCards> {
       },
       leading: Padding(
         padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
-        child: Icon(
-          Icons.account_circle,
-          size: 70,
-          color: Colors.grey,
-        ),
+        child: doc['photoUrl'] == null
+            ? Icon(
+                Icons.account_circle,
+                size: 70,
+                color: Colors.grey,
+              )
+            : CircleAvatar(
+                backgroundImage: NetworkImage("${doc['photoUrl']}"),
+                backgroundColor: Colors.transparent,
+                radius: 15,
+              ),
       ),
       // contentPadding: EdgeInsets.fromLTRB(16, 0, 20, 0),
       contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0),
@@ -202,11 +214,17 @@ class _ArticleCardsState extends State<ArticleCards> {
         contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0), */
         title: Row(
           children: <Widget>[
-            Icon(
-              Icons.account_circle,
-              color: Colors.grey,
-              size: 44,
-            ),
+            doc['photoUrl'] == null
+                ? Icon(
+                    Icons.account_circle,
+                    color: Colors.grey,
+                    size: 44,
+                  )
+                : CircleAvatar(
+                    backgroundImage: NetworkImage("${doc['photoUrl']}"),
+                    backgroundColor: Colors.transparent,
+                    radius: 15,
+                  ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 6, 0, 10),
               child: Text(
@@ -290,7 +308,10 @@ class _ArticleCardsState extends State<ArticleCards> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('articles').snapshots(),
+      stream: Firestore.instance
+          .collection('articles')
+          .orderBy("date", descending: true)
+          .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         return Container(
           child: !snapshot.hasData

@@ -165,6 +165,7 @@ class _CommunityPageState extends State<CommunityPage> {
     final FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
     String userId = firebaseUser.uid;
     String userDisplayName = firebaseUser.displayName;
+    String photoUrl = firebaseUser.photoUrl;
     DateTime dateAndTime = DateTime.now();
 
     CollectionReference dbPending = Firestore.instance.collection('pending');
@@ -172,7 +173,8 @@ class _CommunityPageState extends State<CommunityPage> {
       "userId": userId,
       "userDisplayName": userDisplayName,
       "contentUrl": url,
-      "uploadDateAndTime": dateAndTime
+      "uploadDateAndTime": dateAndTime,
+      "photoUrl": photoUrl,
     }).catchError((err) => print(err));
   }
 
