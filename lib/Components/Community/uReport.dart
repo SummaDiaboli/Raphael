@@ -114,6 +114,7 @@ class _UReportPageState extends State<UReportPage> {
           // "url": _articleUrl,
           "description": _articleDescription,
           "heading": _articleTitle,
+          "likes": 0,
         });
 
         setState(() {

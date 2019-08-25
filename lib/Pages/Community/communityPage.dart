@@ -180,6 +180,7 @@ class _CommunityPageState extends State<CommunityPage> {
       "contentUrl": url,
       "uploadDateAndTime": dateAndTime,
       "photoUrl": photoUrl,
+      "likes": 0,
     }).catchError((err) => print(err));
   }
 

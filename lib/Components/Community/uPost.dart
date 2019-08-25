@@ -110,7 +110,8 @@ class _UPostState extends State<UPost> {
           "userId": userId,
           "postContents": post,
           "photoUrl": photoUrl,
-          "textType": "userPost"
+          "textType": "userPost",
+          "likes": 0,
         });
 
         setState(() {
