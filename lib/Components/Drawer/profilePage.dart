@@ -18,7 +18,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final _formKey = new GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   String _userId = "";
 
   FirebaseUser currentUser;
@@ -48,6 +48,11 @@ class _ProfilePageState extends State<ProfilePage> {
       user.reload();
     });
     print("$_userId");
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Widget _showCircularProgress() {

@@ -37,6 +37,11 @@ class _RootPageState extends State<RootPage> {
     });
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void _onLoggedIn() {
     widget.auth.getCurrentUser().then((user) {
       setState(() {

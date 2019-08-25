@@ -19,6 +19,11 @@ class _UPostState extends State<UPost> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   Future _buildErrorDialog(BuildContext context, _message) {
     return showDialog(
       builder: (context) {

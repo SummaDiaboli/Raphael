@@ -27,6 +27,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     print("$_userId");
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   Widget _showCircularProgress() {
     if (_isLoading) {
       return Container(

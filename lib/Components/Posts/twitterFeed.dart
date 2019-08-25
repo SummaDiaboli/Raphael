@@ -28,9 +28,14 @@ class _TwitterFeedWidgetState extends State<TwitterFeedWidget> {
   }
 
   @override
-  initState() {
+  void initState() {
     super.initState();
     _gatherTweets();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

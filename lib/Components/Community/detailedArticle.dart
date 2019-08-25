@@ -19,6 +19,11 @@ class DetailedArticle extends StatefulWidget {
 
 class _DetailedArticleState extends State<DetailedArticle> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   void dispose() {
     super.dispose();
   }

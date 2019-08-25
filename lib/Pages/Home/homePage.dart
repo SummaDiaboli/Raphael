@@ -25,14 +25,14 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   // void _selectAndUpload() async {}
   /* Image _image;
   VideoPlayerController _video; */
-
-
-
 
   @override
   Widget build(BuildContext context) {

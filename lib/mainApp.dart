@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import "package:yafe/Pages/rootPage.dart";
 import 'package:yafe/Utils/Auth/authentication.dart';
+import 'package:yafe/Utils/style.dart';
 
 class MainApp extends StatefulWidget {
   // This widget is the root of your application.
@@ -14,6 +15,17 @@ class _MainAppState extends State<MainApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Yafe',
+      theme: ThemeData(
+        primaryColor: AppBarBackgroundColor,
+        appBarTheme: AppBarTheme(
+          textTheme: TextTheme(
+            title: AppBarTextStyle,
+          ),
+        ),
+        textTheme: TextTheme(
+          title: BodyTextStyle,
+        ),
+      ),
       home: SafeArea(
         bottom: true,
         top: true,

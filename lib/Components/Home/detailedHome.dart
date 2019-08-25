@@ -1,9 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_pollfish/flutter_pollfish.dart';
 
-import 'package:yafe/Components/Drawer/profilePage.dart';
+// import 'package:yafe/Components/Drawer/profilePage.dart';
 import 'package:yafe/Utils/Auth/authentication.dart';
 import 'package:yafe/Components/Home/newsCarousel.dart';
 
@@ -57,13 +57,7 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
       _email();
       _isLoading = false;
     });
-    FlutterPollfish.instance.setPollfishSurveyOpenedListener(onPollfishOpened);
-    FlutterPollfish.instance.hide();
   }
-
-  void onPollfishOpened() => setState(() {
-        _isLoading = false;
-      });
 
   @override
   void dispose() {
@@ -95,7 +89,7 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
     } else if (twitterUser != null) {
       return twitterUser;
     } else {
-      return "Something is missing";
+      return "John Doe";
     }
   }
 
@@ -116,6 +110,7 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
   String _email() {
     if (firebaseUser != null) {
       firebaseUserEmail = firebaseUser.email;
+      // print(firebaseUser.email);
       return firebaseUser.email;
     } else {
       return "";
@@ -134,31 +129,11 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
     }
   }
 
-  _takeSurvey() async {
-    setState(() {
-      _isLoading = true;
-    });
-    FlutterPollfish.instance.hide();
-    await FlutterPollfish.instance
-        .init(
-          apiKey: 'bc35c872-d025-44e2-9bcc-7999d3789ea3',
-          releaseMode: false,
-          pollfishPosition: 5,
-          rewardMode: false,
-          offerwallMode: false,
-        )
-        .timeout(Duration(seconds: 15))
-        .whenComplete(() {
-      setState(() {
-        _isLoading = false;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     _loadCurrentUser();
     _displayName();
+    _email();
     return Stack(
       children: <Widget>[
         Center(
@@ -187,71 +162,12 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                       ),
                     )
                   : Container(),
-              firebaseUserPhotoUrl == null
-                  ? Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Icon(
-                        Icons.account_circle,
-                        size: 100,
-                        color: Colors.grey,
-                      ),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 4),
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage("$firebaseUserPhotoUrl"),
-                        backgroundColor: Colors.transparent,
-                        radius: 45.0,
-                      ),
-                    ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  _displayName(),
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
-                ),
-              ),
-              /* firebaseUserEmail == null
-                ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      _email(),
-                    ),
-                  )
-                : Container(), */
-              firebaseUserDisplayName != null
-                  ? FlatButton(
-                      padding: EdgeInsets.all(0),
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      onPressed: () {
-                        Route route = MaterialPageRoute(
-                          builder: (context) => ProfilePage(auth: widget.auth),
-                        );
-                        Navigator.push(context, route);
-                      },
-                      child: Text(
-                        "Edit Profile",
-                        style: TextStyle(color: Colors.red[800]),
-                      ),
-                    )
-                  : Container(),
-              FlatButton(
-                padding: EdgeInsets.all(0),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                onPressed: () async {
-                  await _takeSurvey();
-                },
-                child: Text(
-                  "Participate in Survey",
-                  style: TextStyle(color: Colors.red[800]),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 20),
                 child: NewsCarousel(),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(2, 10, 2, 0),
+                padding: const EdgeInsets.fromLTRB(2, 30, 2, 30),
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: Row(
@@ -271,7 +187,8 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                             Padding(
                               padding: const EdgeInsets.only(top: 5),
                               child: Text(
-                                "POLLS\nTAKEN",
+                                "POLLS TAKEN",
+                                style: TextStyle(fontSize: 12),
                               ),
                             ),
                           ],
@@ -291,7 +208,8 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                             Padding(
                               padding: const EdgeInsets.only(top: 5),
                               child: Text(
-                                "POSTS\nSHARED",
+                                "POSTS SHARED",
+                                style: TextStyle(fontSize: 12),
                               ),
                             ),
                           ],
@@ -302,7 +220,7 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                         child: Column(
                           children: <Widget>[
                             Text(
-                              "-",
+                              "-/-",
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 28,
@@ -311,7 +229,8 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                             Padding(
                               padding: const EdgeInsets.only(top: 5),
                               child: Text(
-                                "POSTS\nREAD",
+                                "POSTS READ",
+                                style: TextStyle(fontSize: 12),
                               ),
                             ),
                           ],
@@ -320,7 +239,72 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                     ],
                   ),
                 ),
-              )
+              ),
+              firebaseUserPhotoUrl == null
+                  ? Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Icon(
+                        Icons.account_circle,
+                        size: 100,
+                        color: Colors.grey,
+                      ),
+                    )
+                  : ClipOval(
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        height: 90,
+                        width: 90,
+                        imageUrl: firebaseUserPhotoUrl,
+                        placeholder: (context, url) => CircleAvatar(
+                          backgroundColor: Colors.grey,
+                          child: Icon(
+                            Icons.account_circle,
+                            size: 80,
+                            color: Colors.grey,
+                          ),
+                          radius: 45,
+                        ),
+                      ),
+                    ) /* Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 4),
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage("$firebaseUserPhotoUrl"),
+                        backgroundColor: Colors.transparent,
+                        radius: 45.0,
+                      ),
+                    ) */
+              ,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  _displayName(),
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+                ),
+              ),
+              firebaseUserEmail != null
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        _email(),
+                      ),
+                    )
+                  : Container(),
+              /* firebaseUserDisplayName != null
+                  ? FlatButton(
+                      padding: EdgeInsets.all(0),
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      onPressed: () {
+                        Route route = MaterialPageRoute(
+                          builder: (context) => ProfilePage(auth: widget.auth),
+                        );
+                        Navigator.push(context, route);
+                      },
+                      child: Text(
+                        "Edit Profile",
+                        style: TextStyle(color: Colors.red[800]),
+                      ),
+                    )
+                  : Container(), */
             ],
           ),
         ),

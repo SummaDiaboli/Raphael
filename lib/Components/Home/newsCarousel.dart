@@ -12,11 +12,18 @@ class NewsCarousel extends StatefulWidget {
 
 class _NewsCarouselState extends State<NewsCarousel> {
   List<CachedNetworkImage> newsImages = [];
+  GlobalKey swiperKey = GlobalKey(debugLabel: 'SwiperKey');
 
   @override
   void initState() {
     super.initState();
     getImages();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    newsImages = [];
   }
 
   getImages() async {
@@ -25,23 +32,21 @@ class _NewsCarouselState extends State<NewsCarousel> {
         .snapshots()
         .forEach((document) {
       document.documents.map((doc) {
-        setState(() {
-          newsImages.add(
-            CachedNetworkImage(
-              imageUrl: doc['contentUrl'],
-              placeholder: (context, url) => Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 60),
-                  child: Container(
-                    width: 32,
-                    height: 32,
-                    child: CircularProgressIndicator(),
-                  ),
+        newsImages.add(
+          CachedNetworkImage(
+            imageUrl: doc['contentUrl'],
+            placeholder: (context, url) => Center(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 60),
+                child: Container(
+                  width: 32,
+                  height: 32,
+                  child: CircularProgressIndicator(),
                 ),
               ),
             ),
-          );
-        });
+          ),
+        );
       }).toList();
     });
   }
@@ -50,18 +55,17 @@ class _NewsCarouselState extends State<NewsCarousel> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 180,
-      child: Container(
-        child: Swiper(
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              child: newsImages[index],
-            );
-          },
-          itemCount: newsImages.length,
-          viewportFraction: 0.6,
-          scale: 0.9,
-          // control: SwiperControl(),
-        ),
+      child: Swiper(
+        key: swiperKey,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            child: newsImages[index],
+          );
+        },
+        itemCount: newsImages.length,
+        viewportFraction: 0.6,
+        scale: 0.9,
+        // control: SwiperControl(),
       ),
     );
   }

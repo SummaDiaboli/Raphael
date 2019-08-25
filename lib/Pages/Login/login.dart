@@ -163,6 +163,11 @@ class _LoginState extends State<Login> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // _isIos = Theme.of(context).platform == TargetPlatform.iOS;
 

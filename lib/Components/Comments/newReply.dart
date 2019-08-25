@@ -22,6 +22,11 @@ class _NewReplyState extends State<NewReply> {
     _isLoading = false;
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   Widget _showCircularProgress() {
     if (_isLoading) {
       return Container(

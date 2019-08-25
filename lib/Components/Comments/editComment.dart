@@ -35,6 +35,11 @@ class _EditCommentState extends State<EditComment> {
     print("Current date and time ${DateTime.now()}"); */
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   Widget _showCircularProgress() {
     if (_isLoading) {
       return Container(

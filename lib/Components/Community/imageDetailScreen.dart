@@ -13,7 +13,7 @@ class ImageDetailScreen extends StatefulWidget {
 
 class _ImageDetailScreenState extends State<ImageDetailScreen> {
   @override
-  initState() {
+  void initState() {
     SystemChrome.setEnabledSystemUIOverlays([]);
     super.initState();
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yafe/Components/Drawer/profilePage.dart';
 import 'package:yafe/Components/Drawer/settingsPage.dart';
+import 'package:yafe/Components/Drawer/surveyPage.dart';
 import 'package:yafe/Utils/Auth/authentication.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -79,12 +80,16 @@ class _MainDrawerState extends State<MainDrawer> {
   @override
   void initState() {
     super.initState();
-
     _loadCurrentUser();
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
       user.reload();
     });
     print("$_userId");
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   FirebaseUser currentUser;
@@ -100,6 +105,7 @@ class _MainDrawerState extends State<MainDrawer> {
 
   String _displayName() {
     if (currentUser != null) {
+      _photoUrl();
       return currentUser.displayName;
     } else {
       return username;
@@ -290,12 +296,18 @@ class _MainDrawerState extends State<MainDrawer> {
               title: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Text(
-                  "Help",
+                  "Survey",
                   textAlign: TextAlign.start,
                   style: TextStyle(color: Colors.red[800], fontSize: 16),
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Route route = MaterialPageRoute(
+                  builder: (context) => SurveyPage(),
+                );
+                Navigator.pop(context);
+                Navigator.push(context, route);
+              },
             ),
             ListTile(
               contentPadding: EdgeInsets.all(0),
@@ -321,17 +333,23 @@ class _MainDrawerState extends State<MainDrawer> {
                 ),
               ),
               onTap: () async {
-                await FirebaseAuth.instance.signOut();
-                widget.onSignedOut();
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => RootPage(
-                      auth: Auth(),
+                try {
+                  widget.onSignedOut();
+                  Navigator.of(context).pop();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RootPage(
+                        auth: Auth(),
+                      ),
                     ),
-                  ),
-                  ModalRoute.withName("/Home"),
-                );
+                    ModalRoute.withName("/Home"),
+                  );
+                  await FirebaseAuth.instance.signOut();
+                } catch (e) {
+                  print(e);
+                }
+
                 // Navigator.of(context).pushReplacementNamed('/');
               },
             ),

@@ -70,6 +70,11 @@ class _SignUpState extends State<SignUp> {
     print("$_userId");
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   /* Widget _showErrorMessage() {
     if (_errorMessage.length > 0 && _errorMessage != null) {
       return new Text(

@@ -36,6 +36,11 @@ class _CommunityPageState extends State<CommunityPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // return HomeArticleCards();
     return Scaffold(

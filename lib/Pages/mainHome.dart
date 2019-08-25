@@ -133,33 +133,36 @@ class _MainHomePageState extends State<MainHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
-        centerTitle: true,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(45),
+        child: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+          centerTitle: true,
 
-        // This changes the title of the appbar in accordance
-        // with changes in the child of the bottom nav bar
-        title: Text(
-          [
-            "Home",
-            "Community",
-            "Posts",
-          ][_currentIndex],
-          style: TextStyle(color: Colors.black),
-        ),
-        backgroundColor: Colors.white /* Colors.grey[700] */,
-        /* actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.monetization_on),
-            onPressed: () {},
-            tooltip: "Donate",
+          // This changes the title of the appbar in accordance
+          // with changes in the child of the bottom nav bar
+          title: Text(
+            [
+              "Home",
+              "Community",
+              "Posts",
+            ][_currentIndex],
+            style: TextStyle(color: Colors.black),
           ),
-          IconButton(
-            icon: Icon(Icons.share),
-            onPressed: () {},
-            tooltip: "Share Yafe",
-          )
-        ], */
+          backgroundColor: Colors.white /* Colors.grey[700] */,
+          /* actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.monetization_on),
+              onPressed: () {},
+              tooltip: "Donate",
+            ),
+            IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () {},
+              tooltip: "Share Yafe",
+            )
+          ], */
+        ),
       ),
       drawer: MainDrawer(
         userId: widget.userId,
