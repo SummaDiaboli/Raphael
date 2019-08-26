@@ -11,7 +11,9 @@ import 'package:yafe/Components/Community/imageDetailScreen.dart';
 import 'package:yafe/Components/Community/videoCards.dart';
 // import 'package:rxdart/rxdart.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:yafe/Pages/Comments/commentsPage.dart';
+//import 'package:yafe/Pages/Comments/commentsPage.dart';
+import 'package:yafe/Components/Community/commentNumber.dart';
+import 'package:yafe/Components/Community/likesNumber.dart';
 
 class ArticleCards extends StatefulWidget {
   @override
@@ -76,20 +78,11 @@ class _ArticleCardsState extends State<ArticleCards> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.thumb_up),
-                  onPressed: () {},
-                  color: Colors.red,
+                LikesNumber(
+                  doc: doc,
                 ),
-                IconButton(
-                  icon: Icon(Icons.comment),
-                  color: Colors.grey,
-                  onPressed: () {
-                    Route route = MaterialPageRoute(
-                      builder: (context) => CommentsPage(doc: doc),
-                    );
-                    Navigator.push(context, route);
-                  },
+                CommentNumber(
+                  doc: doc,
                 ),
                 IconButton(
                   icon: Icon(Icons.share),
@@ -178,7 +171,7 @@ class _ArticleCardsState extends State<ArticleCards> {
   }
 
   Widget createMediaTile(DocumentSnapshot doc) {
-    return doc['mediaType'] == 'image'
+    return doc['mediaType'] == "image"
         ? imageTile(doc)
         : VideoPlayerCard(
             doc: doc,
@@ -213,7 +206,7 @@ class _ArticleCardsState extends State<ArticleCards> {
                     backgroundColor: Colors.transparent,
                     radius: 15,
                   ),
-            Padding(
+            /*Padding(
               padding: const EdgeInsets.fromLTRB(20, 6, 0, 10),
               child: Text(
                 doc['heading'],
@@ -221,7 +214,7 @@ class _ArticleCardsState extends State<ArticleCards> {
                 overflow: TextOverflow.clip,
                 maxLines: 2,
               ),
-            ),
+            ),*/
           ],
         ),
         subtitle: Column(
@@ -249,23 +242,11 @@ class _ArticleCardsState extends State<ArticleCards> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.thumb_up),
-                  color: Colors.red,
-                  onPressed: () {},
+                LikesNumber(
+                  doc: doc,
                 ),
-                IconButton(
-                  icon: Icon(Icons.comment),
-                  color: Colors.grey,
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => CommentsPage(
-                          doc: doc,
-                        ),
-                      ),
-                    );
-                  },
+                CommentNumber(
+                  doc: doc,
                 ),
                 IconButton(
                   icon: Icon(Icons.share),

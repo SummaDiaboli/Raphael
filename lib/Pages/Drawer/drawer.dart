@@ -296,7 +296,7 @@ class _MainDrawerState extends State<MainDrawer> {
               title: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Text(
-                  "Survey",
+                  "Polls",
                   textAlign: TextAlign.start,
                   style: TextStyle(color: Colors.red[800], fontSize: 16),
                 ),

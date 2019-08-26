@@ -3,7 +3,9 @@ import 'package:chewie/chewie.dart';
 import 'package:share/share.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:yafe/Pages/Comments/commentsPage.dart';
+//import 'package:yafe/Pages/Comments/commentsPage.dart';
+import 'package:yafe/Components/Community/commentNumber.dart';
+import 'package:yafe/Components/Community/likesNumber.dart';
 // import 'package:custom_chewie/custom_chewie.dart';
 
 class VideoPlayerCard extends StatefulWidget {
@@ -70,7 +72,7 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
                   backgroundColor: Colors.transparent,
                   radius: 15,
                 ),
-          Padding(
+          /*Padding(
             padding: const EdgeInsets.fromLTRB(20, 6, 0, 10),
             child: Text(
               widget.doc['heading'],
@@ -78,7 +80,7 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
               overflow: TextOverflow.clip,
               maxLines: 2,
             ),
-          ),
+          ),*/
         ],
       ),
       subtitle: Column(
@@ -118,23 +120,11 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.thumb_up),
-                color: Colors.red,
-                onPressed: () {},
+              LikesNumber(
+                doc: widget.doc,
               ),
-              IconButton(
-                icon: Icon(Icons.comment),
-                color: Colors.grey,
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => CommentsPage(
-                        doc: widget.doc,
-                      ),
-                    ),
-                  );
-                },
+              CommentNumber(
+                doc: widget.doc,
               ),
               IconButton(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 0),

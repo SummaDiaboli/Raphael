@@ -193,29 +193,29 @@ class _MainHomePageState extends State<MainHomePage> {
         onTap: onTabTapped,
         showSelectedLabels: true,
         showUnselectedLabels: true,
-        backgroundColor: Colors.red[900],
+        backgroundColor: Colors.white,
         currentIndex: _currentIndex,
         items: [
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
               size: 30,
-              color: Colors.white,
+              color: Colors.red[800],
             ),
             title: Text(
               "Home",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.red[800]),
             ),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.group,
               size: 30,
-              color: Colors.white,
+              color: Colors.red[800],
             ),
             title: Text(
               "Community",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.red[800]),
             ),
           ),
           /* BottomNavigationBarItem(
@@ -233,11 +233,11 @@ class _MainHomePageState extends State<MainHomePage> {
             icon: Icon(
               Icons.mode_comment,
               size: 30,
-              color: Colors.white,
+              color: Colors.red[800],
             ),
             title: Text(
               "Posts",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.red[800]),
             ),
           ),
         ],

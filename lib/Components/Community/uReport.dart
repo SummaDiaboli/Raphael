@@ -105,7 +105,9 @@ class _UReportPageState extends State<UReportPage> {
         DateTime dateAndTime = DateTime.now();
 
         CollectionReference dbPending =
-            Firestore.instance.collection('pending');
+//            Firestore.instance.collection('pending');
+            //! Until the demo is over. To be switched back to pending
+            Firestore.instance.collection('articles');
         await dbPending.add({
           "date": dateAndTime,
           "userDisplayName": displayName,

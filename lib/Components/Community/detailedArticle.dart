@@ -3,7 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:yafe/Pages/Comments/commentsPage.dart';
+//import 'package:yafe/Pages/Comments/commentsPage.dart';
+import 'package:yafe/Components/Community/commentNumber.dart';
+import 'package:yafe/Components/Community/likesNumber.dart';
 
 class DetailedArticle extends StatefulWidget {
   DetailedArticle({this.url, this.likes, this.dislikes, this.doc});
@@ -96,24 +98,10 @@ class _DetailedArticleState extends State<DetailedArticle> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.thumb_up),
-              color: Colors.red,
-              onPressed: () {},
+            LikesNumber(
+              doc: widget.doc,
             ),
-            IconButton(
-              icon: Icon(Icons.comment),
-              color: Colors.grey,
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => CommentsPage(
-                      doc: widget.doc,
-                    ),
-                  ),
-                );
-              },
-            ),
+            CommentNumber(doc: widget.doc),
             IconButton(
               icon: Icon(Icons.share),
               color: Colors.blueAccent,

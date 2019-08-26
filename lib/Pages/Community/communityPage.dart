@@ -138,7 +138,8 @@ class _CommunityPageState extends State<CommunityPage> {
     );
   }
 
-  Future<void> uploadTask(File userSelection, String filename) async {
+  Future<void> uploadTask(
+      File userSelection, String filename, bool _isImage) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     StorageReference storage = FirebaseStorage.instance
         .ref()
@@ -158,12 +159,13 @@ class _CommunityPageState extends State<CommunityPage> {
       Scaffold.of(context).showSnackBar(snackBar);
     }
 
-    sendToDatabase(uploadTask);
+    sendToDatabase(uploadTask, _isImage);
 
     print("File uploaded");
   }
 
-  Future<void> sendToDatabase(StorageUploadTask uploadTask) async {
+  Future<void> sendToDatabase(
+      StorageUploadTask uploadTask, bool _isImage) async {
     var downloadUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
     String url = downloadUrl.toString();
 
@@ -173,12 +175,17 @@ class _CommunityPageState extends State<CommunityPage> {
     String photoUrl = firebaseUser.photoUrl;
     DateTime dateAndTime = DateTime.now();
 
-    CollectionReference dbPending = Firestore.instance.collection('pending');
+    CollectionReference dbPending =
+//    Firestore.instance.collection('pending');
+        //! Until demo ends. Will be switched back to pending later
+        Firestore.instance.collection('articles');
     dbPending.add({
       "userId": userId,
       "userDisplayName": userDisplayName,
-      "contentUrl": url,
-      "uploadDateAndTime": dateAndTime,
+      "mediaType": _isImage ? 'image' : 'video',
+      "media": true,
+      "url": url,
+      "date": dateAndTime,
       "photoUrl": photoUrl,
       "likes": 0,
     }).catchError((err) => print(err));
@@ -203,9 +210,9 @@ class _CommunityPageState extends State<CommunityPage> {
     whatToDisplay(_image, _video);
   }
 
-  _uploadInProgress(file, filename) async {
+  _uploadInProgress(file, filename, bool _isImage) async {
     try {
-      await uploadTask(file, filename);
+      await uploadTask(file, filename, _isImage);
       setState(() {
         _isLoading = false;
       });
@@ -217,7 +224,7 @@ class _CommunityPageState extends State<CommunityPage> {
   }
 
   Future<void> _buildConfirmation(
-      BuildContext context, _message, _file, _filename) {
+      BuildContext context, _message, _file, _filename, bool _isImage) {
     return showDialog<void>(
       builder: (context) {
         return AlertDialog(
@@ -227,7 +234,7 @@ class _CommunityPageState extends State<CommunityPage> {
             FlatButton(
               child: Text("Confirm"),
               onPressed: () {
-                _uploadInProgress(_file, _filename);
+                _uploadInProgress(_file, _filename, _isImage);
                 Navigator.of(context).pop();
               },
             ),
@@ -253,11 +260,11 @@ class _CommunityPageState extends State<CommunityPage> {
     if (image == null && video != null) {
       String filename = prefix0.basename(video.path);
       _buildConfirmation(context, "Are you sure you want to upload this video?",
-          _video, "${fileprefix}_$filename");
+          _video, "${fileprefix}_$filename", false);
     } else if (image != null && video == null) {
       String filename = prefix0.basename(image.path);
       _buildConfirmation(context, "Are you sure you want to upload this image?",
-          _image, "${fileprefix}_$filename");
+          _image, "${fileprefix}_$filename", true);
     }
   }
 }
