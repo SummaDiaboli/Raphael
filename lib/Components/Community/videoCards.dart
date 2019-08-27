@@ -97,10 +97,12 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
                     aspectRatio: _controller.value.aspectRatio,
                     // Use the VideoPlayer widget to display the video.
                     child: Chewie(
-                      _controller,
-                      aspectRatio: _controller.value.aspectRatio,
-                      autoPlay: false,
-                      looping: true,
+                      controller: ChewieController(
+                        videoPlayerController: _controller,
+                        aspectRatio: _controller.value.aspectRatio,
+                        autoPlay: false,
+                        looping: true,
+                      ),
                       // showControls: true,
                     ),
                   );
