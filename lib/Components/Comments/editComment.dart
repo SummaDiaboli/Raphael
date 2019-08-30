@@ -21,18 +21,6 @@ class _EditCommentState extends State<EditComment> {
   void initState() {
     super.initState();
     _isLoading = false;
-
-    /* print("Widget doc: ${widget.doc.data}");
-    print("Comment doc: ${widget.comment.data}");
-    print("Comment reference: ${widget.comment.reference.path}");
-
-    print("Doc display name: ${widget.doc['displayName']}");
-    print("Doc date created: ${widget.doc['dateCreated']}");
-
-    print("Comment display name: ${widget.comment['displaName']}");
-    print("Comment date created: ${widget.comment['dateCreated']}");
-
-    print("Current date and time ${DateTime.now()}"); */
   }
 
   @override

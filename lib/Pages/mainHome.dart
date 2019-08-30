@@ -95,10 +95,6 @@ class _MainHomePageState extends State<MainHomePage> {
   }
 
   Widget _showVerifyEmailSentDialog() {
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) {
-    // return object of type Dialog
     return AlertDialog(
       title: Text("Verify your account"),
       content: Text("Link to verify account has been sent to your email"),
@@ -114,14 +110,7 @@ class _MainHomePageState extends State<MainHomePage> {
         ),
       ],
     );
-    // },
-    // );
   }
-  /* @override
-  void dispose() {
-    super.dispose();
-    print("$_userId");
-  } */
 
   void _onSignedOut() {
     setState(() {

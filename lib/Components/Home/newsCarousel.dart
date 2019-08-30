@@ -8,8 +8,6 @@ class NewsCarousel extends StatefulWidget {
   _NewsCarouselState createState() => _NewsCarouselState();
 }
 
-// TODO: have the container for the urls open links to the articles.
-
 class _NewsCarouselState extends State<NewsCarousel> {
   List<CachedNetworkImage> newsImages = [];
   GlobalKey swiperKey = GlobalKey(debugLabel: 'SwiperKey');
@@ -65,6 +63,9 @@ class _NewsCarouselState extends State<NewsCarousel> {
         itemCount: newsImages.length,
         viewportFraction: 0.6,
         scale: 0.9,
+        onTap: (int index) {
+          // Make sure the images open up a webview with the url
+        },
         // control: SwiperControl(),
       ),
     );

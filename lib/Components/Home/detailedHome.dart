@@ -98,7 +98,7 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
       setState(() {
         firebaseUserPhotoUrl = firebaseUser.displayName;
       });
-      print(firebaseUser.photoUrl);
+      // print(firebaseUser.photoUrl);
       return firebaseUserPhotoUrl;
     } else {
       return null;

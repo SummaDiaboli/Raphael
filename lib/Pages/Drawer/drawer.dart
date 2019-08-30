@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yafe/Components/Drawer/profilePage.dart';
 import 'package:yafe/Components/Drawer/settingsPage.dart';
 import 'package:yafe/Components/Drawer/surveyPage.dart';
+import 'package:yafe/Components/Drawer/translate/translateWebView.dart';
 import 'package:yafe/Utils/Auth/authentication.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -84,7 +85,7 @@ class _MainDrawerState extends State<MainDrawer> {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
       user.reload();
     });
-    print("$_userId");
+    // print("$_userId");
   }
 
   @override
@@ -222,6 +223,24 @@ class _MainDrawerState extends State<MainDrawer> {
                 Navigator.push(context, route);
               },
             ),
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              title: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: Text(
+                  "Translate",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(color: Colors.red[800], fontSize: 16),
+                ),
+              ),
+              onTap: () {
+                Route route = MaterialPageRoute(
+                  builder: (context) => TranslateWebView(),
+                );
+                Navigator.pop(context);
+                Navigator.push(context, route);
+              },
+            ),
             /*ListTile(
               contentPadding: EdgeInsets.all(0),
               /* leading: Padding(
@@ -249,6 +268,24 @@ class _MainDrawerState extends State<MainDrawer> {
             ),*/
             ListTile(
               contentPadding: EdgeInsets.all(0),
+              title: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: Text(
+                  "Polls",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(color: Colors.red[800], fontSize: 16),
+                ),
+              ),
+              onTap: () {
+                Route route = MaterialPageRoute(
+                  builder: (context) => SurveyPage(),
+                );
+                Navigator.pop(context);
+                Navigator.push(context, route);
+              },
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
               /* leading: Padding(
                   padding: const EdgeInsets.all(0.0),
                   child: SizedBox(
@@ -273,37 +310,6 @@ class _MainDrawerState extends State<MainDrawer> {
               onTap: () {
                 Route route = MaterialPageRoute(
                   builder: (context) => SettingsPage(),
-                );
-                Navigator.pop(context);
-                Navigator.push(context, route);
-              },
-            ),
-            ListTile(
-              contentPadding: EdgeInsets.all(0),
-              /* leading: Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: SizedBox(
-                    width: 5,
-                    height: 45,
-                    child: Container(
-                      margin: EdgeInsetsDirectional.only(
-                        start: 0,
-                      ),
-                      color: Colors.red[800],
-                    ),
-                  ),
-                ), */
-              title: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                child: Text(
-                  "Polls",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(color: Colors.red[800], fontSize: 16),
-                ),
-              ),
-              onTap: () {
-                Route route = MaterialPageRoute(
-                  builder: (context) => SurveyPage(),
                 );
                 Navigator.pop(context);
                 Navigator.push(context, route);

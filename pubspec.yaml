@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  android_intent:
   carousel_slider:
   cached_network_image: ^1.1.1
   chewie:
