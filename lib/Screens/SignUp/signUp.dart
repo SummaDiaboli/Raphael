@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 //import 'package:yafe/login/login.dart';
 import 'package:yafe/Utils/Auth/authentication.dart';
-import "package:yafe/Pages/rootPage.dart";
+import "package:yafe/Screens/rootPage.dart";
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:path/path.dart' as prefix0;
 

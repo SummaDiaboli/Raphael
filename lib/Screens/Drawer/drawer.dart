@@ -6,7 +6,7 @@ import 'package:yafe/Components/Drawer/translate/translateWebView.dart';
 import 'package:yafe/Utils/Auth/authentication.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import "package:yafe/Pages/rootPage.dart";
+import "package:yafe/Screens/rootPage.dart";
 
 class MainDrawer extends StatefulWidget {
   MainDrawer({this.userId, this.auth, this.onSignedOut});
@@ -28,7 +28,7 @@ enum AuthStatus {
 
 class _MainDrawerState extends State<MainDrawer> {
   AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
-  String _userId = "";
+  // String _userId = "";
   /* AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
   String _userId = "";
 

@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:share/share.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-//import 'package:yafe/Pages/Comments/commentsPage.dart';
-import 'package:yafe/Components/Community/commentNumber.dart';
-import 'package:yafe/Components/Community/likesNumber.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:yafe/Utils/Language/language.dart';
+
+// import 'package:share/share.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
+// //import 'package:yafe/Pages/Comments/commentsPage.dart';
+// import 'package:yafe/Components/Community/commentNumber.dart';
+// import 'package:yafe/Components/Community/likesNumber.dart';
 
 class DetailedArticle extends StatefulWidget {
   DetailedArticle({this.url, this.likes, this.dislikes, this.doc});
@@ -20,9 +23,13 @@ class DetailedArticle extends StatefulWidget {
 }
 
 class _DetailedArticleState extends State<DetailedArticle> {
+  String userLanguage;
+
   @override
   void initState() {
     super.initState();
+    getUserLanguage();
+    // print(userLanguage);
   }
 
   @override
@@ -30,9 +37,42 @@ class _DetailedArticleState extends State<DetailedArticle> {
     super.dispose();
   }
 
+  Future<void> getUserLanguage() async {
+    String language = await getCurrentLanguage();
+    setState(() {
+      userLanguage = language;
+    });
+    print(userLanguage);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return userLanguage == null
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+
+        // WebviewScaffold is used in the place of WebView because google translate's redirect
+        // didn't automatically redirect in WebView, it required a manual tap
+        : WebviewScaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(
+                "Article",
+                style: TextStyle(color: Colors.black),
+              ),
+              backgroundColor: Colors.white,
+              iconTheme: IconThemeData(color: Colors.black),
+            ),
+            withJavascript: true,
+            url: userLanguage == "en"
+                ? widget.url
+                : "https://translate.google.com/translate?hl=en&sl=auto&tl=$userLanguage&u=${widget.url}",
+          );
+  }
+}
+
+/* Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -112,10 +152,16 @@ class _DetailedArticleState extends State<DetailedArticle> {
           ],
         ),
       ],
-      body: WebView(
-        initialUrl: widget.url,
-        javascriptMode: JavascriptMode.unrestricted,
-      ),
-    );
-  }
-}
+      body: userLanguage == null
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : WebView(
+              onWebViewCreated: (WebViewController viewController) {
+              },
+              initialUrl: userLanguage == "en"
+                  ? widget.url
+                  : "https://translate.google.com/translate?hl=en&sl=auto&tl=$userLanguage&u=${widget.url}",
+              javascriptMode: JavascriptMode.unrestricted,
+            ),
+    ); */

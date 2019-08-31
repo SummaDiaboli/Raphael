@@ -100,6 +100,14 @@ class _CommentsBuilderState extends State<CommentsBuilder> {
                   trailing: doc['userId'] == uid
                       ? PopupMenuButton(
                           icon: Icon(Icons.more_horiz),
+                          itemBuilder: (BuildContext context) {
+                            return CommentActions.actions.map((String action) {
+                              return PopupMenuItem<String>(
+                                value: action,
+                                child: Text(action),
+                              );
+                            }).toList();
+                          },
                           onSelected: (String choice) {
                             if (choice == CommentActions.Edit) {
                               Navigator.of(context).push(
@@ -127,14 +135,6 @@ class _CommentsBuilderState extends State<CommentsBuilder> {
                                 ),
                               );
                             }
-                          },
-                          itemBuilder: (BuildContext context) {
-                            return CommentActions.actions.map((String action) {
-                              return PopupMenuItem<String>(
-                                value: action,
-                                child: Text(action),
-                              );
-                            }).toList();
                           },
                         )
                       : null,

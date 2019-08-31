@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// Importing other pages for the main route
-import 'package:yafe/Pages/Home/homePage.dart';
-import 'package:yafe/Pages/Community/communityPage.dart';
-import 'package:yafe/Pages/Posts/postPage.dart';
+// Importing other Screens for the main route
+import 'package:yafe/Screens/Home/homePage.dart';
+import 'package:yafe/Screens/Community/communityPage.dart';
+import 'package:yafe/Screens/Posts/postPage.dart';
 
 // Importing the drawer
-import 'package:yafe/Pages/Drawer/drawer.dart';
+import 'package:yafe/Screens/Drawer/drawer.dart';
 
 import "package:yafe/Utils/Auth/authentication.dart";
 
@@ -32,7 +32,7 @@ class _MainHomePageState extends State<MainHomePage> {
 
   bool _isEmailVerified;
 
-  // All the pages contained in the bottom navigation bar
+  // All the Screens contained in the bottom navigation bar
   /* final List<Widget> _children = [
     HomePage(),
     MapPage(),

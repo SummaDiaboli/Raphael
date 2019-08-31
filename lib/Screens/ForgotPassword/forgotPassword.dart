@@ -13,7 +13,7 @@ class ForgotPassword extends StatefulWidget {
 class _ForgotPasswordState extends State<ForgotPassword> {
   final _formKey = new GlobalKey<FormState>();
 
-  String _userId = "";
+  // String _userId = "";
   String _email;
 
   bool _isLoading;

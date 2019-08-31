@@ -3,7 +3,7 @@ import 'package:chewie/chewie.dart';
 import 'package:share/share.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
-//import 'package:yafe/Pages/Comments/commentsPage.dart';
+//import 'package:yafe/Screens/Comments/commentsPage.dart';
 import 'package:yafe/Components/Community/commentNumber.dart';
 import 'package:yafe/Components/Community/likesNumber.dart';
 // import 'package:custom_chewie/custom_chewie.dart';

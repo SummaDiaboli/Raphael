@@ -11,7 +11,7 @@ import 'package:yafe/Components/Community/imageDetailScreen.dart';
 import 'package:yafe/Components/Community/videoCards.dart';
 // import 'package:rxdart/rxdart.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-//import 'package:yafe/Pages/Comments/commentsPage.dart';
+//import 'package:yafe/Screens/Comments/commentsPage.dart';
 import 'package:yafe/Components/Community/commentNumber.dart';
 import 'package:yafe/Components/Community/likesNumber.dart';
 
@@ -144,7 +144,6 @@ class _ArticleCardsState extends State<ArticleCards> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           // Fills in the article information
-
           Text(
             doc['description'],
             overflow: TextOverflow.ellipsis,
@@ -163,6 +162,25 @@ class _ArticleCardsState extends State<ArticleCards> {
                 style: TextStyle(fontSize: 11.9),
               ),
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              LikesNumber(
+                doc: doc,
+              ),
+              CommentNumber(
+                doc: doc,
+              ),
+              IconButton(
+                icon: Icon(Icons.share),
+                color: Colors.blueAccent,
+                onPressed: () {
+                  Share.share(
+                      "\"${doc['postContents']}\" \n-- ${doc['userDisplayName']} ");
+                },
+              ),
+            ],
           ),
         ],
       ),

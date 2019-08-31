@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:yafe/Components/Drawer/profilePage.dart';
 import 'package:yafe/Utils/Auth/authentication.dart';
 import 'package:yafe/Components/Home/newsCarousel.dart';
+import 'package:yafe/Utils/Language/language.dart';
 
 class DetailedHomePage extends StatefulWidget {
   DetailedHomePage({this.auth, this.userId});
@@ -22,8 +23,10 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
   String firebaseUserDisplayName;
   String firebaseUserEmail;
   String firebaseUserPhotoUrl;
+  String userLanguage;
 
   bool firstTime;
+  bool languageSelected;
 
   bool _isLoading;
 
@@ -49,12 +52,13 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
   @override
   void initState() {
     super.initState();
+    checkIfBeginner();
+    _loadCurrentUser();
+    _displayName();
+    _profilePicture();
+    _email();
+    getUserLanguage();
     setState(() {
-      checkIfBeginner();
-      _loadCurrentUser();
-      _displayName();
-      _profilePicture();
-      _email();
       _isLoading = false;
     });
   }
@@ -62,6 +66,10 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  Future<void> getUserLanguage() async {
+    userLanguage = await getCurrentLanguage();
   }
 
   void _loadCurrentUser() {
@@ -123,9 +131,11 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
 
     if (_seen) {
       firstTime = false;
+      languageSelected = false;
     } else {
       preferences.setBool('seen', true);
       firstTime = true;
+      languageSelected = true;
     }
   }
 
@@ -158,6 +168,91 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                             "What is YAFE? How to get started",
                             style: TextStyle(color: Colors.white),
                           ),
+                        ),
+                      ),
+                    )
+                  : Container(),
+              languageSelected == true
+                  ? Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: Container(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Container(
+                              child: Center(
+                                child: Text(
+                                  "What language do you prefer speaking in?",
+                                  style: TextStyle(
+                                    fontSize: 11.0,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  child: FlatButton(
+                                    onPressed: () {
+                                      setNewLanguage('en');
+                                    },
+                                    child: Text(
+                                      "English",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  child: FlatButton(
+                                    onPressed: () {
+                                      setNewLanguage('ha');
+                                    },
+                                    child: Text(
+                                      "Hausa",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  child: FlatButton(
+                                    onPressed: () {
+                                      setNewLanguage('ig');
+                                    },
+                                    child: Text(
+                                      "Igbo",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  child: FlatButton(
+                                    onPressed: () {
+                                      setNewLanguage('yo');
+                                    },
+                                    child: Text(
+                                      "Yoruba",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
                         ),
                       ),
                     )

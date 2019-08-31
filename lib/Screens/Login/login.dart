@@ -5,12 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_twitter_login/flutter_twitter_login.dart';
 
-// Importing the other login pages
-import 'package:yafe/Pages/SignUp/signUp.dart';
-import 'package:yafe/Pages/ForgotPassword/forgotPassword.dart';
+// Importing the other login Screens
+import 'package:yafe/Screens/SignUp/signUp.dart';
+import 'package:yafe/Screens/ForgotPassword/forgotPassword.dart';
 
-// Importing the navigation to the main pages
-import 'package:yafe/Pages/mainHome.dart';
+// Importing the navigation to the main Screens
+import 'package:yafe/Screens/mainHome.dart';
 
 // importing progress indicator
 //import 'package:yafe/mainPages/supplementary/circularProgressIndicator.dart';

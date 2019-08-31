@@ -22,6 +22,9 @@ dependencies:
   flutter_speed_dial:
   flutter_swiper:
   flutter_twitter_login:
+
+  flutter_webview_plugin:
+
   image_picker:
   intl:
   path_provider:

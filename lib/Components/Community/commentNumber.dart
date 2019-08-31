@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:yafe/Pages/Comments/commentsPage.dart';
+import 'package:yafe/Screens/Comments/commentsPage.dart';
 
 class CommentNumber extends StatefulWidget {
   CommentNumber({this.doc});
