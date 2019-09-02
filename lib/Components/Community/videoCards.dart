@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:chewie/chewie.dart';
 import 'package:share/share.dart';
@@ -66,10 +67,19 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
                   color: Colors.grey,
                   size: 44,
                 )
-              : CircleAvatar(
-                  backgroundImage: NetworkImage("${widget.doc['photoUrl']}"),
-                  backgroundColor: Colors.transparent,
-                  radius: 15,
+              : ClipOval(
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    height: 45,
+                    width: 45,
+                    imageUrl: widget.doc['photoUrl'],
+                    placeholder: (context, url) => CircleAvatar(
+                      backgroundImage:
+                          NetworkImage("${widget.doc['photoUrl']}"),
+                      backgroundColor: Colors.grey,
+                      radius: 20,
+                    ),
+                  ),
                 ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 6, 0, 10),

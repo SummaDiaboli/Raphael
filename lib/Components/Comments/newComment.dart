@@ -164,7 +164,7 @@ class _NewCommentState extends State<NewComment> {
                     vertical: 4,
                   ),
                   child: Container(
-                    width: 185,
+                    width: 160,
                     child: FlatButton(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6),
@@ -182,10 +182,10 @@ class _NewCommentState extends State<NewComment> {
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
-                          Icon(
+                          /* Icon(
                             Icons.forward,
                             color: Colors.red[800],
-                          ),
+                          ), */
                         ],
                       ),
                     ),

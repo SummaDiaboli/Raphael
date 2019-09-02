@@ -7,6 +7,7 @@ class ImageDetailScreen extends StatefulWidget {
 
   final String tag;
   final String url;
+
   @override
   _ImageDetailScreenState createState() => _ImageDetailScreenState();
 }
@@ -32,6 +33,7 @@ class _ImageDetailScreenState extends State<ImageDetailScreen> {
         Navigator.pop(context);
       },
       child: Scaffold(
+        backgroundColor: Colors.transparent,
         body: GestureDetector(
           child: Center(
             child: Hero(

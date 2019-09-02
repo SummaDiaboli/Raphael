@@ -51,23 +51,25 @@ class _NewsCarouselState extends State<NewsCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 180,
-      child: Swiper(
-        key: swiperKey,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            child: newsImages[index],
+    return newsImages == null
+        ? Center(child: CircularProgressIndicator())
+        : SizedBox(
+            height: 180,
+            child: Swiper(
+              key: swiperKey,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  child: newsImages[index],
+                );
+              },
+              itemCount: newsImages.length,
+              viewportFraction: 0.6,
+              scale: 0.8,
+              onTap: (int index) {
+                // Make sure the images open up a webview with the url
+              },
+              // control: SwiperControl(),
+            ),
           );
-        },
-        itemCount: newsImages.length,
-        viewportFraction: 0.6,
-        scale: 0.9,
-        onTap: (int index) {
-          // Make sure the images open up a webview with the url
-        },
-        // control: SwiperControl(),
-      ),
-    );
   }
 }

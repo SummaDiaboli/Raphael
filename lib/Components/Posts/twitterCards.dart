@@ -137,8 +137,10 @@ class _TwitterTileState extends State<TwitterTile> {
                       color: Colors.blueAccent,
                       icon: Icon(Icons.share),
                       onPressed: () {
-                        //* Gets the shortened tweet URl and shares it
-                        Share.share(widget.tweet['entities']['urls'][0]['url']);
+                        //* Gets the shortened tweet URl for sharing
+                        Share.share(
+                          widget.tweet['entities']['urls'][0]['url'],
+                        );
                       },
                     ),
                   ],

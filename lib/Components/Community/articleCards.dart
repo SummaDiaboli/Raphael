@@ -51,10 +51,18 @@ class _ArticleCardsState extends State<ArticleCards> {
                   color: Colors.grey,
                   size: 44,
                 )
-              : CircleAvatar(
-                  backgroundImage: NetworkImage("${doc['photoUrl']}"),
-                  backgroundColor: Colors.transparent,
-                  radius: 15,
+              : ClipOval(
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    height: 45,
+                    width: 45,
+                    imageUrl: doc['photoUrl'],
+                    placeholder: (context, url) => CircleAvatar(
+                      backgroundImage: NetworkImage("${doc['photoUrl']}"),
+                      backgroundColor: Colors.grey,
+                      radius: 20,
+                    ),
+                  ),
                 ),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 6, 0, 10),
@@ -119,13 +127,21 @@ class _ArticleCardsState extends State<ArticleCards> {
         child: doc['photoUrl'] == null
             ? Icon(
                 Icons.account_circle,
-                size: 70,
+                size: 45,
                 color: Colors.grey,
               )
-            : CircleAvatar(
-                backgroundImage: NetworkImage("${doc['photoUrl']}"),
-                backgroundColor: Colors.transparent,
-                radius: 15,
+            : ClipOval(
+                child: CachedNetworkImage(
+                  fit: BoxFit.cover,
+                  height: 45,
+                  width: 45,
+                  imageUrl: doc['photoUrl'],
+                  placeholder: (context, url) => CircleAvatar(
+                    backgroundImage: NetworkImage("${doc['photoUrl']}"),
+                    backgroundColor: Colors.grey,
+                    radius: 20,
+                  ),
+                ),
               ),
       ),
       // contentPadding: EdgeInsets.fromLTRB(16, 0, 20, 0),
@@ -135,7 +151,7 @@ class _ArticleCardsState extends State<ArticleCards> {
         child: Text(
           doc['heading'],
           style: TextStyle(fontWeight: FontWeight.w500),
-          overflow: TextOverflow.clip,
+          overflow: TextOverflow.ellipsis,
           maxLines: 2,
         ),
       ),
@@ -219,10 +235,18 @@ class _ArticleCardsState extends State<ArticleCards> {
                     color: Colors.grey,
                     size: 44,
                   )
-                : CircleAvatar(
-                    backgroundImage: NetworkImage("${doc['photoUrl']}"),
-                    backgroundColor: Colors.transparent,
-                    radius: 15,
+                : ClipOval(
+                    child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      height: 45,
+                      width: 45,
+                      imageUrl: doc['photoUrl'],
+                      placeholder: (context, url) => CircleAvatar(
+                        backgroundImage: NetworkImage("${doc['photoUrl']}"),
+                        backgroundColor: Colors.grey,
+                        radius: 20,
+                      ),
+                    ),
                   ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 6, 0, 10),

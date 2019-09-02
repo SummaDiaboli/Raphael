@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -132,10 +133,18 @@ class _ReplyBuilderState extends State<ReplyBuilder> {
                       color: Colors.grey,
                       size: 44,
                     )
-                  : CircleAvatar(
-                      backgroundImage: NetworkImage(doc['photoUrl']),
-                      backgroundColor: Colors.transparent,
-                      radius: 15,
+                  : ClipOval(
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        height: 45,
+                        width: 45,
+                        imageUrl: doc['photoUrl'],
+                        placeholder: (context, url) => CircleAvatar(
+                          backgroundImage: NetworkImage("${doc['photoUrl']}"),
+                          backgroundColor: Colors.grey,
+                          radius: 20,
+                        ),
+                      ),
                     ),
               title: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
