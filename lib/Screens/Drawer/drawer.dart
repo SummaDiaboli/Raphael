@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:yafe/Components/Drawer/profilePage.dart';
 import 'package:yafe/Components/Drawer/settingsPage.dart';
 import 'package:yafe/Components/Drawer/surveyPage.dart';
@@ -132,6 +133,11 @@ class _MainDrawerState extends State<MainDrawer> {
     }
   }
 
+  void launchWhatsappLink() async {
+    const url = "https://chat.whatsapp.com/GrfObmWqvwACiMLdVi4Rhk";
+    await canLaunch(url) ? launch(url) : print("Please install whatsapp");
+  }
+
   @override
   Widget build(BuildContext context) {
     _photoUrl();
@@ -192,19 +198,6 @@ class _MainDrawerState extends State<MainDrawer> {
             ),
             ListTile(
               contentPadding: EdgeInsets.all(0),
-              /* leading: Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: SizedBox(
-                    width: 5,
-                    height: 45,
-                    child: Container(
-                      margin: EdgeInsetsDirectional.only(
-                        start: 0,
-                      ),
-                      color: Colors.red[800],
-                    ),
-                  ),
-                ), */
               title: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Text(
@@ -241,31 +234,6 @@ class _MainDrawerState extends State<MainDrawer> {
                 Navigator.push(context, route);
               },
             ),
-            /*ListTile(
-              contentPadding: EdgeInsets.all(0),
-              /* leading: Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: SizedBox(
-                    width: 5,
-                    height: 45,
-                    child: Container(
-                      margin: EdgeInsetsDirectional.only(
-                        start: 0,
-                      ),
-                      color: Colors.red[800],
-                    ),
-                  ),
-                ), */
-              title: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                child: Text(
-                  "Account",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(color: Colors.red[800], fontSize: 16),
-                ),
-              ),
-              onTap: () {},
-            ),*/
             ListTile(
               contentPadding: EdgeInsets.all(0),
               title: Padding(
@@ -286,19 +254,6 @@ class _MainDrawerState extends State<MainDrawer> {
             ),
             ListTile(
               contentPadding: EdgeInsets.all(0),
-              /* leading: Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: SizedBox(
-                    width: 5,
-                    height: 45,
-                    child: Container(
-                      margin: EdgeInsetsDirectional.only(
-                        start: 0,
-                      ),
-                      color: Colors.red[800],
-                    ),
-                  ),
-                ), */
               title: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Text(
@@ -317,19 +272,18 @@ class _MainDrawerState extends State<MainDrawer> {
             ),
             ListTile(
               contentPadding: EdgeInsets.all(0),
-              /* leading: Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: SizedBox(
-                    width: 5,
-                    height: 45,
-                    child: Container(
-                      margin: EdgeInsetsDirectional.only(
-                        start: 0,
-                      ),
-                      color: Colors.red[800],
-                    ),
-                  ),
-                ), */
+              title: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: Text(
+                  "Help",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(color: Colors.red[800], fontSize: 16),
+                ),
+              ),
+              onTap: launchWhatsappLink,
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
               title: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Text(
@@ -355,7 +309,6 @@ class _MainDrawerState extends State<MainDrawer> {
                 } catch (e) {
                   print(e);
                 }
-
                 // Navigator.of(context).pushReplacementNamed('/');
               },
             ),
