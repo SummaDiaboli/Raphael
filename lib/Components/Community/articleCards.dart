@@ -224,15 +224,15 @@ class _ArticleCardsState extends State<ArticleCards> {
                     backgroundColor: Colors.transparent,
                     radius: 15,
                   ),
-            /*Padding(
+            Padding(
               padding: const EdgeInsets.fromLTRB(20, 6, 0, 10),
               child: Text(
-                doc['heading'],
+                doc['userDisplayName'],
                 style: TextStyle(fontWeight: FontWeight.w500),
                 overflow: TextOverflow.clip,
                 maxLines: 2,
               ),
-            ),*/
+            ),
           ],
         ),
         subtitle: Column(

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TwitterTile extends StatefulWidget {
@@ -67,22 +68,25 @@ class _TwitterTileState extends State<TwitterTile> {
               widget.tweet["user"]["profile_image_url_https"],
             ),
           ),
-          title: Row(
-            //Tweet heading
-            children: <Widget>[
-              Text(
-                "${widget.tweet['user']['name']}",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Text(
-                  "@${widget.tweet['user']['screen_name']}",
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
+          title: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+            child: Row(
+              //Tweet heading
+              children: <Widget>[
+                Text(
+                  "${widget.tweet['user']['name']}",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
-              ),
-            ],
-            mainAxisAlignment: MainAxisAlignment.start,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Text(
+                    "@${widget.tweet['user']['screen_name']}",
+                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                  ),
+                ),
+              ],
+              mainAxisAlignment: MainAxisAlignment.start,
+            ),
           ),
           subtitle: Column(
             children: <Widget>[
@@ -96,17 +100,46 @@ class _TwitterTileState extends State<TwitterTile> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    Row(children: <Widget>[
-                      Text("${widget.tweet['retweet_count']}"),
-                      Icon(Icons.autorenew),
-                    ]),
-                    Row(
-                      children: <Widget>[
-                        Text("${widget.tweet['favorite_count']}"),
-                        Icon(Icons.favorite_border),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                      child: Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 2, 0),
+                            child: Text("${widget.tweet['retweet_count']}"),
+                          ),
+                          Icon(
+                            Icons.autorenew,
+                            color: Colors.blue,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                      child: Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 2, 0),
+                            child: Text("${widget.tweet['favorite_count']}"),
+                          ),
+                          Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      padding: EdgeInsets.all(0),
+                      color: Colors.blueAccent,
+                      icon: Icon(Icons.share),
+                      onPressed: () {
+                        //* Gets the shortened tweet URl and shares it
+                        Share.share(widget.tweet['entities']['urls'][0]['url']);
+                      },
                     ),
                   ],
                 ),

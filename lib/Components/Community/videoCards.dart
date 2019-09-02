@@ -32,7 +32,6 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
   @override
   void dispose() {
     _controller.dispose();
-    // chewieController.dispose();
     super.dispose();
   }
 
@@ -72,15 +71,15 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
                   backgroundColor: Colors.transparent,
                   radius: 15,
                 ),
-          /*Padding(
+          Padding(
             padding: const EdgeInsets.fromLTRB(20, 6, 0, 10),
             child: Text(
-              widget.doc['heading'],
+              widget.doc['userDisplayName'],
               style: TextStyle(fontWeight: FontWeight.w500),
               overflow: TextOverflow.clip,
               maxLines: 2,
             ),
-          ),*/
+          ),
         ],
       ),
       subtitle: Column(
@@ -130,7 +129,7 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
               ),
               IconButton(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                color: Colors.grey,
+                color: Colors.blueAccent,
                 icon: Icon(Icons.share),
                 onPressed: () {
                   Share.share(widget.doc["url"]);
