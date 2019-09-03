@@ -1,13 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:chewie/chewie.dart';
-import 'package:share/share.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
-//import 'package:yafe/Screens/Comments/commentsPage.dart';
 import 'package:yafe/Components/Community/commentNumber.dart';
 import 'package:yafe/Components/Community/likesNumber.dart';
-// import 'package:custom_chewie/custom_chewie.dart';
+import 'package:yafe/Utils/Widgets/shareButton.dart';
 
 class VideoPlayerCard extends StatefulWidget {
   VideoPlayerCard({this.doc});
@@ -137,13 +135,8 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
               CommentNumber(
                 doc: widget.doc,
               ),
-              IconButton(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                color: Colors.blueAccent,
-                icon: Icon(Icons.share),
-                onPressed: () {
-                  Share.share(widget.doc["url"]);
-                },
+              ShareButton(
+                doc: widget.doc,
               ),
             ],
           )

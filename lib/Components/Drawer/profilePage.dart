@@ -102,6 +102,9 @@ class _ProfilePageState extends State<ProfilePage> {
       });
       return currentUser.email;
     } else {
+      setState(() {
+        _userEmail = "";
+      });
       return "";
     }
   }

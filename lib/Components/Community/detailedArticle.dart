@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
@@ -11,12 +11,12 @@ import 'package:yafe/Utils/Language/language.dart';
 // import 'package:yafe/Components/Community/likesNumber.dart';
 
 class DetailedArticle extends StatefulWidget {
-  DetailedArticle({this.url, this.likes, this.dislikes, this.doc});
+  DetailedArticle({this.url, /* this.likes, this.dislikes, this.doc */});
 
   final String url;
-  final int likes;
-  final int dislikes;
-  final DocumentSnapshot doc;
+  // final int likes;
+  // final int dislikes;
+  // final DocumentSnapshot doc;
 
   @override
   _DetailedArticleState createState() => _DetailedArticleState();

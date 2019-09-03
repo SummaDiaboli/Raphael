@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-// import 'package:webview_flutter/webview_flutter.dart';
-// import 'package:yafe/mainPages/pageCards/articleDatabase.dart';
-// import 'package:yafe/mainPages/pageCards/aticleFeeder.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:share/share.dart';
-// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:yafe/Components/Community/detailedArticle.dart';
 import 'package:yafe/Components/Community/imageDetailScreen.dart';
 import 'package:yafe/Components/Community/videoCards.dart';
-// import 'package:rxdart/rxdart.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-//import 'package:yafe/Screens/Comments/commentsPage.dart';
 import 'package:yafe/Components/Community/commentNumber.dart';
 import 'package:yafe/Components/Community/likesNumber.dart';
+import 'package:yafe/Utils/Widgets/shareButton.dart';
 
 class ArticleCards extends StatefulWidget {
   @override
@@ -92,13 +86,8 @@ class _ArticleCardsState extends State<ArticleCards> {
                 CommentNumber(
                   doc: doc,
                 ),
-                IconButton(
-                  icon: Icon(Icons.share),
-                  color: Colors.blueAccent,
-                  onPressed: () {
-                    Share.share(
-                        "\"${doc['postContents']}\" \n-- ${doc['userDisplayName']} ");
-                  },
+                ShareButton(
+                  doc: doc,
                 )
               ],
             ),
@@ -115,9 +104,9 @@ class _ArticleCardsState extends State<ArticleCards> {
           MaterialPageRoute(
             builder: (context) => DetailedArticle(
               url: doc['url'],
-              likes: doc['likes'],
-              dislikes: doc['dislikes'],
-              doc: doc,
+              // likes: doc['likes'],
+              // dislikes: doc['dislikes'],
+              // doc: doc,
             ),
           ),
         );
@@ -188,14 +177,7 @@ class _ArticleCardsState extends State<ArticleCards> {
               CommentNumber(
                 doc: doc,
               ),
-              IconButton(
-                icon: Icon(Icons.share),
-                color: Colors.blueAccent,
-                onPressed: () {
-                  Share.share(
-                      "\"${doc['postContents']}\" \n-- ${doc['userDisplayName']} ");
-                },
-              ),
+              ShareButton(doc: doc),
             ],
           ),
         ],
@@ -290,12 +272,8 @@ class _ArticleCardsState extends State<ArticleCards> {
                 CommentNumber(
                   doc: doc,
                 ),
-                IconButton(
-                  icon: Icon(Icons.share),
-                  color: Colors.blueAccent,
-                  onPressed: () {
-                    Share.share(imageUrl);
-                  },
+                ShareButton(
+                  doc: doc,
                 ),
               ],
             ),

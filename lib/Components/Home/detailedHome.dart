@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,6 +20,8 @@ class DetailedHomePage extends StatefulWidget {
 
 class _DetailedHomePageState extends State<DetailedHomePage> {
   FirebaseUser firebaseUser;
+  DocumentSnapshot document;
+
   String twitterUser;
   String firebaseUserDisplayName;
   String firebaseUserEmail;
@@ -29,6 +32,8 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
   bool languageSelected;
 
   bool _isLoading;
+
+  int shareCount;
 
   // bool _isIos;
 
@@ -57,6 +62,7 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
     _displayName();
     _profilePicture();
     _email();
+    getUserData();
     getUserLanguage();
     setState(() {
       _isLoading = false;
@@ -80,6 +86,8 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
         this.firebaseUser = user;
       });
     });
+
+    getUserData();
     /*  } else {
       this.twitterUser = widget.userId;
     } */
@@ -125,6 +133,32 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
     }
   }
 
+  void getUserData() async {
+    String userId = firebaseUser.uid;
+    DocumentSnapshot documentSnapshot = await Firestore.instance
+        .collection('userData')
+        .document('$userId')
+        .get();
+
+    setState(() {
+      document = documentSnapshot;
+    });
+  }
+
+  String _shareCount() {
+    if (document != null) {
+      setState(() {
+        shareCount = document['shareCount'];
+      });
+      return "$shareCount";
+    } else {
+      setState(() {
+        shareCount = 0;
+      });
+      return "$shareCount";
+    }
+  }
+
   Future checkIfBeginner() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     bool _seen = (preferences.getBool('seen') ?? false);
@@ -144,6 +178,7 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
     _loadCurrentUser();
     _displayName();
     _email();
+    _shareCount();
     return Stack(
       children: <Widget>[
         Center(
@@ -294,7 +329,7 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                         child: Column(
                           children: <Widget>[
                             Text(
-                              "-",
+                              _shareCount(),
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 28,

@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class TwitterTile extends StatefulWidget {
   TwitterTile(Map<String, dynamic> tweet) : this.tweet = tweet;
@@ -13,6 +15,26 @@ class TwitterTile extends StatefulWidget {
 }
 
 class _TwitterTileState extends State<TwitterTile> {
+  void updateFirestoreShareCount() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    String userId = user.uid;
+    int shareCount = 0;
+
+    DocumentSnapshot document = await Firestore.instance
+        .collection("userData")
+        .document('$userId')
+        .get();
+
+    if (document.exists) {
+      shareCount = document['shareCount'];
+    }
+
+    await Firestore.instance.collection('userData').document('$userId').setData(
+      {"shareCount": shareCount + 1},
+      merge: true,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> tweetContent = [
@@ -137,10 +159,12 @@ class _TwitterTileState extends State<TwitterTile> {
                       color: Colors.blueAccent,
                       icon: Icon(Icons.share),
                       onPressed: () {
-                        //* Gets the shortened tweet URl for sharing
+                        //* Gets the shortened tweet URl for sharing */
                         Share.share(
                           widget.tweet['entities']['urls'][0]['url'],
-                        );
+                        ).whenComplete(() async {
+                          updateFirestoreShareCount();
+                        });
                       },
                     ),
                   ],
