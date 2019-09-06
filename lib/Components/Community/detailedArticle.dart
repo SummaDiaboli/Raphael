@@ -1,8 +1,9 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:yafe/Utils/Language/language.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 // import 'package:share/share.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
@@ -11,7 +12,10 @@ import 'package:yafe/Utils/Language/language.dart';
 // import 'package:yafe/Components/Community/likesNumber.dart';
 
 class DetailedArticle extends StatefulWidget {
-  DetailedArticle({this.url, /* this.likes, this.dislikes, this.doc */});
+  DetailedArticle({
+    this.url,
+    /* this.likes, this.dislikes, this.doc */
+  });
 
   final String url;
   // final int likes;
@@ -29,12 +33,38 @@ class _DetailedArticleState extends State<DetailedArticle> {
   void initState() {
     super.initState();
     getUserLanguage();
+    updateFirestoreReadArticlesCount();
     // print(userLanguage);
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void updateFirestoreReadArticlesCount() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    String userId = user.uid;
+    int readArticlesCount = 0;
+
+    DocumentSnapshot document = await Firestore.instance
+        .collection("userData")
+        .document('$userId')
+        .get();
+
+    if (document.exists) {
+      readArticlesCount = document['readArticlesCount'];
+      print(readArticlesCount);
+    }
+
+    if (readArticlesCount == null) {
+      readArticlesCount = 0;
+    }
+
+    await Firestore.instance.collection('userData').document('$userId').setData(
+      {"readArticlesCount": readArticlesCount + 1},
+      merge: true,
+    );
   }
 
   Future<void> getUserLanguage() async {
@@ -64,6 +94,10 @@ class _DetailedArticleState extends State<DetailedArticle> {
               backgroundColor: Colors.white,
               iconTheme: IconThemeData(color: Colors.black),
             ),
+            appCacheEnabled: false,
+            clearCache: true,
+            clearCookies: true,
+            withLocalStorage: false,
             withJavascript: true,
             url: userLanguage == "en"
                 ? widget.url

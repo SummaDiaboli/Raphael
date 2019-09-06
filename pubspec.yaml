@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  android_intent:
+  android_intent: 0.2.1
   carousel_slider:
   cached_network_image: ^1.1.1
   chewie:
@@ -25,15 +25,15 @@ dependencies:
 
   flutter_webview_plugin:
 
-  image_picker:
+  image_picker: 0.4.12+1
   intl:
   path_provider:
   rxdart:
-  share:
+  share: 0.5.3
   shared_preferences: 0.4.3
   twitter:
-  url_launcher:
-  video_player:
+  url_launcher: 4.1.0+1
+  video_player: 0.9.0
   webview_flutter: 0.2.0
   yaml:
 

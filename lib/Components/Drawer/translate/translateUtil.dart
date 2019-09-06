@@ -1,4 +1,4 @@
-import 'package:android_intent/android_intent.dart';
+/* import 'package:android_intent/android_intent.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Leaving this in, just in case we want to send user to Google Translate App.
@@ -28,3 +28,4 @@ class TranslateUtils {
     }
   }
 }
+ */

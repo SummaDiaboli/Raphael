@@ -21,6 +21,10 @@ class ShareButton extends StatelessWidget {
       shareCount = document['shareCount'];
     }
 
+    if (shareCount == null) {
+      shareCount = 0;
+    }
+
     await Firestore.instance.collection('userData').document('$userId').setData(
       {"shareCount": shareCount + 1},
       merge: true,

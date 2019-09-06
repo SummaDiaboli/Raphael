@@ -33,7 +33,9 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
 
   bool _isLoading;
 
-  int shareCount;
+  int shareCount = 0;
+  int readArticlesCount = 0;
+  int pollsCompletedCount = 0;
 
   // bool _isIos;
 
@@ -146,16 +148,71 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
   }
 
   String _shareCount() {
-    if (document != null) {
-      setState(() {
-        shareCount = document['shareCount'];
-      });
+    try {
+      if (document.data != null) {
+        setState(() {
+          shareCount = document['shareCount'];
+        });
+        if (shareCount == null) {
+          setState(() {
+            shareCount = 0;
+          });
+        }
+        return "$shareCount";
+      } else {
+        setState(() {
+          shareCount = 0;
+        });
+        return "$shareCount";
+      }
+    } catch (e) {
       return "$shareCount";
-    } else {
-      setState(() {
-        shareCount = 0;
-      });
-      return "$shareCount";
+    }
+  }
+
+  String _readArticlesCount() {
+    try {
+      if (document.data != null) {
+        setState(() {
+          readArticlesCount = document['readArticlesCount'];
+        });
+        if (readArticlesCount == null) {
+          setState(() {
+            readArticlesCount = 0;
+          });
+        }
+        return "$readArticlesCount";
+      } else {
+        setState(() {
+          readArticlesCount = 0;
+        });
+        return "$readArticlesCount";
+      }
+    } catch (e) {
+      return "$readArticlesCount";
+    }
+  }
+
+  String _pollsCompletedCount() {
+    try {
+      if (document.data != null) {
+        setState(() {
+          pollsCompletedCount = document['pollsCompletedCount'];
+        });
+        if (pollsCompletedCount == null) {
+          setState(() {
+            pollsCompletedCount = 0;
+          });
+        }
+        return "$pollsCompletedCount";
+      } else {
+        setState(() {
+          readArticlesCount = 0;
+        });
+        return "$pollsCompletedCount";
+      }
+    } catch (e) {
+      return "$pollsCompletedCount";
     }
   }
 
@@ -178,7 +235,11 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
     _loadCurrentUser();
     _displayName();
     _email();
+    getUserData();
     _shareCount();
+    _readArticlesCount();
+    _pollsCompletedCount();
+
     return Stack(
       children: <Widget>[
         Center(
@@ -308,7 +369,7 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                         child: Column(
                           children: <Widget>[
                             Text(
-                              "-/-",
+                              _pollsCompletedCount(),
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 28,
@@ -350,7 +411,7 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                         child: Column(
                           children: <Widget>[
                             Text(
-                              "-/-",
+                              _readArticlesCount(),
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 28,
@@ -359,7 +420,7 @@ class _DetailedHomePageState extends State<DetailedHomePage> {
                             Padding(
                               padding: const EdgeInsets.only(top: 5),
                               child: Text(
-                                "POSTS READ",
+                                "ARTICLES READ",
                                 style: TextStyle(fontSize: 12),
                               ),
                             ),
