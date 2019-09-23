@@ -139,7 +139,7 @@ class _NewCommentState extends State<NewComment> {
                     key: commentKey,
                     child: TextFormField(
                       maxLines: null,
-                      minLines: 5,
+                      minLines: 10,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder(
@@ -163,32 +163,26 @@ class _NewCommentState extends State<NewComment> {
                     horizontal: 8,
                     vertical: 4,
                   ),
-                  child: Container(
-                    width: 160,
-                    child: FlatButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
-                        side: BorderSide(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Container(
+                        child: FlatButton(
                           color: Colors.red[800],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
+                            side: BorderSide(
+                              color: Colors.red[800],
+                            ),
+                          ),
+                          onPressed: _validateAndSubmit,
+                          child: Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                      onPressed: _validateAndSubmit,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            "Submit Comment",
-                            style: TextStyle(
-                                color: Colors.red[800],
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400),
-                          ),
-                          /* Icon(
-                            Icons.forward,
-                            color: Colors.red[800],
-                          ), */
-                        ],
-                      ),
-                    ),
+                    ],
                   ),
                 )
               ],

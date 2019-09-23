@@ -97,6 +97,8 @@ class _CommentsBuilderState extends State<CommentsBuilder> {
           (doc) => Column(
             children: <Widget>[
               Card(
+                margin: EdgeInsets.all(0),
+                elevation: 0.2,
                 child: ListTile(
                   trailing: doc['userId'] == uid
                       ? PopupMenuButton(
@@ -104,9 +106,53 @@ class _CommentsBuilderState extends State<CommentsBuilder> {
                           itemBuilder: (BuildContext context) {
                             return CommentActions.actions.map((String action) {
                               return PopupMenuItem<String>(
-                                value: action,
-                                child: Text(action),
-                              );
+                                  value: action,
+                                  child: action == CommentActions.Edit
+                                      ? Row(
+                                          children: <Widget>[
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      1, 0, 4, 0),
+                                              child: Icon(
+                                                Icons.edit,
+                                                color: Colors.blue,
+                                              ),
+                                            ),
+                                            Text(action),
+                                          ],
+                                        )
+                                      : action == CommentActions.Delete
+                                          ? Row(
+                                              children: <Widget>[
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          1, 0, 4, 0),
+                                                  child: Icon(
+                                                    Icons.delete,
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                                Text(action),
+                                              ],
+                                            )
+                                          : action == CommentActions.Reply
+                                              ? Row(
+                                                  children: <Widget>[
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .fromLTRB(1, 0, 4, 0),
+                                                      child: Icon(
+                                                        Icons.reply,
+                                                        color:
+                                                            Colors.lightGreen,
+                                                      ),
+                                                    ),
+                                                    Text(action),
+                                                  ],
+                                                )
+                                              : null);
                             }).toList();
                           },
                           onSelected: (String choice) {
@@ -295,8 +341,8 @@ class _CommentsBuilderState extends State<CommentsBuilder> {
 
 class CommentActions {
   static const String Reply = 'Reply';
-  static const String Edit = 'Edit comment';
-  static const String Delete = 'Delete comment';
+  static const String Edit = 'Edit';
+  static const String Delete = 'Delete';
 
   static const List<String> actions = <String>[
     Reply,

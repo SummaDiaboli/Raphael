@@ -91,6 +91,8 @@ class _ReplyBuilderState extends State<ReplyBuilder> {
     return snapshot.data.documents
         .map(
           (doc) => Card(
+            margin: EdgeInsets.all(0),
+            elevation: 0.2,
             child: ListTile(
               onLongPress: () {
                 print("Doc userID " + doc['userId']);
@@ -121,7 +123,35 @@ class _ReplyBuilderState extends State<ReplyBuilder> {
                         return ReplyCommentActions.actions.map((String action) {
                           return PopupMenuItem<String>(
                             value: action,
-                            child: Text(action),
+                            child: action == ReplyCommentActions.Edit
+                                ? Row(
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            1, 0, 4, 0),
+                                        child: Icon(
+                                          Icons.edit,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                      Text(action),
+                                    ],
+                                  )
+                                : action == ReplyCommentActions.Delete
+                                    ? Row(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                1, 0, 4, 0),
+                                            child: Icon(
+                                              Icons.delete,
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                          Text(action),
+                                        ],
+                                      )
+                                    : null,
                           );
                         }).toList();
                       },
@@ -208,8 +238,8 @@ class _ReplyBuilderState extends State<ReplyBuilder> {
 }
 
 class ReplyCommentActions {
-  static const String Edit = 'Edit comment';
-  static const String Delete = 'Delete comment';
+  static const String Edit = 'Edit';
+  static const String Delete = 'Delete';
 
   static const List<String> actions = <String>[
     Edit,
