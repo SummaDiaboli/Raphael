@@ -1,23 +1,20 @@
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:yafe/Components/Community/commentNumber.dart';
-import 'package:yafe/Components/Community/likesNumber.dart';
-import 'package:yafe/Utils/Widgets/shareButton.dart';
 
-class VideoPlayerCard extends StatefulWidget {
-  VideoPlayerCard({this.doc});
+class UploadsVideoPlayerCard extends StatefulWidget {
+  UploadsVideoPlayerCard({this.doc});
 
   final DocumentSnapshot doc;
 
   @override
-  _VideoPlayerCardState createState() => _VideoPlayerCardState();
+  _UploadsVideoPlayerCardState createState() => _UploadsVideoPlayerCardState();
 }
 
-class _VideoPlayerCardState extends State<VideoPlayerCard> {
+class _UploadsVideoPlayerCardState extends State<UploadsVideoPlayerCard> {
   VideoPlayerController _controller;
   Future<void> _initializeVideoPlayerFuture;
 
@@ -35,6 +32,68 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
     super.dispose();
   }
 
+  Future _buildErrorDialog(BuildContext context, _message) {
+    return showDialog(
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Error Message'),
+          content: Text(_message),
+          actions: <Widget>[
+            FlatButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                })
+          ],
+        );
+      },
+      context: context,
+    );
+  }
+
+  Future<void> _buildConfirmation(
+      BuildContext context, _message, DocumentSnapshot doc) {
+    return showDialog<void>(
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Confirmation'),
+          content: Text(_message),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                "Delete Upload",
+                style: TextStyle(color: Colors.red[800]),
+              ),
+              onPressed: () {
+                _deleteUpload(doc);
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text(
+                "Close",
+                style: TextStyle(color: Colors.grey),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+      context: context,
+    );
+  }
+
+  _deleteUpload(DocumentSnapshot doc) {
+    try {
+      Firestore.instance.document(doc.reference.path).delete();
+    } catch (e) {
+      print(e);
+      _buildErrorDialog(context, e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -49,16 +108,7 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
           },
         );
       },
-      /* leading: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
-        child: Icon(
-          Icons.account_circle,
-          size: 70,
-          color: Colors.grey,
-        ),
-      ),
-      contentPadding: EdgeInsets.fromLTRB(10, 0, 15, 0), */
-      title: Row(
+      /* title: Row(
         children: <Widget>[
           widget.doc['photoUrl'] == null
               ? Icon(
@@ -90,6 +140,35 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
             ),
           ),
         ],
+      ), */
+      trailing: PopupMenuButton(
+        icon: Icon(Icons.more_horiz),
+        itemBuilder: (BuildContext context) {
+          return UploadActions.actions.map((String action) {
+            return PopupMenuItem<String>(
+                value: action,
+                child: action == UploadActions.Delete
+                    ? Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(1, 0, 4, 0),
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                          ),
+                          Text(action),
+                        ],
+                      )
+                    : null);
+          }).toList();
+        },
+        onSelected: (String choice) {
+          if (choice == UploadActions.Delete) {
+            _buildConfirmation(
+                context, "Are you sure you want to delete this?", widget.doc);
+          }
+        },
       ),
       subtitle: Column(
         children: <Widget>[
@@ -106,6 +185,7 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
                     // Use the VideoPlayer widget to display the video.
                     child: Chewie(
                       controller: ChewieController(
+                        showControls: false,
                         videoPlayerController: _controller,
                         aspectRatio: _controller.value.aspectRatio,
                         autoPlay: false,
@@ -115,8 +195,6 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
                     ),
                   );
                 } else {
-                  // If the VideoPlayerController is still initializing, show a
-                  // loading spinner.
                   return Center(
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 80),
@@ -132,29 +210,23 @@ class _VideoPlayerCardState extends State<VideoPlayerCard> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                // 'Posted on ${dayFormatter.toString()} - ${dayAndTime.hour}:${dayAndTime.minute} GMT',
-                //'Posted on -- - -- GMT',
                 'Posted on ${DateFormat('EE, d MMMM yyyy hh:mm a').format(widget.doc['date'])}',
                 style: TextStyle(fontSize: 11.9),
               ),
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              LikesNumber(
-                doc: widget.doc,
-              ),
-              CommentNumber(
-                doc: widget.doc,
-              ),
-              ShareButton(
-                doc: widget.doc,
-              ),
-            ],
-          )
         ],
       ),
     );
   }
+}
+
+class UploadActions {
+  // static const String Edit = 'Edit';
+  static const String Delete = 'Delete';
+
+  static const List<String> actions = <String>[
+    // Edit,
+    Delete,
+  ];
 }

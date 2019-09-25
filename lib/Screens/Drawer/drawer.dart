@@ -3,8 +3,10 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:yafe/Components/Drawer/profilePage.dart';
 import 'package:yafe/Components/Drawer/settingsPage.dart';
 import 'package:yafe/Components/Drawer/surveyPage.dart';
-import 'package:yafe/Components/Drawer/translate/translateWebView.dart';
+// import 'package:yafe/Components/Drawer/translate/translateWebView.dart';
+import 'package:yafe/Components/Drawer/uploadsPage.dart';
 import 'package:yafe/Utils/Auth/authentication.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:yafe/Screens/rootPage.dart";
@@ -150,7 +152,7 @@ class _MainDrawerState extends State<MainDrawer> {
               child: Column(
                 children: <Widget>[
                   ListTile(
-                    contentPadding: EdgeInsets.all(0),
+                    contentPadding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                     leading: photoUrl == null
                         ? Icon(
                             Icons.account_circle,
@@ -159,10 +161,18 @@ class _MainDrawerState extends State<MainDrawer> {
                           )
                         : Padding(
                             padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage("$photoUrl"),
-                              backgroundColor: Colors.transparent,
-                              radius: 30,
+                            child: ClipOval(
+                              child: CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                height: 60,
+                                width: 60,
+                                imageUrl: photoUrl,
+                                placeholder: (context, url) => CircleAvatar(
+                                  backgroundImage: NetworkImage("$photoUrl"),
+                                  backgroundColor: Colors.grey,
+                                  radius: 30,
+                                ),
+                              ),
                             ),
                           ),
                     title: Padding(
@@ -221,14 +231,14 @@ class _MainDrawerState extends State<MainDrawer> {
               title: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Text(
-                  "Translate",
+                  "Uploads",
                   textAlign: TextAlign.start,
                   style: TextStyle(color: Colors.red[800], fontSize: 16),
                 ),
               ),
               onTap: () {
                 Route route = MaterialPageRoute(
-                  builder: (context) => TranslateWebView(),
+                  builder: (context) => UploadsPage(),
                 );
                 Navigator.pop(context);
                 Navigator.push(context, route);

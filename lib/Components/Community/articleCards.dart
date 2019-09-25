@@ -77,6 +77,18 @@ class _ArticleCardsState extends State<ArticleCards> {
             Text(
               doc['postContents'],
             ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 16, 4, 4),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  // 'Posted on ${dayFormatter.toString()} - ${dayAndTime.hour}:${dayAndTime.minute} GMT',
+                  //'Posted on -- - -- GMT',
+                  'Posted on ${DateFormat('EE, d MMMM yyyy hh:mm a').format(doc['date'])}',
+                  style: TextStyle(fontSize: 11.9),
+                ),
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -260,6 +272,18 @@ class _ArticleCardsState extends State<ArticleCards> {
                     ),
                   ),
                   errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 16, 4, 4),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  // 'Posted on ${dayFormatter.toString()} - ${dayAndTime.hour}:${dayAndTime.minute} GMT',
+                  //'Posted on -- - -- GMT',
+                  'Posted on ${DateFormat('EE, d MMMM yyyy hh:mm a').format(doc['date'])}',
+                  style: TextStyle(fontSize: 11.9),
                 ),
               ),
             ),
