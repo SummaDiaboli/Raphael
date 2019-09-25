@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'mainApp.dart';
 
-void main() => runApp(
-      MainApp(),
-    );
+void main() =>
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+        .then((_) {
+      runApp(
+        MainApp(),
+      );
+    });

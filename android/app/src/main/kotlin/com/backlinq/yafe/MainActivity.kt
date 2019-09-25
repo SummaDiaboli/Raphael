@@ -1,4 +1,4 @@
-package com.example.yafe
+package com.backlinq.yafe
 
 import android.os.Bundle
 

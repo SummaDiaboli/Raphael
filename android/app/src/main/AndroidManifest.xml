@@ -1,21 +1,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.yafe">
+    package="com.backlinq.yafe">
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
          In most cases you can leave this as-is, but you if you want to provide
          additional functionality it is fine to subclass or reimplement
          FlutterApplication and put your custom class here. -->
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="Yafe"
         android:icon="@mipmap/ic_launcher">
-        <!-- <meta-data android:name="com.google.android.geo.AIzaSyAzYvm8BKp44F7hUBbe-7UNhbqS14SRVzg"
-               android:value="AIzaSyAzYvm8BKp44F7hUBbe-7UNhbqS14SRVzg"/> -->
-        <!-- <meta-data android:name="com.mapbox.token" android:value="pk.eyJ1Ijoic3VtbWFkcmFjb2xpIiwiYSI6ImNqd20wcHBrYzE1eHM0M281anRydzJ0dm0ifQ.25dQ-AXtuDUkXXW7_mU3OQ" /> -->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -35,6 +35,5 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
     </application>
 </manifest>
