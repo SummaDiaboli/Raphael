@@ -30,6 +30,7 @@ dependencies:
   path_provider:
   rxdart:
   share: 0.5.3
+  sentry:
   shared_preferences: 0.4.3
   twitter:
   url_launcher: 4.1.0+1
