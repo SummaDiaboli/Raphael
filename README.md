@@ -1,2 +1,2 @@
 # Raphael
-A mobile application that's none of your business at the moment.
+A mobile application that's attempts to provide a local social media platform for regions within Nigeria.
